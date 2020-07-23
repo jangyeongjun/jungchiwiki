@@ -20,7 +20,10 @@ class Law(models.Model):
     # 1:N, M:N
     like_users             = models.ManyToManyField(User, blank=True, related_name = 'like_law',             through='UserLikeLaw')
     dislike_users          = models.ManyToManyField(User, blank=True, related_name = 'dislike_law',          through='UserDislikeLaw' )
-    comment_users          = models.ManyToManyField(User, blank=True, related_name = 'comment_law',          through='UserCommentLaw')
+    #comment_users          = models.ManyToManyField(User, blank=True, related_name = 'comment_law',          through='UserCommentLaw')
+    #comment_users는 무슨 기능이야?
+    Law_comments           = 
+
 
 
 # 국회의원 모델
@@ -43,10 +46,19 @@ class Politician(models.Model):
     like_users             = models.ManyToManyField(User, blank=True, related_name = 'like_politican',             through='UserLikePolitican')
     dislike_users          = models.ManyToManyField(User, blank=True, related_name = 'dislike_politican',          through='UserDislikePolitican' )
     orientation_vote_users = models.ManyToManyField(User, blank=True, related_name = 'orientation_vote_politican', through='OrientationVote')
-    like_law               = models.ManyToManyField(Law,  blank=True, related_name = 'like_politican',             through='PoliticanLikeLaw')
-    dislike_law            = models.ManyToManyField(Law,  blank=True, related_name = 'dislike_politican',          through='PoliticanDislikeLaw')
+    agree_law              = models.ManyToManyField(Law,  blank=True, related_name = 'agree_politican',            through='PoliticanAgreeLaw')
+    disagree_law           = models.ManyToManyField(Law,  blank=True, related_name = 'disagree_politican',         through='PoliticanDisagreeLaw')
     abstain_law            = models.ManyToManyField(Law,  blank=True, related_name = 'abstain_politican',          through='PoliticanAbstainLaw')
     propose_law            = models.ManyToManyField(Law,  blank=True, related_name = 'propose_politican',          through='PoliticanProposeLaw')
+
+
+#댓글 모델
+class comments(models.Model):
+    content = models.TextFeild()
+    created_at = models.DateTimeFeild(default=timezone.now)
+
+    #1:N
+    
 
 
 
@@ -85,12 +97,12 @@ class OrientationVote(models.Model):
     value = models.IntegerField()
     created_at = models.DateTimeField(auto_now_add = True)
 
-class PoliticanLikeLaw(models.Model):
+class PoliticanAgreeLaw(models.Model):
     law = models.ForeignKey(Law, on_delete = models.CASCADE)
     politican = models.ForeignKey(Politician, on_delete = models.CASCADE)
     created_at = models.DateTimeField(auto_now_add = True)
 
-class PoliticanDislikeLaw(models.Model):
+class PoliticanDisagreeLaw(models.Model):
     law = models.ForeignKey(Law, on_delete = models.CASCADE)
     politican = models.ForeignKey(Politician, on_delete = models.CASCADE)
     created_at = models.DateTimeField(auto_now_add = True)
