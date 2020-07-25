@@ -20,8 +20,7 @@ class Law(models.Model):
     # 1:N, M:N
     like_users             = models.ManyToManyField(User, blank=True, related_name = 'like_law',             through='UserLikeLaw')
     dislike_users          = models.ManyToManyField(User, blank=True, related_name = 'dislike_law',          through='UserDislikeLaw' )
-    #comment_users          = models.ManyToManyField(User, blank=True, related_name = 'comment_law',          through='UserCommentLaw')
-    #comment_users는 무슨 기능이야?
+    
 
 
 
@@ -91,7 +90,7 @@ class SmallFeed(models.Model):
 #reference_feed
 class ReferenceFeed(models.Model):
     content = models.TextField()
-    referencUrl = models.URLField()
+    referenceUrl = models.URLField()
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(blank=True, null=True)
 
@@ -117,12 +116,14 @@ class Comment(models.Model):
     author = models.ForeignKey(User, on_delete=models.PROTECT) #유저가 사라져도 댓글은 사라지지 않음
     law = models.ForeignKey(Law, null=True, on_delete=models.CASCADE)
     normalFeed = models.ForeignKey(NormalFeed, null=True, on_delete=models.CASCADE)
-    smallFedd = models.ForeignKey(SmallFeed, null=True, on_delete=models.CASCADE)
+    smallFeed = models.ForeignKey(SmallFeed, null=True, on_delete=models.CASCADE)
+    politician = models.ForeignKey(Politican, null=True, on_delete=models.CASCADE)
+    
     #N:M
     like_users             = models.ManyToManyField(User, blank=True, related_name = 'like_comment',             through='UserLikeComment')
     dislike_users          = models.ManyToManyField(User, blank=True, related_name = 'dislike_comment',          through='UserDislikeComment' )
-    politician             = models.ManyToManyField(User, blank=True, related_name = 'politician_comment',       through='CommentToPolitican' )
-
+    # politician             = models.ManyToManyField(User, blank=True, related_name = 'comment',                  through='CommentToPolitican' )
+    # 하나의 댓글은 한 명의 정치인한테 달리고 한 명의 정치인한테 여러 개 댓글이 달릴 수 있으니까 위에 law 처럼 1:N인듯??? 
 
 
 #대댓글 모델
@@ -157,11 +158,7 @@ class UserDislikeLaw(models.Model):
     law = models.ForeignKey(Law, on_delete = models.CASCADE)
     created_at = models.DateTimeField(auto_now_add = True)
 
-class UserCommentLaw(models.Model):
-    user = models.ForeignKey(User, on_delete = models.CASCADE)
-    law = models.ForeignKey(Law, on_delete = models.CASCADE)
-    content = models.TextField()
-    created_at = models.DateTimeField(auto_now_add = True)
+
     
 
 #politican relate 해주는 model들
@@ -234,10 +231,10 @@ class UserDislikeComment(models.Model):
     comment = models.ForeignKey(Comment, on_delete = models.CASCADE)
     created_at = models.DateTimeField(auto_now_add = True)
 
-class CommentToPolitician(models.Model):
-    politician = models.ForeignKey(Politician, on_delete = models.CASCADE)
-    comment = models.ForeignKey(Comment, on_delete = models.CASCADE)
-    created_at = models.DateTimeField(auto_now_add = True)
+# class CommentToPolitician(models.Model):
+#     politician = models.ForeignKey(Politician, on_delete = models.CASCADE)
+#     comment = models.ForeignKey(Comment, on_delete = models.CASCADE)
+#     created_at = models.DateTimeField(auto_now_add = True)
 
 #CTC relate
 class UserLikeCTC(models.Model):
