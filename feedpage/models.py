@@ -48,7 +48,10 @@ class Politician(models.Model):
     politicalCommittee = models.CharField(max_length=20)
     photo = models.ImageField(blank=True)
     politicalOrientation = models.IntegerField()
-    electedCount = models.CommaSeparatedIntegerField(max_length=20)
+    # electedCount = models.CommaSeparatedIntegerField(max_length=20)
+    # feedpage.Politician.electedCount: (fields.E901) CommaSeparatedIntegerField is removed except for support in historical migrations.
+        # HINT: Use CharField(validators=[validate_comma_separated_integer_list]) instead.
+    electedCount = models.CharField(max_length=20)
     
     #M:N
     like_users             = models.ManyToManyField(User, blank=True, related_name = 'like_politican',             through='UserLikePolitican')
@@ -98,7 +101,7 @@ class ReferenceFeed(models.Model):
     author = models.ForeignKey(User, null=True, on_delete = models.PROTECT)
     #M:N
     like_users             = models.ManyToManyField(User, blank=True, related_name = 'like_reference',             through='UserLikeReference')
-    dislike_users          = models.ManyToManyField(User, blank=True, related_name = 'dislike_reference',          through='UserDislikeRefence' )
+    dislike_users          = models.ManyToManyField(User, blank=True, related_name = 'dislike_reference',          through='UserDislikeReference' )
 
 
 #댓글모델
@@ -113,11 +116,11 @@ class Comment(models.Model):
     ]
     evaluation = models.CharField(max_length = 3, choices = evaluationChoices, blank=True)#일반토론인 경우에는 blank값
     #1:N
-    author = models.ForeignKey(User, on_delete=models.PROTECT) #유저가 사라져도 댓글은 사라지지 않음
+    author = models.ForeignKey(User, null=True, on_delete=models.PROTECT) #유저가 사라져도 댓글은 사라지지 않음
     law = models.ForeignKey(Law, null=True, on_delete=models.CASCADE)
     normalFeed = models.ForeignKey(NormalFeed, null=True, on_delete=models.CASCADE)
     smallFeed = models.ForeignKey(SmallFeed, null=True, on_delete=models.CASCADE)
-    politician = models.ForeignKey(Politican, null=True, on_delete=models.CASCADE)
+    politician = models.ForeignKey(Politician, null=True, on_delete=models.CASCADE)
     
     #N:M
     like_users             = models.ManyToManyField(User, blank=True, related_name = 'like_comment',             through='UserLikeComment')
@@ -132,7 +135,7 @@ class CommentToComment(models.Model):
     created_at = models.CharField(max_length=10)
     photo = models.ImageField(blank=True, upload_to='comment_photos')
     #1:N
-    author = models.ForeignKey(User, on_delete=models.PROTECT)
+    author = models.ForeignKey(User, null=True, on_delete=models.PROTECT)
     comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
     #N:M
     like_users             = models.ManyToManyField(User, blank=True, related_name = 'like_CTC',             through='UserLikeCTC')
