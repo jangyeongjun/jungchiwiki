@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
+from django.core.validators import MaxValueValidator, MinValueValidator
 # Feedpage에 만들어야 할 모델
 # 1. 국회의원
 # 2. 법률
@@ -34,7 +35,7 @@ class Politician(models.Model):
     ]#첫번째 요소가 모델에 저장될 값, 두번째 요소가 사람이 읽을 값
     gender = models.CharField(max_length=1, choices=genderChoices)
     district = models.CharField(max_length=10)
-    PartyChoices = [
+    partyChoices = [
         ('더', '더불어민주당'),
         ('미', '미래통합당'),
         ('정', '정의당'),
@@ -44,10 +45,10 @@ class Politician(models.Model):
         ('시', '시대전환'),
         ('무', '무소속'),
     ]
-    politicalParty = models.CharField(max_length=2, choices=genderChoices)
+    politicalParty = models.CharField(max_length=2, choices=partyChoices)
     politicalCommittee = models.CharField(max_length=20)
     photo = models.ImageField(blank=True)
-    politicalOrientation = models.IntegerField()
+    politicalOrientation = models.IntegerField(default=5, validators=[MaxValueValidator(10), MinValueValidator(0)])
     # electedCount = models.CommaSeparatedIntegerField(max_length=20)
     # feedpage.Politician.electedCount: (fields.E901) CommaSeparatedIntegerField is removed except for support in historical migrations.
         # HINT: Use CharField(validators=[validate_comma_separated_integer_list]) instead.

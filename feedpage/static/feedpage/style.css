@@ -1,3 +1,18 @@
 body  {
 	background-color:  lightblue;
 }
+
+.demo-card-wide.mdl-card {
+	width: 800px;
+	height: 300px;
+}
+
+.demo-card-wide > .mdl-card__title {
+	color:black;
+	height: 176px;
+	background: url('../assets/demos/welcome_card.jpg') center / cover;
+}
+
+.demo-card-wide > .mdl-card__menu {
+	color: #fff;
+}

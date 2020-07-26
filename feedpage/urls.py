@@ -5,5 +5,5 @@ from feedpage import views
 urlpatterns = [
     path('', views.main, name='main'),
     path('', views.search, name='search'),
-    path('', views.politician, name='politician'),
+    path('politician/<int:pid>', views.politician, name='politician'), #pid = politician model id
 ] 
