@@ -1,3 +1,39 @@
 body  {
 	background-color:  lightblue;
 }
+.tabs { 
+  display: flex; 
+  flex-wrap: wrap;
+  justify-content: center;   
+} 
+.tabs label { 
+  width:16.6%; 
+  order: 1; 
+  display: block; 
+  padding:10px 0px; 
+  text-align:center; 
+  cursor: pointer; 
+  background: #838487; 
+  font-weight: bold; 
+  transition: background ease 0.2s; 
+
+} 
+/*박스배경*/ 
+.tabs .tab { 
+  order: 99; 
+  flex-grow: 1; 
+  width: 100%; 
+  display: none; 
+  padding: 1rem; 
+  background: #92B6D5; 
+} 
+.tabs input[type="radio"] { 
+  display: none; 
+} 
+/*탭 눌렀을때 컬러*/ 
+.tabs input[type="radio"]:checked + label { 
+  background: #92B6D5; 
+} 
+.tabs input[type="radio"]:checked + label + .tab { 
+  display: block; 
+}
