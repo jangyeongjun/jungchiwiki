@@ -12,6 +12,9 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 # 7. 좋아요
 
 #법안 모델
+
+
+
 class Law(models.Model):
     name = models.CharField(max_length=10)
     content = models.TextField()
@@ -25,35 +28,51 @@ class Law(models.Model):
 
 
 
-# 국회의원 모델
+#국회의원 모델
 class Politician(models.Model):
     name = models.CharField(max_length=10)
-    age = models.IntegerField()
-    genderChoices = [
-        ('M', '남자'),
-        ('F', '여자'),
-    ]#첫번째 요소가 모델에 저장될 값, 두번째 요소가 사람이 읽을 값
-    gender = models.CharField(max_length=1, choices=genderChoices)
-    district = models.CharField(max_length=10)
-
-    partyChoices = [
-        ('더', '더불어민주당'),
-        ('미', '미래통합당'),
-        ('정', '정의당'),
-        ('국', '국민의당'),
-        ('열', '열린민주당'),
-        ('기', '기본소득당'),
-        ('시', '시대전환'),
-        ('무', '무소속'),   
+    PartyChoices = [
+        ('더불어민주당', '더불어민주당'),
+        ('미래통합당', '미래통합당'),
+        ('정의당', '정의당'),
+        ('국민의당', '국민의당'),
+        ('열린민주당', '열린민주당'),
+        ('기본소득당', '기본소득당'),
+        ('시대전환', '시대전환'),
+        ('무소속', '무소속'),
     ]
-    politicalParty = models.CharField(max_length=2, choices=partyChoices)
+    politicalParty = models.CharField(max_length=10, choices=PartyChoices)
     politicalCommittee = models.CharField(max_length=20)
-    photo = models.ImageField(blank=True, upload_to='politician_photos')
-    politicalOrientation = models.IntegerField(default=5, validators=[MaxValueValidator(10), MinValueValidator(0)])
+    district = models.CharField(max_length=30)
+    genderChoices = [
+        ('남', '남자'),
+        ('여', '여자'),
+    ]#첫번째 요소가 모델에 저장될 값, 두번째 요소가 사람이 읽을 값
+    gender = models.CharField(max_length=2, choices=genderChoices)
+    countChoices = [
+        ('초선', '초선'),
+        ('재선', '재선'),
+        ('3선', '3선'),
+        ('4선', '4선'),
+        ('5선', '5선'),
+        ('6선', '6선'),
+        ('7선', '7선'),
+        ('8선', '8선'),
+        ('9선', '9선'),
+        ('10선', '10선'),
+    ]
+    electedCount = models.CharField(max_length=10,blank=True, choices=genderChoices)
+    howChoices = [
+        ('지역구', '지역구'),
+        ('비례대표', '비례대표'),
+    ]
+    how = models.CharField(max_length=20,blank=True)
+    photo = models.ImageField(blank=True)
+    age = models.IntegerField(default=0,blank=True)
+    politicalOrientation = models.IntegerField(default=0,blank=True)
     # electedCount = models.CommaSeparatedIntegerField(max_length=20)
     # feedpage.Politician.electedCount: (fields.E901) CommaSeparatedIntegerField is removed except for support in historical migrations.
         # HINT: Use CharField(validators=[validate_comma_separated_integer_list]) instead.
-    electedCount = models.CharField(max_length=20)
     
     #M:N
     like_users             = models.ManyToManyField(User, blank=True, related_name = 'like_politican',             through='UserLikePolitican')
