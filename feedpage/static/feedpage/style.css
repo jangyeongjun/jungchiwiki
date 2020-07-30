@@ -1,5 +1,5 @@
 body  {
-	background-color:  lightblue;
+	background-color:  white;
 }
 .tabs { 
   display: flex; 
@@ -36,4 +36,130 @@ body  {
 } 
 .tabs input[type="radio"]:checked + label + .tab { 
   display: block; 
+}
+
+.contents {
+  min-height: 500px;
+  padding-bottom: 50px;
+}
+
+.nassem_top_btn {
+  text-align: right;
+  margin: 10px 0 -15px 0;
+}
+
+.theme_select_box {
+  overflow: hidden;
+  margin: 25px 0 0 0;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 100%;
+  table-layout: fixed;
+}
+
+colgroup {
+  display: table-column-group;
+}
+
+
+table {
+  display: table;
+  border-collapse: separate;
+  box-sizing: border-box;
+  border-spacing: 2px;
+  border-color: grey;
+}
+
+.theme_select_box table th {
+  font-family: "notoKrM";
+  width: 20%;
+  text-align: center;
+  color: #111111;
+  background: #f2f5f8;
+  padding: 8px;
+  border-top: 1px solid #dbdbdb;
+  border-bottom: 1px solid #dbdbdb;
+}
+
+.theme_select_box table td {
+  width: 30%;
+  height: 50px;
+  border-top: 1px solid #dbdbdb;
+  border-bottom: 1px solid #dbdbdb;
+  padding: 8px;
+}
+
+.theme_select_box table td > select {
+  width: 100%;
+}
+
+.container.hide-pc-lnb {
+  padding-left: 0;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.btn_inquiries {
+  font-family: "notoKrL";
+  display: inline-block;
+  height: 33px;
+  line-height: 33px;
+  width: 88px;
+  background: #003b87;
+  color: #ffffff;
+  text-align: center;
+}
+
+.btn_checkchart {
+  font-family: "notoKrL";
+  display: inline-block;
+  height: 33px;
+  line-height: 33px;
+  width: 88px;
+  background: #0091a3;
+  color: #ffffff;
+  text-align: center;
+}
+
+
+.btn_group ul {
+  display: flex;
+  margin: 10px 0 0 0;
+}
+
+.btn_group {
+  display: flex;
+  text-align: right;
+  justify-content: flex-end;
+}
+
+.themeB table th {
+  font-family: "notoKrM";
+  background: #f2f5f8;
+  border-top: 2px solid #001732;
+  height: 48px;
+  border-bottom: 1px solid #e4e4e4;
+  color: #111111;
+}
+
+tbody {
+  display: table-row-group;
+  vertical-align: middle;
+  border-color: inherit;
+}
+
+.themeB table td {
+  padding: 14px 8px;
+  border-bottom: 1px solid #e4e4e4;
+  text-align: center;
+}
+
+th {
+  display: table-cell;
+  vertical-align: inherit;
+  font-weight: bold;
+  text-align: center;
 }
