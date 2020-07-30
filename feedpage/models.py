@@ -153,7 +153,7 @@ class CommentToComment(models.Model):
     photo = models.ImageField(blank=True, upload_to='comment_photos')
     #1:N
     author = models.ForeignKey(User, null=True, on_delete=models.PROTECT)
-    comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name="CTC")
     #N:M
     like_users             = models.ManyToManyField(User, blank=True, related_name = 'like_CTC',             through='UserLikeCTC')
     dislike_users          = models.ManyToManyField(User, blank=True, related_name = 'dislike_CTC',          through='UserDislikeCTC' )
