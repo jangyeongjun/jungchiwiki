@@ -1,6 +1,114 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h>fdsfsdf</h>
-     <h>fdsfsdf</h>
+    
+    {% comment %} 국회의원 페이지 상단 파트 {% endcomment %}
+    <div class="middle-header">
+        {% comment %} 국회의원 프로필 카드 {% endcomment %}
+        <div class="demo-card-wide mdl-card mdl-shadow--2dp profile">
+            <div class="mdl-card__title">
+                <h2 class="mdl-card__title-text">{{ politician.name }}</h2>
+            </div>
+
+            <div class ="mdl-card__photo">
+                {% if  politician.photo %}
+                    
+                    <img src="{{ politician.photo.url }}"  alt="" width="100%" height="100%">
+                {% else %}
+                    <h>사진없음</h>
+                {% endif %}            
+            </div>
+            
+            <div class="mdl-card__supporting-text">
+                <table>
+                    <tr>
+                        <td class = "category">나이</td>
+                        <td class = "content">{{ politician.age }}</td>
+                    </tr>
+                    <tr>
+                        <td class = "category">성별</td>
+                        <td class = "content">{{ politician.gender }}</td>
+                    </tr>
+                    <tr>
+                        <td class = "category">지역구</td>
+                        <td class = "content">{{ politician.district }}</td>
+                    </tr>
+                    <tr>
+                        <td class = "category">소속당</td>
+                        <td class = "content">{{ politician.politicalParty }}</td>
+                    </tr>
+                    <tr>
+                        <td class = "category">소속 위원회</td>
+                        <td class = "content">{{ politician.politicalCommittee }}</td>
+                    </tr>
+                    <tr>
+                        <td class = "category">성향</td>
+                        <td class = "content">{{ politician.politicalOrientation }}</td>
+                    </tr>
+                </table>
+                
+            </div>
+        </div>
+
+        {% comment %} 국회의원 페이지 목차 {% endcomment %}
+        <div class ="table-of-contents">
+            <div class="title">목차</div>
+            <div class="content">
+                <span class = "large-number">1. 개요</span>
+                <span class = "large-number">2. 경력</span>
+                <span class = "large-number">3. 과거 공약/이행률</span>
+                <span class = "large-number">4. 발의 법률안</span>
+                <span class = "large-number">5. 찬성/반대 법안</span>
+                <span class = "small-number">5.1. 찬성 법안</span>
+                <span class = "small-number">5.2. 반대 법안</span>
+                <span class = "large-number">6. 발언 및 논란</span>
+                
+            </div>
+        </div>    
+    </div>
+    {% comment %} normal Feed 보여주는 part {% endcomment %}
+    {%for normalFeed in normalFeeds|dictsort:"title"%}
+        <div class="demo-card-wide mdl-card mdl-shadow--2dp normal-feed">
+            <div class="mdl-card__title">
+                <h2>{{ normalFeed.title }}.{{ normalFeed.get_title_display }}</h2>
+                <a href="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/like/">{{ normalFeed.like_users.count }} Likes</a>
+                <a href="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/dislike/">{{ normalFeed.dislike_users.count }} Dislikes</a>
+                <a href="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/debate/">해당 내용에 대한 토론방</a>
+            </div>
+            <div class="normal-feed__supporting-text">
+                <h3> {{ normalFeed.content }}
+                {% for smallFeed in smallFeeds %}
+                    {% if smallFeed.normalFeed == normalFeed %}   
+                        <h4>{{ normalFeed.title }}.{{ forloop.counter }} {{ smallFeed.title }}</h4>
+                        <a href="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/smallfeed/{{ smallFeed.id }}/like/">{{ smallFeed.like_users.count }} Likes</a>
+                        <a href="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/smallfeed/{{ smallFeed.id }}/dislike/">{{ smallFeed.dislike_users.count }} Dislikes</a>
+                        <h5>{{ smallFeed.content }}</h5>
+                        {% comment %} smallfeed는 어떻게 sort할까 {% endcomment %}
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+            
+        </div>
+    {% endfor %}
+
+     {% comment %} <div class="demo-card-wide mdl-card mdl-shadow--2dp normal-feed">
+        <div class="mdl-card__title">
+           2. 경력
+        </div>
+        
+        <div class="mdl-card__supporting-text">
+           
+        </div>
+    </div>
+    <div class="demo-card-wide mdl-card mdl-shadow--2dp normal-feed">
+        <div class="mdl-card__title">
+           3. 과거 공약/이행률
+        </div>
+        
+        <div class="mdl-card__supporting-text">
+           
+        </div>
+    </div>  {% endcomment %}
+    
 {% endblock content %}
