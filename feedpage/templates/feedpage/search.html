@@ -1,6 +1,309 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h>fdsfsdf</h>
-     <h>fdsfsdf</h>
+
+<div class="container" id="container">
+	<article>
+		<div class="contents" id="contents">
+       		<div class="layout_flex_100">   		
+       			
+       			<div class="national_assemblyman_search">
+	       			<!-- left 검색 -->
+	       			<div class="theme_select_box response_theme_box response_theme_layout">
+	       			<form id="schform" method="post">
+		       			<div class="response_theme_header">
+			       			<h4>의원검색</h4>
+		       			</div>
+	       				<table>
+	       				<colgroup>
+	       				<col style="width:15%;">
+	       				<col style="">
+	       				<col style="width:15%;">
+	       				<col style="">
+	       				<col style="width:15%;">
+	       				<col style="">
+	       				</colgroup>
+	       				<tbody>
+	       					<tr>
+	       						<input type="hidden" id="allCnt" value="300" title="총건수">
+	       						<input type="hidden" name="unitCd" value="" title="대수">
+	       						<input type="hidden" name="gubunId" value="MA" title="구분코드">
+	       						<input type="hidden" name="excelNm" value="" title="엑셀 다운로드명">
+								<th scope="row">이름</th>
+	       						<td><input type="text" title="이름" id="schHgNm" name="schHgNm"></td>
+	       						<th scope="row">정치성향</th>
+	       						<td>
+								    <select id="Polychar" name="Polychar" title="성향">
+										<option value="">전체</option>
+										
+											<option value="">보수 4.0~</option>										
+										
+											<option value="">보수 3.0~3.9</option>										
+										
+											<option value="">보수 2.0~2.9</option>		
+
+											<option value="">보수 1.0~1.9</option>
+
+											<option value="">보수 0.0~0.9</option>
+
+											<option value="">진보 0.0~0.9</option>				
+										
+											<option value="">진보 1.0~1.9</option>										
+										
+											<option value="">진보 2.0~2.9</option>			
+										
+											<option value="">진보 3.0~3.9</option>										
+										
+											<option value="">진보 4.0~</option>										
+									</select>
+								</td>
+	       						<th scope="row">정당</th>
+	       						<td>
+		       						<select id="schPoly" name="schPoly" title="정당">
+										<option value="">전체</option>
+										
+											<option value="101182">더불어민주당</option>										
+										
+											<option value="101198">미래통합당</option>										
+										
+											<option value="101180">정의당</option>		
+
+											<option value="101200">국민의당</option>		
+										
+											<option value="101203">열린민주당</option>										
+										
+											<option value="101208">기본소득당</option>			
+										
+											<option value="101209">시대전환</option>										
+										
+											<option value="101030">무소속</option>										
+									</select>
+	       						</td>
+	       					</tr>
+	       					<tr>
+	       						<th scope="row">위원회</th>
+	       						<td>
+		       						<select id="schCmit" name="schCmit" title="위원회">
+										<option value="">전체</option>
+										
+											<option value="9700005">국회운영위원회</option>
+										
+											<option value="9700006">법제사법위원회</option>
+										
+											<option value="9700008">정무위원회</option>
+										
+											<option value="9700300">기획재정위원회</option>
+										
+											<option value="9700512">교육위원회</option>
+										
+											<option value="9700479">과학기술정보방송통신위원회</option>
+										
+											<option value="9700409">외교통일위원회</option>
+										
+											<option value="9700019">국방위원회</option>
+										
+											<option value="9700480">행정안전위원회</option>
+										
+											<option value="9700513">문화체육관광위원회</option>
+										
+											<option value="9700408">농림축산식품해양수산위원회</option>
+										
+											<option value="9700481">산업통상자원중소벤처기업위원회</option>
+										
+											<option value="9700341">보건복지위원회</option>
+										
+											<option value="9700038">환경노동위원회</option>
+										
+											<option value="9700407">국토교통위원회</option>
+										
+											<option value="9700047">정보위원회</option>
+										
+											<option value="9700342">여성가족위원회</option>
+										
+											<option value="9700049">예산결산특별위원회</option>
+										
+									</select>
+	       						</td>
+	       						<th scope="row">지역선거구</th>
+	       						<td>
+				       						<select id="schUpOrig" name="schUpOrig" title="시/도 지역 선택">
+												<option value="">전체</option>
+														<option value="021001">서울</option>
+														<option value="021002">부산</option>
+														<option value="021003">대구</option>
+														<option value="021004">인천</option>
+														<option value="021005">광주</option>
+														<option value="021006">대전</option>
+														<option value="021007">울산</option>
+														<option value="021008">경기</option>
+														<option value="021009">강원</option>
+														<option value="021010">충북</option>
+														<option value="021011">충남</option>
+														<option value="021012">전북</option>
+														<option value="021013">전남</option>
+														<option value="021014">경북</option>
+														<option value="021015">경남</option>																									
+														<option value="021016">제주</option>													
+														<option value="021168">세종</option>
+											
+											</select>
+	       						</td>
+	       						<th scope="row">성별</th>
+	       						<td>
+	       							<select id="schSexGbn" name="schSexGbn" title="성별">
+										<option value="">전체</option>
+											<option value="1">남</option>
+											<option value="2">여</option>
+									</select>
+	       						</td>
+	       					</tr>
+	       					<tr>
+	       						<th scope="row">연령</th>
+	       						<td>
+		       						<select id="schAge" name="schAge" title="연령">
+										<option value="" selected="selected">전체</option>
+										
+											<option value="29">30세미만</option>
+											
+											<option value="30">30대</option>
+											
+											<option value="40">40대</option>
+											
+											<option value="50">50대</option>
+											
+											<option value="60">60대</option>
+										
+											<option value="70">70세이상</option>
+											
+										
+									</select>
+	       						</td>
+	       						<th scope="row">당선횟수</th>
+	       						<td>
+		       						<select id="schReeleGbn" name="schReeleGbn" title="당선횟수">
+										<option value="">전체</option>
+										
+											<option value="105001">초선</option>
+											
+											<option value="105002">재선</option>
+											
+											<option value="105003">3선</option>
+											
+											<option value="105004">4선</option>
+											
+											<option value="105005">5선</option>
+											
+											<option value="105006">6선</option>
+											
+											<option value="105007">7선</option>
+											
+											<option value="105008">8선</option>
+
+											<option value="105009">9선</option>
+											
+											<option value="105010">10선</option>
+											
+									</select>
+	       						</td>
+	       						<th scope="row">당선방법</th>
+	       						<td>
+		       						<select id="schElectGbn" name="schElectGbn" title="당선방법">
+										<option value="">전체</option>
+										
+											<option value="102010">지역구</option>
+										
+											<option value="102020">비례대표</option>
+										
+									</select>
+	       						</td>
+	       					</tr>
+	       				</tbody>
+	       				</table>
+	       				<div class="btn_group">
+		       				<ul>
+		       					<li><a href="javascript:;" class="btn_inquiries" id="btnSearch">검색</a></li>
+		       					<li><a href="javascript:;" class="btn_checkchart" id="btnInit">초기화</a></li>
+		       				</ul>
+	       				</div>
+	       			</form>
+	       			<div class="bgshadow_modal">&nbsp;</div>
+	       			</div>
+	       			<!-- //left 검색 -->
+	       			
+	       			<!-- right 결과 -->
+	       			<div class="nassem_bottom">
+	       				<div class="nassem_reslut_view">
+	       					<!-- 목록보기 -->
+	       					<div class="nassem_result_list" style="display: block;">
+	       					<h4 class="hide">목록보기</h4>
+	       					<form id="listform" method="post">
+	       						<input type="hidden" name="page" title="page" value="1">
+								<input type="hidden" name="rows" title="rows" value="10">
+	       						<div class="themeB response_theme">
+	       						<table>
+	       						<colgroup>
+	       						<col style="width:80px;" class="m_none">
+	       						<col class="p110_m70">
+	       						<col class="p150_m30">
+	       						<col style="width:;" class="m_none">
+	       						<col style="width:160px;" class="m_none">
+	       						<col style="width:100px;" class="m_none">
+	       						<col style="width:110px;" class="m_none">
+	       						<col style="width:180px;" class="m_none">
+	       						</colgroup>
+	       						<thead>
+	       							<tr>
+	       								<th scope="col">번호</th>
+	       								<th scope="col">의원명</th>
+	       								<th scope="col">정당</th>
+	       								<th scope="col">소속위원회</th>
+	       								<th scope="col">지역</th>
+	       								<th scope="col">성별</th>
+	       								<th scope="col" class="m_none">당선횟수</th>
+	       								<th scope="col">당선방법</th>
+	       							</tr>
+	       						</thead>
+	       						<tbody id="list-result-sect"><tr>	<td class="m_none rownum">1</td>	<td class="m_left"><a href="javascript:;" class="hgNm" title="새창열림">강기윤</a></td>	<td class="polyNm">미래통합당</td>	<td class="m_none cmits">보건복지위원회</td>	<td class="m_none origNm">경남 창원시성산구</td>	<td class="m_none sexGbnNm">남</td>	<td class="m_none reeleGbnNm">재선</td>	<td class="m_none eleGbnNm">지역구</td></tr><tr>	<td class="m_none rownum">2</td>	<td class="m_left"><a href="javascript:;" class="hgNm" title="새창열림">강대식</a></td>	<td class="polyNm">미래통합당</td>	<td class="m_none cmits">국방위원회</td>	<td class="m_none origNm">대구 동구을</td>	<td class="m_none sexGbnNm">남</td>	<td class="m_none reeleGbnNm">초선</td>	<td class="m_none eleGbnNm">지역구</td></tr><tr>	<td class="m_none rownum">3</td>	<td class="m_left"><a href="javascript:;" class="hgNm" title="새창열림">강득구</a></td>	<td class="polyNm">더불어민주당</td>	<td class="m_none cmits">교육위원회</td>	<td class="m_none origNm">경기 안양시만안구</td>	<td class="m_none sexGbnNm">남</td>	<td class="m_none reeleGbnNm">초선</td>	<td class="m_none eleGbnNm">지역구</td></tr><tr>	<td class="m_none rownum">4</td>	<td class="m_left"><a href="javascript:;" class="hgNm" title="새창열림">강민국</a></td>	<td class="polyNm">미래통합당</td>	<td class="m_none cmits">정무위원회</td>	<td class="m_none origNm">경남 진주시을</td>	<td class="m_none sexGbnNm">남</td>	<td class="m_none reeleGbnNm">초선</td>	<td class="m_none eleGbnNm">지역구</td></tr><tr>	<td class="m_none rownum">5</td>	<td class="m_left"><a href="javascript:;" class="hgNm" title="새창열림">강민정</a></td>	<td class="polyNm">열린민주당</td>	<td class="m_none cmits">교육위원회</td>	<td class="m_none origNm">비례대표</td>	<td class="m_none sexGbnNm">여</td>	<td class="m_none reeleGbnNm">초선</td>	<td class="m_none eleGbnNm">비례대표</td></tr><tr>	<td class="m_none rownum">6</td>	<td class="m_left"><a href="javascript:;" class="hgNm" title="새창열림">강병원</a></td>	<td class="polyNm">더불어민주당</td>	<td class="m_none cmits">보건복지위원회</td>	<td class="m_none origNm">서울 은평구을</td>	<td class="m_none sexGbnNm">남</td>	<td class="m_none reeleGbnNm">재선</td>	<td class="m_none eleGbnNm">지역구</td></tr><tr>	<td class="m_none rownum">7</td>	<td class="m_left"><a href="javascript:;" class="hgNm" title="새창열림">강선우</a></td>	<td class="polyNm">더불어민주당</td>	<td class="m_none cmits">국회운영위원회, 보건복지위원회</td>	<td class="m_none origNm">서울 강서구갑</td>	<td class="m_none sexGbnNm">여</td>	<td class="m_none reeleGbnNm">초선</td>	<td class="m_none eleGbnNm">지역구</td></tr><tr>	<td class="m_none rownum">8</td>	<td class="m_left"><a href="javascript:;" class="hgNm" title="새창열림">강은미</a></td>	<td class="polyNm">정의당</td>	<td class="m_none cmits">환경노동위원회</td>	<td class="m_none origNm">비례대표</td>	<td class="m_none sexGbnNm">여</td>	<td class="m_none reeleGbnNm">초선</td>	<td class="m_none eleGbnNm">비례대표</td></tr><tr>	<td class="m_none rownum">9</td>	<td class="m_left"><a href="javascript:;" class="hgNm" title="새창열림">강준현</a></td>	<td class="polyNm">더불어민주당</td>	<td class="m_none cmits">국토교통위원회</td>	<td class="m_none origNm">세종특별자치시을</td>	<td class="m_none sexGbnNm">남</td>	<td class="m_none reeleGbnNm">초선</td>	<td class="m_none eleGbnNm">지역구</td></tr><tr>	<td class="m_none rownum">10</td>	<td class="m_left"><a href="javascript:;" class="hgNm" title="새창열림">강훈식</a></td>	<td class="polyNm">더불어민주당</td>	<td class="m_none cmits">산업통상자원중소벤처기업위원회</td>	<td class="m_none origNm">충남 아산시을</td>	<td class="m_none sexGbnNm">남</td>	<td class="m_none reeleGbnNm">재선</td>	<td class="m_none eleGbnNm">지역구</td></tr></tbody>
+	       						</table>
+	       						</div>
+	       						
+	       						<div id="list-sect-pager"><div class="paging-navigation">  <strong class="page-number" style="cursor:default;">1</strong> <a href="#" class="number page-number">2</a> <a href="#" class="number page-number">3</a> <a href="#" class="number page-number">4</a> <a href="#" class="number page-number">5</a> <a href="#" class="number page-number">6</a> <a href="#" class="number page-number">7</a> <a href="#" class="number page-number">8</a> <a href="#" class="number page-number">9</a> <a href="#" class="number page-number">10</a> <a href="#" class="btn-next btn_page_next next" title="다음 10페이지 이동"><strong>다음 10페이지 이동</strong></a> <a href="#" class="btn-last btn_page_last last" title="마지막페이지 이동"><strong>마지막페이지 이동</strong></a></div></div>
+	       					</form>
+	       					</div>
+	       					<!-- //목록보기 -->
+	       					
+	       					<!-- 사진보기 -->
+	       					<div class="nassem_result_picture" style="display: none;">
+	       					<h4 class="hide">사진보기</h4>
+	       					<form id="picform" method="post">
+	       						<input type="hidden" name="page" title="page" value="1">
+								<input type="hidden" name="rows" title="rows" value="30">
+		       					<ul class="political_organization">
+		       						<li><span class="politics101182">더불어민주당</span></li>
+		       						<li><span class="politics101186">자유한국당</span></li>
+		       						<li><span class="politics101192">바른미래당</span></li>
+		       						<li><span class="politics101180">정의당</span></li>
+		       						<li><span class="politics101191">민주평화당</span></li>
+		       						<li><span class="politics101193">우리공화당</span></li>
+		       						<li><span class="politics101190">민중당</span></li>
+		       						<li><span class="politics101030">무소속</span></li>
+		       					</ul>
+		       					<div id="pic-result-sect">	       					
+	       						<ul class="nassem_result_ul"><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9771230.jpg" alt="강기윤 국회의원 사진"></div>		<span class="politics101198"><i>미래통합당</i>강기윤</span>	</a></li><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9771142.jpg" alt="강대식 국회의원 사진"></div>		<span class="politics101198"><i>미래통합당</i>강대식</span>	</a></li><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9771174.jpg" alt="강득구 국회의원 사진"></div>		<span class="politics101182"><i>더불어민주당</i>강득구</span>	</a></li><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9771233.jpg" alt="강민국 국회의원 사진"></div>		<span class="politics101198"><i>미래통합당</i>강민국</span>	</a></li><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9771283.jpg" alt="강민정 국회의원 사진"></div>		<span class="politics101203"><i>열린민주당</i>강민정</span>	</a></li><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9770933.jpg" alt="강병원 국회의원 사진"></div>		<span class="politics101182"><i>더불어민주당</i>강병원</span>	</a></li><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9771116.jpg" alt="강선우 국회의원 사진"></div>		<span class="politics101182"><i>더불어민주당</i>강선우</span>	</a></li><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9771276.jpg" alt="강은미 국회의원 사진"></div>		<span class="politics101180"><i>정의당</i>강은미</span>	</a></li><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9771168.jpg" alt="강준현 국회의원 사진"></div>		<span class="politics101182"><i>더불어민주당</i>강준현</span>	</a></li><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9771007.jpg" alt="강훈식 국회의원 사진"></div>		<span class="politics101182"><i>더불어민주당</i>강훈식</span>	</a></li><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9771109.jpg" alt="고민정 국회의원 사진"></div>		<span class="politics101182"><i>더불어민주당</i>고민정</span>	</a></li><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9771180.jpg" alt="고영인 국회의원 사진"></div>		<span class="politics101182"><i>더불어민주당</i>고영인</span>	</a></li><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9770931.jpg" alt="고용진 국회의원 사진"></div>		<span class="politics101182"><i>더불어민주당</i>고용진</span>	</a></li><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9770956.jpg" alt="곽상도 국회의원 사진"></div>		<span class="politics101198"><i>미래통합당</i>곽상도</span>	</a></li><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9771224.jpg" alt="구자근 국회의원 사진"></div>		<span class="politics101198"><i>미래통합당</i>구자근</span>	</a></li><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9771165.jpg" alt="권명호 국회의원 사진"></div>		<span class="politics101198"><i>미래통합당</i>권명호</span>	</a></li><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9770679.jpg" alt="권성동 국회의원 사진"></div>		<span class="politics101030"><i>무소속</i>권성동</span>	</a></li><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9771108.jpg" alt="권영세 국회의원 사진"></div>		<span class="politics101198"><i>미래통합당</i>권영세</span>	</a></li><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9770977.jpg" alt="권은희 국회의원 사진"></div>		<span class="politics101200"><i>국민의당</i>권은희</span>	</a></li><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9771259.jpg" alt="권인숙 국회의원 사진"></div>		<span class="politics101182"><i>더불어민주당</i>권인숙</span>	</a></li><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9770998.jpg" alt="권칠승 국회의원 사진"></div>		<span class="politics101182"><i>더불어민주당</i>권칠승</span>	</a></li><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9770927.jpg" alt="기동민 국회의원 사진"></div>		<span class="politics101182"><i>더불어민주당</i>기동민</span>	</a></li><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9771258.jpg" alt="김경만 국회의원 사진"></div>		<span class="politics101182"><i>더불어민주당</i>김경만</span>	</a></li><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9770712.jpg" alt="김경협 국회의원 사진"></div>		<span class="politics101182"><i>더불어민주당</i>김경협</span>	</a></li><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9771152.jpg" alt="김교흥 국회의원 사진"></div>		<span class="politics101182"><i>더불어민주당</i>김교흥</span>	</a></li><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9771164.jpg" alt="김기현 국회의원 사진"></div>		<span class="politics101198"><i>미래통합당</i>김기현</span>	</a></li><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9771181.jpg" alt="김남국 국회의원 사진"></div>		<span class="politics101182"><i>더불어민주당</i>김남국</span>	</a></li><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9770719.jpg" alt="김도읍 국회의원 사진"></div>		<span class="politics101198"><i>미래통합당</i>김도읍</span>	</a></li><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9770997.jpg" alt="김두관 국회의원 사진"></div>		<span class="politics101182"><i>더불어민주당</i>김두관</span>	</a></li><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9771136.jpg" alt="김미애 국회의원 사진"></div>		<span class="politics101198"><i>미래통합당</i>김미애</span>	</a></li></ul>
+	       						
+	       						<div id="pic-sect-pager"><div class="paging-navigation">  <strong class="page-number" style="cursor:default;">1</strong> <a href="#" class="number page-number">2</a> <a href="#" class="number page-number">3</a> <a href="#" class="number page-number">4</a> <a href="#" class="number page-number">5</a> <a href="#" class="number page-number">6</a> <a href="#" class="number page-number">7</a> <a href="#" class="number page-number">8</a> <a href="#" class="number page-number">9</a> <a href="#" class="number page-number">10</a> <a href="#" class="btn-next btn_page_next" title="다음 10페이지 이동" style="cursor: default;"><strong>다음 10페이지 이동</strong></a> <a href="#" class="btn-last btn_page_last last" title="마지막페이지 이동"><strong>마지막페이지 이동</strong></a></div></div>
+	       						</div>
+	       					</form>
+	       					</div>
+	       					<!-- //사진보기 -->
+	       				</div>
+	       			</div>
+	       			<!-- //right 결과 -->
+       			</div>
+       		</div>
+		</div>
+	</article>
+	</div>
+
+
 {% endblock content %}

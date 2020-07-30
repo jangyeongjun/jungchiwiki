@@ -6,13 +6,13 @@ from django.dispatch import receiver
 
 class Profile(models.Model):  
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    nickname = models.CharField(max_length=10)
+    nickname = models.CharField(max_length=10, blank=True)
     genderChoices = [
         ('M', '남성'),
         ('W', '여성'),
     ]#튜플의 첫번째 요소가 저장될 값, 두번째 요소가 사람이 읽을 수 있는 이름
-    gender = models.CharField(max_length=1, choices=genderChoices)
-    politicalOrientation = models.IntegerField()
+    gender = models.CharField(max_length=1, choices=genderChoices, blank=True)
+    politicalOrientation = models.IntegerField(default=5)
 
 
     @receiver(post_save, sender=User)
