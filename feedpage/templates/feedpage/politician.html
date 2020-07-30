@@ -2,7 +2,9 @@
 
 {% block content %}
     
+    {% comment %} 국회의원 페이지 상단 파트 {% endcomment %}
     <div class="middle-header">
+        {% comment %} 국회의원 프로필 카드 {% endcomment %}
         <div class="demo-card-wide mdl-card mdl-shadow--2dp profile">
             <div class="mdl-card__title">
                 <h2 class="mdl-card__title-text">{{ politician.name }}</h2>
@@ -10,7 +12,7 @@
 
             <div class ="mdl-card__photo">
                 {% if  politician.photo %}
-                    <h>{{ politician.photo.url }}</h>
+                    
                     <img src="{{ politician.photo.url }}"  alt="" width="100%" height="100%">
                 {% else %}
                     <h>사진없음</h>
@@ -47,6 +49,8 @@
                 
             </div>
         </div>
+
+        {% comment %} 국회의원 페이지 목차 {% endcomment %}
         <div class ="table-of-contents">
             <div class="title">목차</div>
             <div class="content">
@@ -62,19 +66,33 @@
             </div>
         </div>    
     </div>
+    {% comment %} normal Feed 보여주는 part {% endcomment %}
+    {%for normalFeed in normalFeeds|dictsort:"title"%}
+        <div class="demo-card-wide mdl-card mdl-shadow--2dp normal-feed">
+            <div class="mdl-card__title">
+                <h2>{{ normalFeed.title }}.{{ normalFeed.get_title_display }}</h2>
+                <a href="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/like/">{{ normalFeed.like_users.count }} Likes</a>
+                <a href="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/dislike/">{{ normalFeed.dislike_users.count }} Dislikes</a>
+                <a href="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/debate/">해당 내용에 대한 토론방</a>
+            </div>
+            <div class="normal-feed__supporting-text">
+                <h3> {{ normalFeed.content }}
+                {% for smallFeed in smallFeeds %}
+                    {% if smallFeed.normalFeed == normalFeed %}   
+                        <h4>{{ normalFeed.title }}.{{ forloop.counter }} {{ smallFeed.title }}</h4>
+                        <a href="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/smallfeed/{{ smallFeed.id }}/like/">{{ smallFeed.like_users.count }} Likes</a>
+                        <a href="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/smallfeed/{{ smallFeed.id }}/dislike/">{{ smallFeed.dislike_users.count }} Dislikes</a>
+                        <h5>{{ smallFeed.content }}</h5>
+                        {% comment %} smallfeed는 어떻게 sort할까 {% endcomment %}
+                    {% endif %}
+                {% endfor %}
+            </div>
 
-
-
-    <div class="demo-card-wide mdl-card mdl-shadow--2dp normal-feed">
-        <div class="mdl-card__title">
-           1. 개요
+            
         </div>
-        
-        <div class="mdl-card__supporting-text">
-           
-        </div>
-    </div>
-    <div class="demo-card-wide mdl-card mdl-shadow--2dp normal-feed">
+    {% endfor %}
+
+     {% comment %} <div class="demo-card-wide mdl-card mdl-shadow--2dp normal-feed">
         <div class="mdl-card__title">
            2. 경력
         </div>
@@ -91,6 +109,6 @@
         <div class="mdl-card__supporting-text">
            
         </div>
-    </div>
+    </div>  {% endcomment %}
     
 {% endblock content %}

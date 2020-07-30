@@ -35,6 +35,7 @@ class Politician(models.Model):
     ]#첫번째 요소가 모델에 저장될 값, 두번째 요소가 사람이 읽을 값
     gender = models.CharField(max_length=1, choices=genderChoices)
     district = models.CharField(max_length=10)
+
     partyChoices = [
         ('더', '더불어민주당'),
         ('미', '미래통합당'),
@@ -43,11 +44,11 @@ class Politician(models.Model):
         ('열', '열린민주당'),
         ('기', '기본소득당'),
         ('시', '시대전환'),
-        ('무', '무소속'),
+        ('무', '무소속'),   
     ]
     politicalParty = models.CharField(max_length=2, choices=partyChoices)
     politicalCommittee = models.CharField(max_length=20)
-    photo = models.ImageField(blank=True)
+    photo = models.ImageField(blank=True, upload_to='politician_photos')
     politicalOrientation = models.IntegerField(default=5, validators=[MaxValueValidator(10), MinValueValidator(0)])
     # electedCount = models.CommaSeparatedIntegerField(max_length=20)
     # feedpage.Politician.electedCount: (fields.E901) CommaSeparatedIntegerField is removed except for support in historical migrations.
@@ -65,7 +66,16 @@ class Politician(models.Model):
 
 #normal_feed
 class NormalFeed(models.Model):
-    title = models.CharField(max_length=256)
+    titleChoices = [
+        ('1', '개요'),
+        ('2', '경력'),
+        ('3', '과거 공약/이행률'),
+        ('4', '발의 법률안'),
+        ('5', '찬성/반대 법안'),
+        ('6', '발언 및 논란'),
+    ]
+
+    title = models.CharField(max_length=256, choices=titleChoices)
     content = models.TextField()
     photo = models.ImageField(blank=True, upload_to='feed_photos')
     created_at = models.DateTimeField(default=timezone.now)
@@ -73,6 +83,11 @@ class NormalFeed(models.Model):
 
     #1:N
     author = models.ForeignKey(User, null=True, on_delete = models.PROTECT)
+    politician = models.ForeignKey(Politician, null=True, on_delete = models.CASCADE, related_name='normalFeeds')
+    
+    #M:N
+    like_users             = models.ManyToManyField(User, blank=True, related_name = 'like_normalFeed',             through='UserLikeNormalFeed')
+    dislike_users          = models.ManyToManyField(User, blank=True, related_name = 'dislike_normalFeed',          through='UserDislikeNormalFeed' )
 
 
 
@@ -86,6 +101,7 @@ class SmallFeed(models.Model):
 
     #1:N
     author = models.ForeignKey(User, null=True, on_delete = models.PROTECT)
+    normalFeed = models.ForeignKey(NormalFeed,  null=True, on_delete = models.CASCADE, related_name='smallFeeds')
     #M:N
     like_users             = models.ManyToManyField(User, blank=True, related_name = 'like_smallFeed',             through='UserLikeSmallFeed')
     dislike_users          = models.ManyToManyField(User, blank=True, related_name = 'dislike_smallFeed',          through='UserDislikeSmallFeed' )
@@ -108,7 +124,7 @@ class ReferenceFeed(models.Model):
 #댓글모델
 class Comment(models.Model):
     content = models.TextField()
-    created_at = models.CharField(max_length=10)
+    created_at = models.CharField(max_length=35, default=timezone.now)
     photo = models.ImageField(blank=True, upload_to='comment_photos')
     evaluationChoices = [
         ('이행', 'implemented'),
@@ -117,11 +133,11 @@ class Comment(models.Model):
     ]
     evaluation = models.CharField(max_length = 3, choices = evaluationChoices, blank=True)#일반토론인 경우에는 blank값
     #1:N
-    author = models.ForeignKey(User, null=True, on_delete=models.PROTECT) #유저가 사라져도 댓글은 사라지지 않음
-    law = models.ForeignKey(Law, null=True, on_delete=models.CASCADE)
-    normalFeed = models.ForeignKey(NormalFeed, null=True, on_delete=models.CASCADE)
-    smallFeed = models.ForeignKey(SmallFeed, null=True, on_delete=models.CASCADE)
-    politician = models.ForeignKey(Politician, null=True, on_delete=models.CASCADE)
+    author = models.ForeignKey(User, blank=True, on_delete=models.PROTECT) #유저가 사라져도 댓글은 사라지지 않음
+    law = models.ForeignKey(Law, blank=True, on_delete=models.CASCADE)
+    normalFeed = models.ForeignKey(NormalFeed, blank=True, on_delete=models.CASCADE, related_name = 'comments')
+    smallFeed = models.ForeignKey(SmallFeed,blank=True, on_delete=models.CASCADE, related_name = 'comments')
+    politician = models.ForeignKey(Politician, blank=True, on_delete=models.CASCADE, related_name = 'comments')
     
     #N:M
     like_users             = models.ManyToManyField(User, blank=True, related_name = 'like_comment',             through='UserLikeComment')
@@ -201,6 +217,18 @@ class PoliticanProposeLaw(models.Model):
     law = models.ForeignKey(Law, on_delete = models.CASCADE)
     politican = models.ForeignKey(Politician, on_delete = models.CASCADE)
     created_at = models.DateTimeField(auto_now_add = True)
+
+#normal_feed relate
+class UserLikeNormalFeed(models.Model):
+    user = models.ForeignKey(User, on_delete = models.CASCADE)
+    normalFeed = models.ForeignKey(NormalFeed, on_delete = models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add = True)
+
+class UserDislikeNormalFeed(models.Model):
+    user = models.ForeignKey(User, on_delete = models.CASCADE)
+    normalFeed = models.ForeignKey(NormalFeed, on_delete = models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add = True)
+
 
 #small_feed relate
 class UserLikeSmallFeed(models.Model):

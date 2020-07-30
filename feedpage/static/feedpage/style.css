@@ -121,3 +121,32 @@ body  {
 	margin-top:40px;
 	margin-left: 20px;
 }
+
+.card.comment {
+	width: 95%;
+	height: auto;
+	margin-top:40px;
+	margin-left: 20px;
+	background-color:white;
+
+	display : flex;
+	flex-direction:column;
+	justify-content: center;
+	align-items: flex-start;
+}
+
+
+
+.card.comment > .text {
+	width: 100%;
+	height:auto;
+	display: flex;
+	justify-content: flex-start;
+
+}
+
+.card.comment > .image {
+	width: 200px;
+	height:auto;
+
+}

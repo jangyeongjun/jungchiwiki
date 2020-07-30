@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% for c in comments %}
+        <div class="card comment">
+            {% comment %} <h3>{% c.author.profile.nickname %}</h3> {% endcomment %}
+            <div class="image">
+                <img src="{{ c.photo.url }}"  alt="" width="100%" height="100%">                    
+            </div> 
+            <div class="text">
+                <h3>{{ c.content }}</h3>
+                <h3>{{ c.created_at }}</h3>
+                <a href="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/comment/{{ c.id }}/like/">{{ c.like_users.count }} Likes</a>
+                <a href="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/comment/{{ c.id }}/dislike/">{{ c.dislike_users.count }} Dislikes</a>
+            </div>
+            
+                       
+        </div>
+    {% endfor %}
+{% endblock content %}
