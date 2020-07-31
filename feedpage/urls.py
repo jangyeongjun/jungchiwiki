@@ -12,6 +12,10 @@ urlpatterns = [
     path('politician/<int:pid>/normalfeed/<int:nfid>/like/', views.normalFeed_like, name='normalFeed_like'),
     path('politician/<int:pid>/normalfeed/<int:nfid>/dislike/', views.normalFeed_dislike, name='normalFeed_dislike'),
     path('politician/<int:pid>/normalfeed/<int:nfid>/debate/', views.normalFeed_debate, name='normalFeed_debate'),
-    path('politician/<int:pid>/normalfeed/<int:nfid>/comment/<int:cid>/like/', views.normalFeed_comment_like, name='normalFeed_comment_like'),
-    path('politician/<int:pid>/normalfeed/<int:nfid>/comment/<int:cid>/dislike/', views.normalFeed_comment_dislike, name='normalFeed_comment_dislike'),
+    path('politician/<int:pid>/normalfeed/<int:nfid>/debate/comment/<int:cid>/like/', views.normalFeed_comment_like, name='normalFeed_comment_like'),
+    path('politician/<int:pid>/normalfeed/<int:nfid>/debate/comment/<int:cid>/dislike/', views.normalFeed_comment_dislike, name='normalFeed_comment_dislike'),
+    path('politician/<int:pid>/normalfeed/<int:nfid>/debate/comment/new/', views.normalFeed_debate_new_comment, name='normalFeed_debate_new_comment'),
+    path('politician/<int:pid>/normalfeed/<int:nfid>/debate/comment/<int:cid>/new/', views.normalFeed_debate_new_CTC, name='normalFeed_debate_new_comment'),
+    path('politician/<int:pid>/normalfeed/<int:nfid>/debate/comment/<int:cid>/ctc/<int:ctcid>/like/', views.normalFeed_ctc_like, name='normalFeed_ctc_like'),
+    path('politician/<int:pid>/normalfeed/<int:nfid>/debate/comment/<int:cid>/ctc/<int:ctcid>/dislike/', views.normalFeed_ctc_dislike, name='normalFeed_ctc_dislike'),
 ] 

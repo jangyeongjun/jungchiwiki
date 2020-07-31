@@ -6,7 +6,8 @@ import os
 
 # Create your views here.
 def main(request):
-    return render(request,'feedpage/main.html')
+    politicians = Politician.objects.all()
+    return render(request,'feedpage/main.html', {'politicians' : politicians})
  
 def search(request):
     return render(request,'feedpage/search.html')
@@ -27,7 +28,28 @@ def normalFeed_debate(request, pid, nfid):
     politician = Politician.objects.get(id = pid)
     normalFeed = NormalFeed.objects.get(id = nfid)
     comments = normalFeed.comments.all()
-    return render(request,'feedpage/debate.html', {'politician': politician ,'normalFeed' : normalFeed, 'comments' : comments})
+    comments_to_comment = CommentToComment.objects.none()
+    for c in comments:
+        temp = c.ctc.all()
+        comments_to_comment = comments_to_comment.union(temp)
+    
+    return render(request,'feedpage/debate.html', {'politician': politician ,'normalFeed' : normalFeed, 'comments' : comments, 'comments_to_comment' : comments_to_comment})
+
+def normalFeed_debate_new_comment(request, pid, nfid):
+    content = request.POST['content']
+    author = request.user
+    normalFeed = NormalFeed.objects.get(id = nfid)
+    Comment.objects.create(content=content, author = author, normalFeed=normalFeed)
+    path = os.path.join('/feeds/politician', str(pid), 'normalfeed', str(nfid), 'debate').replace("\\" , "/")
+    return redirect(path)
+
+def normalFeed_debate_new_CTC(request, pid, nfid, cid):
+    content = request.POST['content']
+    author = request.user
+    comment = Comment.objects.get(id = cid)
+    CommentToComment.objects.create(content = content, author = author, comment = comment)
+    path = os.path.join('/feeds/politician', str(pid), 'normalfeed', str(nfid), 'debate').replace("\\" , "/")
+    return redirect(path)
 
 
 def smallFeed_like(request, pid, sfid, nfid):
@@ -80,7 +102,6 @@ def normalFeed_like(request, pid, nfid):
     path = os.path.join('/feeds/politician/', str(pid))
     return redirect(path)
 
-
 def normalFeed_dislike(request, pid, nfid):
     normalFeed = NormalFeed.objects.get(id = nfid)
     like_list = normalFeed.userlikenormalfeed_set.filter(user_id = request.user.id)
@@ -96,7 +117,6 @@ def normalFeed_dislike(request, pid, nfid):
 
     path = os.path.join('/feeds/politician/', str(pid))
     return redirect(path)
-
 
 
 def normalFeed_comment_like(request, pid, nfid, cid):
@@ -130,4 +150,41 @@ def normalFeed_comment_dislike(request, pid, nfid, cid):
         comment.userlikecomment_set.get(user_id = request.user.id).delete()
 
     path = os.path.join('/feeds/politician', str(pid), 'normalfeed', str(nfid), 'debate').replace("\\" , "/")
+    return redirect(path)
+
+
+def normalFeed_ctc_like(request, pid, nfid, cid,ctcid):
+    ctc = CommentToComment.objects.get(id = ctcid)
+    like_list = ctc.userlikectc_set.filter(user_id = request.user.id)
+    dislike_list = ctc.userdislikectc_set.filter(user_id = request.user.id)
+
+    if like_list.count() > 0 :
+        ctc.userlikectc_set.get(user_id = request.user.id).delete()
+    else :
+        UserLikeCTC.objects.create(user_id = request.user.id, ctc_id = ctc.id)
+
+    if dislike_list.count() > 0 :
+        ctc.userdislikectc_set.get(user_id = request.user.id).delete()
+
+    path = os.path.join('/feeds/politician', str(pid), 'normalfeed', str(nfid), 'debate').replace("\\" , "/")
+    
+    return redirect(path)
+
+
+
+def normalFeed_ctc_dislike(request, pid, nfid, cid,ctcid):
+    ctc = CommentToComment.objects.get(id = ctcid)
+    like_list = ctc.userlikectc_set.filter(user_id = request.user.id)
+    dislike_list = ctc.userdislikectc_set.filter(user_id = request.user.id)
+
+    if dislike_list.count() > 0 :
+        ctc.userdislikectc_set.get(user_id = request.user.id).delete()
+    else :
+        UserDislikeCTC.objects.create(user_id = request.user.id, ctc_id = ctc.id)
+
+    if like_list.count() > 0 :
+        ctc.userlikectc_set.get(user_id = request.user.id).delete()
+
+    path = os.path.join('/feeds/politician', str(pid), 'normalfeed', str(nfid), 'debate').replace("\\" , "/")
+    
     return redirect(path)

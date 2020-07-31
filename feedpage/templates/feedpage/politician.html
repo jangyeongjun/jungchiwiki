@@ -80,9 +80,10 @@
                 {% for smallFeed in smallFeeds %}
                     {% if smallFeed.normalFeed == normalFeed %}   
                         <h4>{{ normalFeed.title }}.{{ forloop.counter }} {{ smallFeed.title }}</h4>
+                        <h5>{{ smallFeed.content }}</h5>
                         <a href="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/smallfeed/{{ smallFeed.id }}/like/">{{ smallFeed.like_users.count }} Likes</a>
                         <a href="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/smallfeed/{{ smallFeed.id }}/dislike/">{{ smallFeed.dislike_users.count }} Dislikes</a>
-                        <h5>{{ smallFeed.content }}</h5>
+                        
                         {% comment %} smallfeed는 어떻게 sort할까 {% endcomment %}
                     {% endif %}
                 {% endfor %}
@@ -91,24 +92,5 @@
             
         </div>
     {% endfor %}
-
-     {% comment %} <div class="demo-card-wide mdl-card mdl-shadow--2dp normal-feed">
-        <div class="mdl-card__title">
-           2. 경력
-        </div>
-        
-        <div class="mdl-card__supporting-text">
-           
-        </div>
-    </div>
-    <div class="demo-card-wide mdl-card mdl-shadow--2dp normal-feed">
-        <div class="mdl-card__title">
-           3. 과거 공약/이행률
-        </div>
-        
-        <div class="mdl-card__supporting-text">
-           
-        </div>
-    </div>  {% endcomment %}
     
 {% endblock content %}

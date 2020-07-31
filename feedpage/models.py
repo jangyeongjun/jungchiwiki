@@ -168,11 +168,11 @@ class Comment(models.Model):
 #대댓글 모델
 class CommentToComment(models.Model):
     content = models.TextField()
-    created_at = models.CharField(max_length=10)
+    created_at = models.CharField(max_length=36, default=timezone.now)
     photo = models.ImageField(blank=True, upload_to='comment_photos')
     #1:N
     author = models.ForeignKey(User, null=True, on_delete=models.PROTECT)
-    comment = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name="CTC")
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE, related_name="ctc")
     #N:M
     like_users             = models.ManyToManyField(User, blank=True, related_name = 'like_CTC',             through='UserLikeCTC')
     dislike_users          = models.ManyToManyField(User, blank=True, related_name = 'dislike_CTC',          through='UserDislikeCTC' )
@@ -295,5 +295,5 @@ class UserLikeCTC(models.Model):
 
 class UserDislikeCTC(models.Model):
     user = models.ForeignKey(User, on_delete = models.CASCADE)
-    comment = models.ForeignKey(CommentToComment, on_delete = models.CASCADE)
+    ctc = models.ForeignKey(CommentToComment, on_delete = models.CASCADE)
     created_at = models.DateTimeField(auto_now_add = True)
