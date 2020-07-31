@@ -2,11 +2,13 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.contrib.auth.models import User
 from .models import *
+from .crawling import lawParsing
 import os
 
 # Create your views here.
 def main(request):
-    return render(request,'feedpage/main.html')
+    politicians = Politician.objects.all()
+    return render(request,'feedpage/main.html', {'politicians':politicians})
  
 def search(request):
     return render(request,'feedpage/search.html')
@@ -131,3 +133,20 @@ def normalFeed_comment_dislike(request, pid, nfid, cid):
 
     path = os.path.join('/feeds/politician', str(pid), 'normalfeed', str(nfid), 'debate').replace("\\" , "/")
     return redirect(path)
+
+
+def lawsearch(request):
+    politicians = Politician.objects.all()
+    for poli in politicians:
+        laws = lawParsing(poli.name)
+        if len(laws) == 8 or len(laws) == 0:#발의법률안이 1개인 의원의 경우
+            print("그만!")
+            continue
+        else :
+            for number in range(len(laws)):
+                print(len(laws))
+                print(poli.name,number)
+                Law.objects.create(bill_name = laws[number]['BILL_NAME'],proposer=poli.name,proposer_etc=laws[number]['PROPOSER'])
+                #law = Law.objects.get(bill_name = laws[number]['BILL_NAME'])\
+                # #Law.objects.create(propse_dt=laws[number]['PROPOSE_DT'],committee=laws[number]['COMMITTEE'],detail_link=laws[number]['DETAIL_LINK'],member_link=laws[number]['MEMBER_LIST'],proposer=poli.name,proposer_etc=laws[number]['PROPOSER'])
+    return render(request, 'feedpage/lawsearch.html',{'laws':laws})

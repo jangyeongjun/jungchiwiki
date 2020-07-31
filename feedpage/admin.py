@@ -8,7 +8,7 @@ admin.site.register(NormalFeed)
 admin.site.register(SmallFeed)
 admin.site.register(Comment)
 admin.site.register(CommentToComment)
-
+admin.site.register(Law)
 # Register your models here.
 @admin.register(Politician)
 class PoliticianAdmin(ImportExportModelAdmin):

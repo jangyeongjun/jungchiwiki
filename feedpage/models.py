@@ -15,16 +15,6 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 
-class Law(models.Model):
-    name = models.CharField(max_length=10)
-    content = models.TextField()
-    created_at = models.CharField(max_length=10)
-    link = models.URLField() #link는 URLS
-
-    # 1:N, M:N
-    like_users             = models.ManyToManyField(User, blank=True, related_name = 'like_law',             through='UserLikeLaw')
-    dislike_users          = models.ManyToManyField(User, blank=True, related_name = 'dislike_law',          through='UserDislikeLaw' )
-    
 
 
 
@@ -78,10 +68,25 @@ class Politician(models.Model):
     like_users             = models.ManyToManyField(User, blank=True, related_name = 'like_politican',             through='UserLikePolitican')
     dislike_users          = models.ManyToManyField(User, blank=True, related_name = 'dislike_politican',          through='UserDislikePolitican' )
     orientation_vote_users = models.ManyToManyField(User, blank=True, related_name = 'orientation_vote_politican', through='OrientationVote')
-    agree_law              = models.ManyToManyField(Law,  blank=True, related_name = 'agree_politican',            through='PoliticanAgreeLaw')
-    disagree_law           = models.ManyToManyField(Law,  blank=True, related_name = 'disagree_politican',         through='PoliticanDisagreeLaw')
-    abstain_law            = models.ManyToManyField(Law,  blank=True, related_name = 'abstain_politican',          through='PoliticanAbstainLaw')
-    propose_law            = models.ManyToManyField(Law,  blank=True, related_name = 'propose_politican',          through='PoliticanProposeLaw')
+    #propose_law            = models.ManyToManyField(Law,  blank=True, related_name = 'propose_politican',          through='PoliticanProposeLaw')
+
+class Law(models.Model):
+    bill_name = models.CharField(max_length=100,blank=True)#법률이름
+    propse_dt = models.CharField(max_length=10,blank=True)
+    committee = models.CharField(max_length=20,blank=True)
+    detail_link = models.URLField(blank=True)#법률설명링크
+    member_link = models.URLField(blank=True)#법률제안자링크
+    # 1:N
+    proposer = models.CharField(max_length=10,blank=True)
+    proposer_etc = models.CharField(max_length=10,blank=True)
+
+    # M:N
+    like_users             = models.ManyToManyField(User, blank=True, related_name = 'like_law',             through='UserLikeLaw')
+    dislike_users          = models.ManyToManyField(User, blank=True, related_name = 'dislike_law',          through='UserDislikeLaw' )
+    agree_politican        = models.ManyToManyField(Politician,  blank=True, related_name = 'agree_law',            through='PoliticanAgreeLaw')
+    disagree_politican     = models.ManyToManyField(Politician,  blank=True, related_name = 'disagree_law',         through='PoliticanDisagreeLaw')
+    abstain_politican      = models.ManyToManyField(Politician,  blank=True, related_name = 'abstain_law',          through='PoliticanAbstainLaw')
+
 
 #normal_feed
 class NormalFeed(models.Model):
@@ -232,10 +237,10 @@ class PoliticanAbstainLaw(models.Model):
     politican = models.ForeignKey(Politician, on_delete = models.CASCADE)
     created_at = models.DateTimeField(auto_now_add = True)
 
-class PoliticanProposeLaw(models.Model):
-    law = models.ForeignKey(Law, on_delete = models.CASCADE)
-    politican = models.ForeignKey(Politician, on_delete = models.CASCADE)
-    created_at = models.DateTimeField(auto_now_add = True)
+# class PoliticanProposeLaw(models.Model):
+#     law = models.ForeignKey(Law, on_delete = models.CASCADE)
+#     politican = models.ForeignKey(Politician, on_delete = models.CASCADE)
+#     created_at = models.DateTimeField(auto_now_add = True)
 
 #normal_feed relate
 class UserLikeNormalFeed(models.Model):

@@ -5,7 +5,7 @@ from feedpage import views
 urlpatterns = [
     path('', views.main, name='main'),
     path('search/', views.search, name='search'),
-    path('', views.search, name='search'),
+    path('lawsearch/', views.lawsearch, name='lawsearch'),
     path('politician/<int:pid>/', views.politician, name='politician'), #pid = politician model id
     path('politician/<int:pid>/normalfeed/<int:nfid>/smallfeed/<int:sfid>/like/', views.smallFeed_like, name='smallFeed_like'),
     path('politician/<int:pid>/normalfeed/<int:nfid>/smallfeed/<int:sfid>/dislike/', views.smallFeed_dislike, name='smallFeed_dislike'),
