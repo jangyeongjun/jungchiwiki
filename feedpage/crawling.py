@@ -12,7 +12,10 @@ def lawParsing(name):
     req = requests.get(url).content #여기서 requests가 필요하다.
     # the role of xmltodict : It changes xml type into dictionary.
     xmlObject = xmltodict.parse(req)
-    allData = xmlObject['nzmimeepazxkubdpn']['row']
+    try:
+        allData = xmlObject['nzmimeepazxkubdpn']['row']
     # allData = xmlObject[‘response’][‘body’][‘items’][‘item’][0][‘dataTime’] 는 후반부에 설명하겠다.
-    return allData
+        return allData
+    except:
+        return '1'
     # print(allData)

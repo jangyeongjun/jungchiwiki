@@ -139,14 +139,24 @@ def lawsearch(request):
     politicians = Politician.objects.all()
     for poli in politicians:
         laws = lawParsing(poli.name)
-        if len(laws) == 8 or len(laws) == 0:#발의법률안이 1개인 의원의 경우
-            print("그만!")
+        if len(laws) == 1:#발의법률안이 1개인 의원의 경우
+            print("발의안한개도 없음")
+            print(poli.name)
             continue
+        elif len(laws) == 8:
+            print(laws)
+            try:
+                Law.objects.create(committee=laws['COMMITTEE'],bill_name = laws['BILL_NAME'],proposer=poli.name,proposer_etc=laws['PROPOSER'], propse_dt=laws['PROPOSE_DT'],detail_link=laws['DETAIL_LINK'],member_link=laws['MEMBER_LIST'])
+            except:
+                Law.objects.create(bill_name = laws['BILL_NAME'],proposer=poli.name,proposer_etc=laws['PROPOSER'], propse_dt=laws['PROPOSE_DT'],detail_link=laws['DETAIL_LINK'],member_link=laws['MEMBER_LIST'])
         else :
             for number in range(len(laws)):
                 print(len(laws))
                 print(poli.name,number)
-                Law.objects.create(bill_name = laws[number]['BILL_NAME'],proposer=poli.name,proposer_etc=laws[number]['PROPOSER'])
+                try:
+                    Law.objects.create(committee=laws[number]['COMMITTEE'],bill_name = laws[number]['BILL_NAME'],proposer=poli.name,proposer_etc=laws[number]['PROPOSER'], propse_dt=laws[number]['PROPOSE_DT'],detail_link=laws[number]['DETAIL_LINK'],member_link=laws[number]['MEMBER_LIST'])
+                except:
+                    Law.objects.create(bill_name = laws[number]['BILL_NAME'],proposer=poli.name,proposer_etc=laws[number]['PROPOSER'], propse_dt=laws[number]['PROPOSE_DT'],detail_link=laws[number]['DETAIL_LINK'],member_link=laws[number]['MEMBER_LIST'])
+
                 #law = Law.objects.get(bill_name = laws[number]['BILL_NAME'])\
-                # #Law.objects.create(propse_dt=laws[number]['PROPOSE_DT'],committee=laws[number]['COMMITTEE'],detail_link=laws[number]['DETAIL_LINK'],member_link=laws[number]['MEMBER_LIST'],proposer=poli.name,proposer_etc=laws[number]['PROPOSER'])
     return render(request, 'feedpage/lawsearch.html',{'laws':laws})
