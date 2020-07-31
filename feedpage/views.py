@@ -23,6 +23,22 @@ def politician(request, pid):
 
     return render(request,'feedpage/politician.html', {'politician': politician ,'normalFeeds' : normalFeeds, 'smallFeeds':smallFeeds})
 
+def orientationVote(request, pid, value):
+    politician = Politician.objects.get(id = pid)
+    OrientationVote.objects.create(user_id = request.user.id, politician= politician, value = value)
+    numOfUsers = politician.orientationvote_set.count()
+    total = politician.politicalOrientation * numOfUsers
+    politician.politicalOrientation = (total+value) / (numOfUsers+1)
+    path = os.path.join('/feeds/politician/', str(pid))
+    return redirect(path)
+    
+
+def orientationVoteCancel(request,  pid):
+    politician = Politician.objects.get(id = pid)
+    OrientationVote.objects.get(user_id = request.user.id, politician= politician).delete()
+    path = os.path.join('/feeds/politician/', str(pid))
+    return redirect(path)
+
 
 def normalFeed_debate(request, pid, nfid):
     politician = Politician.objects.get(id = pid)
@@ -169,9 +185,6 @@ def normalFeed_ctc_like(request, pid, nfid, cid,ctcid):
     path = os.path.join('/feeds/politician', str(pid), 'normalfeed', str(nfid), 'debate').replace("\\" , "/")
     
     return redirect(path)
-
-
-
 def normalFeed_ctc_dislike(request, pid, nfid, cid,ctcid):
     ctc = CommentToComment.objects.get(id = ctcid)
     like_list = ctc.userlikectc_set.filter(user_id = request.user.id)

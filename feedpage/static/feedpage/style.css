@@ -181,11 +181,11 @@ th {
 
 /*politician 프로필 카드 */
 
+
 .demo-card-wide.mdl-card.profile {
 	width: 30%;
 	height: 100%;	
-	margin-left: 20px;
-  margin-top:20px;
+	
   background-color : lightskyblue; 
 }
 
@@ -222,7 +222,8 @@ th {
 
 .demo-card-wide > .mdl-card__supporting-text table tr{
 	width: 100%;
-	height: 50px;
+  min-height: 50px;
+  height: auto;
 	display: flex;
 	justify-content: space-between;
 	
@@ -230,9 +231,10 @@ th {
 
 
 .demo-card-wide > .mdl-card__supporting-text table td{
-	height: 100%;
+	min-height: 100%;
 	display: flex;
-	align-items: center;
+  align-items: center;
+  
 	border: solid 1px #dbdbdb;
 	
 }
@@ -245,11 +247,24 @@ th {
 }
 
 .demo-card-wide > .mdl-card__supporting-text .content {
-	width:70%;
+  width:70%;
+  min-height:100%;
 	color: black;
-	display:flex;
-	justify-content: center;
-	
+  display:flex;
+  flex-direction:column;
+  align-items: center;
+  justify-content: center;
+}
+
+.popup span{
+  height:auto;
+  font-size: 14px;
+}
+
+#test .vote {
+  width:100%;
+  display:flex;
+  justify-content: space-evenly;
 }
 
 /* politician 페이지 목차 */

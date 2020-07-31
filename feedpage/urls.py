@@ -7,6 +7,8 @@ urlpatterns = [
     path('search/', views.search, name='search'),
     path('', views.search, name='search'),
     path('politician/<int:pid>/', views.politician, name='politician'), #pid = politician model id
+    path('politician/<int:pid>/orientationVote/<int:value>/', views.orientationVote, name='orientationVote'),
+    path('politician/<int:pid>/orientationVote/cancel/', views.orientationVoteCancel, name='orientationVoteCancel'),
     path('politician/<int:pid>/normalfeed/<int:nfid>/smallfeed/<int:sfid>/like/', views.smallFeed_like, name='smallFeed_like'),
     path('politician/<int:pid>/normalfeed/<int:nfid>/smallfeed/<int:sfid>/dislike/', views.smallFeed_dislike, name='smallFeed_dislike'),
     path('politician/<int:pid>/normalfeed/<int:nfid>/like/', views.normalFeed_like, name='normalFeed_like'),

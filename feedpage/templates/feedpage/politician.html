@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 
+
 {% block content %}
+
     
     {% comment %} 국회의원 페이지 상단 파트 {% endcomment %}
     <div class="middle-header">
@@ -42,8 +44,40 @@
                         <td class = "content">{{ politician.politicalCommittee }}</td>
                     </tr>
                     <tr>
+                        <td class = "category">의원선수</td>
+                        <td class = "content">{{ politician.electedCount }}</td>
+                    </tr>
+                    <tr>
                         <td class = "category">성향</td>
-                        <td class = "content">{{ politician.politicalOrientation }}</td>
+                        <td class = "content">
+                            {% comment %} 투표 결과 표시하기 점수 {% endcomment %}
+                            <span>{{ politician.politicalOrientation }}</span>
+                            <span>{{ politician.orientation_vote_users.count }} 명 참여</span>
+                            {% if user in politician.orientation_vote_users.all %}
+                                <a href="/feeds/politician/{{ politician.id }}/orientationVote/cancel/">투표취소</a>
+                            {% else%}
+                                <div class = "popup">
+                                    <span>투표하기</span>
+                                </div>
+                            {% endif %}    
+                        </td>
+                    </tr>
+                    <tr id="test" style="display:none; background-color:black;">
+                        
+                        <td class = "vote">
+                            <a href="/feeds/politician/{{ politician.id }}/orientationVote/-5/">-5</a>
+                            <a href="/feeds/politician/{{ politician.id }}/orientationVote/-4/">-4</a>
+                            <a href="/feeds/politician/{{ politician.id }}/orientationVote/-3/">-3</a>
+                            <a href="/feeds/politician/{{ politician.id }}/orientationVote/-2/">-2</a>
+                            <a href="/feeds/politician/{{ politician.id }}/orientationVote/-1/">-1</a>
+                            <a href="/feeds/politician/{{ politician.id }}/orientationVote/0/">0</a>
+                            <a href="/feeds/politician/{{ politician.id }}/orientationVote/1/">1</a>
+                            <a href="/feeds/politician/{{ politician.id }}/orientationVote/2/">2</a>
+                            <a href="/feeds/politician/{{ politician.id }}/orientationVote/3/">3</a>
+                            <a href="/feeds/politician/{{ politician.id }}/orientationVote/4/">4</a>
+                            <a href="/feeds/politician/{{ politician.id }}/orientationVote/5/">5</a>
+                            
+                        </td>
                     </tr>
                 </table>
                 
@@ -54,14 +88,14 @@
         <div class ="table-of-contents">
             <div class="title">목차</div>
             <div class="content">
-                <span class = "large-number">1. 개요</span>
-                <span class = "large-number">2. 경력</span>
-                <span class = "large-number">3. 과거 공약/이행률</span>
-                <span class = "large-number">4. 발의 법률안</span>
-                <span class = "large-number">5. 찬성/반대 법안</span>
-                <span class = "small-number">5.1. 찬성 법안</span>
-                <span class = "small-number">5.2. 반대 법안</span>
-                <span class = "large-number">6. 발언 및 논란</span>
+                <a class = "large-number scroll-down">1. 개요</a>
+                <a class = "large-number scroll-down">2. 경력</a>
+                <a class = "large-number scroll-down">3. 과거 공약/이행률</a>
+                <a class = "large-number scroll-down">4. 발의 법률안</a>
+                <a class = "large-number scroll-down">5. 찬성/반대 법안</a>
+                <a class = "small-number scroll-down">5.1. 찬성 법안</a>
+                <a class = "small-number scroll-down">5.2. 반대 법안</a>
+                <a class = "large-number scroll-down">6. 발언 및 논란</a>
                 
             </div>
         </div>    
@@ -77,16 +111,20 @@
             </div>
             <div class="normal-feed__supporting-text">
                 <h3> {{ normalFeed.content }}
+
                 {% for smallFeed in smallFeeds %}
                     {% if smallFeed.normalFeed == normalFeed %}   
                         <h4>{{ normalFeed.title }}.{{ forloop.counter }} {{ smallFeed.title }}</h4>
+                        {% comment %} forloop.counter shibalalalalalalalalal {% endcomment %}
                         <h5>{{ smallFeed.content }}</h5>
                         <a href="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/smallfeed/{{ smallFeed.id }}/like/">{{ smallFeed.like_users.count }} Likes</a>
                         <a href="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/smallfeed/{{ smallFeed.id }}/dislike/">{{ smallFeed.dislike_users.count }} Dislikes</a>
                         
+                        
                         {% comment %} smallfeed는 어떻게 sort할까 {% endcomment %}
                     {% endif %}
                 {% endfor %}
+                 
             </div>
 
             

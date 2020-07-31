@@ -213,7 +213,7 @@ class UserDislikePolitican(models.Model):
 
 class OrientationVote(models.Model):
     user = models.ForeignKey(User, on_delete = models.CASCADE)
-    politican = models.ForeignKey(Politician, on_delete = models.CASCADE)
+    politician = models.ForeignKey(Politician, on_delete = models.CASCADE)
     value = models.IntegerField()
     created_at = models.DateTimeField(auto_now_add = True)
 
