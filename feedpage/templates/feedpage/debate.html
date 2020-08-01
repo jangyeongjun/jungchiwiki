@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <a>뒤로 가기</a>
+    <a href = "/feeds/politician/{{ politician.id }}">뒤로 가기</a>
+    
     <div class = "comment-box">
         {% if comments %}
             {% for c in comments %}
@@ -14,12 +15,63 @@
                     </div> 
                     <div class="text">
                         <h3>{{ c.content }}</h3>
-                        
+                        {% if request.user == c.author %}
+                            {% comment %} comment edit {% endcomment %}
+                            <div class = "comment-edit-form">
+                                <button class="mdl-button mdl-js-button mdl-button--icon comment-edit">
+                                    <i class="material-icons">edit</i>
+                                </button>
+                                <form action=                 "/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/debate/comment/{{ c.id }}/edit/" 
+                                    method=                   "POST" 
+                                    class=                    "comment-edit-form" 
+                                    data-pid=                 "{{ politician.id }}" 
+                                    data-nfid=                "{{ normalFeed.id }}"
+                                    data-cid=                 "{{ c.id }}" 
+                                    data-csrfmiddlewaretoken= "{{ csrf_token }}"
+                                    style= "display:none;">
+                                    {% csrf_token %}
+                                    <div class="mdl-textfield mdl-js-textfield">
+                                        <input class="mdl-textfield__input" type="text" name="content" value="{{ c.content }}">
+                                        <button  type="submit" class="mdl-button mdl-js-button mdl-button--icon">
+                                            <i class="material-icons">send</i>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                            {% comment %} comment delete {% endcomment %}
+                            <form action=                   "/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/debate/comment/{{ c.id }}/delete/" 
+                                  method=                   "POST" 
+                                  class=                    "comment-delete" 
+                                  data-pid=                 "{{ politician.id }}" 
+                                  data-nfid=                "{{ normalFeed.id }}"
+                                  data-cid=                 "{{ c.id }}" 
+                                  data-csrfmiddlewaretoken= "{{ csrf_token }}">
+
+                                {% csrf_token %}
+                                <button class="mdl-button mdl-js-button mdl-button--icon">
+                                    <i class="material-icons">clear</i>
+                                </button>
+                            </form>
+                        {% endif %}
                         <div class="comment-info">
                             <h6>by {{ c.author.profile.nickname }}</h6>
-                            <h6>{{ c.created_at }}</h6> 
-                            <a href="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/debate/comment/{{ c.id }}/like/">{{ c.like_users.count }} Likes</a>
-                            <a href="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/debate/comment/{{ c.id }}/dislike/">{{ c.dislike_users.count }} Dislikes</a>
+                            <h6>작성 시간: {{ c.created_at }}</h6>
+                            <h6>수정 시간: {{ c.updated_at }}</h6>  
+                            <a href=                    "/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/debate/comment/{{ c.id }}/like/"    
+                               class =                  "material-icons mdl-badge comment-Like"     
+                               data-pid=                 {{ politician.id }} 
+                               data-nfid=                {{ normalFeed.id }} 
+                               data-cid=                 {{ c.id }} 
+                               data-csrfmiddlewaretoken="{{ csrf_token }}" 
+                               data-badge=              "{{ c.like_users.count }}">LIKES</a>
+
+                            <a href=                    "/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/debate/comment/{{ c.id }}/dislike/" 
+                               class =                  "material-icons mdl-badge comment-Dislike" 
+                               data-pid=                 {{ politician.id }} 
+                               data-nfid=                {{ normalFeed.id }} 
+                               data-cid=                 {{ c.id }} 
+                               data-csrfmiddlewaretoken="{{ csrf_token }}" 
+                               data-badge=              "{{ c.dislike_users.count }}">DISLIKES</a>
                         </div>
                     
                     </div>
@@ -28,15 +80,77 @@
                             {% if ctc.comment == c %}
                                 <h5>{{ ctc.content }}</h5>
                                 <h6>by {{ ctc.author.profile.nickname }}</h6>
-                                <h6>{{ ctc.created_at }}</h6> 
-                                <a href="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/debate/comment/{{ c.id }}/ctc/{{ ctc.id }}/like/">{{ ctc.like_users.count }} Likes</a>
-                                <a href="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/debate/comment/{{ c.id }}/ctc/{{ ctc.id }}/dislike/">{{ ctc.dislike_users.count }} Dislikes</a>
+                                <h6>작성 시간: {{ ctc.created_at }}</h6>
+                                <h6>수정 시간: {{ ctc.updated_at }}</h6>  
+
+                                {% if request.user == c.author %}
+                                {% comment %} CTC edit {% endcomment %}
+                                    <div class = "ctc-edit-wrapper">
+                                        <button class="mdl-button mdl-js-button mdl-button--icon ctc-edit">
+                                            <i class="material-icons">edit</i>
+                                        </button>
+                                        <form action=                 "/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/debate/comment/{{ c.id }}/ctc/{{ ctc.id }}/edit/" 
+                                            method=                   "POST" 
+                                            class=                    "ctc-edit-form" 
+                                            data-pid=                 "{{ politician.id }}" 
+                                            data-nfid=                "{{ normalFeed.id }}"
+                                            data-cid=                 "{{ c.id }}" 
+                                            data-ctcid=               "{{ ctc.id }}"
+                                            data-csrfmiddlewaretoken= "{{ csrf_token }}"
+                                            style= "display:none;">
+                                            {% csrf_token %}
+                                            <div class="mdl-textfield mdl-js-textfield">
+                                                <input class="mdl-textfield__input" type="text" name="content" value="{{ ctc.content }}">
+                                                <button  type="submit" class="mdl-button mdl-js-button mdl-button--icon">
+                                                    <i class="material-icons">send</i>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    {% comment %} Delete CTC {% endcomment %}
+                                    <form action=   "/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/debate/comment/{{ c.id }}/ctc/{{ ctc.id }}/delete/" 
+                                        method=                  "POST" 
+                                        class=                   "ctc-delete" 
+                                        data-pid=                "{{ politician.id }}" 
+                                        data-nfid=               "{{ normalFeed.id }}"
+                                        data-cid=                "{{ c.id }}"
+                                        data-ctcid=              "{{ ctc.id }}" 
+                                        data-csrfmiddlewaretoken="{{ csrf_token }}">
+
+                                        {% csrf_token %}
+                                        <button class="mdl-button mdl-js-button mdl-button--icon">
+                                            <i class="material-icons">clear</i>
+                                        </button>
+
+                                    </form>
+                                {% endif %}
+                                <div class="ctc-wrapper"> 
+                                    {% comment %} CTC Like & Dislike {% endcomment %}
+                                    <a href=                 "/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/debate/comment/{{ c.id }}/ctc/{{ ctc.id }}/like/"  
+                                    class =                  "material-icons mdl-badge ctc-Like"     
+                                    data-pid=                 {{ politician.id }} 
+                                    data-nfid=                {{ normalFeed.id }} 
+                                    data-cid=                 {{ c.id }} 
+                                    data-ctcid=               {{ ctc.id }}
+                                    data-csrfmiddlewaretoken="{{ csrf_token }}" 
+                                    data-badge=              "{{ ctc.like_users.count }}">LIKES</a>
+
+                                    <a href=                 "/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/debate/comment/{{ c.id }}/ctc/{{ ctc.id }}/dislike/"
+                                    class =                  "material-icons mdl-badge ctc-Dislike" 
+                                    data-pid=                 {{ politician.id }} 
+                                    data-nfid=                {{ normalFeed.id }} 
+                                    data-cid=                 {{ c.id }} 
+                                    data-ctcid=               {{ ctc.id }}
+                                    data-csrfmiddlewaretoken="{{ csrf_token }}" 
+                                    data-badge=              "{{ ctc.dislike_users.count }}">DISLIKES</a>
+                                </div>
                             {% endif %}
                         {% endfor %}    
                     </div>
                     
 
                     <div class = "new-comment-wrapper">
+                        {% comment %} New CTC {% endcomment %}
                         <form action="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/debate/comment/{{ c.id }}/new/" method="POST">
                             {% csrf_token %}
                             <div class="mdl-textfield mdl-js-textfield">
@@ -57,6 +171,7 @@
         {% endif %}
 
         <div class = "new-comment-wrapper">
+            {% comment %} NEw Comment {% endcomment %}
             <form action="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/debate/comment/new/" method="POST">
                 {% csrf_token %}
                 <div class="mdl-textfield mdl-js-textfield">
@@ -71,3 +186,4 @@
 
     </div>
 {% endblock content %}
+

@@ -153,6 +153,7 @@ class ReferenceFeed(models.Model):
 class Comment(models.Model):
     content = models.TextField()
     created_at = models.CharField(max_length=35, default=timezone.now)
+    updated_at = models.CharField(max_length=35, blank=True, null=True)
     photo = models.ImageField(blank=True, upload_to='comment_photos')
     evaluationChoices = [
         ('이행', 'implemented'),
@@ -178,6 +179,7 @@ class Comment(models.Model):
 class CommentToComment(models.Model):
     content = models.TextField()
     created_at = models.CharField(max_length=36, default=timezone.now)
+    updated_at = models.CharField(max_length=35, blank=True, null=True)
     photo = models.ImageField(blank=True, upload_to='comment_photos')
     #1:N
     author = models.ForeignKey(User, null=True, on_delete=models.PROTECT)
