@@ -21,6 +21,8 @@ def politician(request, pid):
     # 더 좋은 방법이 뭘가
     smallFeeds = SmallFeed.objects.filter(normalFeed__in=normalFeeds)
     return render(request,'feedpage/politician.html', {'politician': politician ,'normalFeeds' : normalFeeds, 'smallFeeds':smallFeeds})
+    
+
 
 def orientationVote(request, pid, value):
     politician = Politician.objects.get(id = pid)
@@ -47,6 +49,42 @@ def orientationVoteCancel(request,  pid):
     path = os.path.join('/feeds/politician/', str(pid))
     return redirect(path)
 
+def normalFeedAdd(request, pid):
+    politician = Politician.objects.get(id = pid)
+    return render (request,'feedpage/newNormalFeed.html', {'politician': politician})
+
+def normalFeedCreate(request, pid):
+    politician = Politician.objects.get(id = pid)
+    title = request.POST['title']
+    content = request.POST['content']
+    if title == '개요':
+        title = '1'
+    elif title == '경력':
+        title = '2'
+    elif title == '과거 공약/이행률':
+        title = '3'
+    elif title == '발의 법률안':
+        title = '4'
+    elif title =='찬성/반대 법안':
+        title = '5'
+    else:
+        title = '6'
+    NormalFeed.objects.create(title = title, content = content, author=request.user, politician=politician)
+    path = os.path.join('/feeds/politician/', str(pid))
+    return redirect(path)
+
+def smallFeedAdd(request, pid, nfid):
+    politician = Politician.objects.get(id = pid)
+    normalFeed = NormalFeed.objects.get(id = nfid)
+    return render (request,'feedpage/newSmallFeed.html', {'politician': politician, 'normalFeed' : normalFeed})
+
+def smallFeedCreate(request,pid,nfid):
+    normalFeed = NormalFeed.objects.get(id = nfid)
+    title = request.POST['title']
+    content = request.POST['content']
+    SmallFeed.objects.create(title = title, content = content, author=request.user, normalFeed=normalFeed)
+    path = os.path.join('/feeds/politician/', str(pid))
+    return redirect(path)
 
 def normalFeed_debate(request, pid, nfid):
     politician = Politician.objects.get(id = pid)
@@ -80,7 +118,7 @@ def smallFeed_like(request, pid, sfid, nfid):
     smallFeed = SmallFeed.objects.get(id = sfid)
     like_list = smallFeed.userlikesmallfeed_set.filter(user_id = request.user.id)
     dislike_list = smallFeed.userdislikesmallfeed_set.filter(user_id = request.user.id)
-
+    dislike_count = dislike_list.count()
     if like_list.count() > 0 :
         smallFeed.userlikesmallfeed_set.get(user_id = request.user.id).delete()
     else :
@@ -89,14 +127,19 @@ def smallFeed_like(request, pid, sfid, nfid):
     if dislike_list.count() > 0 :
         smallFeed.userdislikesmallfeed_set.get(user_id = request.user.id).delete()
 
-    path = os.path.join('/feeds/politician/', str(pid))
-    return redirect(path)
+    context = {
+        'like_count': like_list.count(),
+        'dislike_count': dislike_count
+    }
+
+    return JsonResponse(context)
 
 def smallFeed_dislike(request, pid, sfid, nfid):
     smallFeed = SmallFeed.objects.get(id = sfid)
     like_list = smallFeed.userlikesmallfeed_set.filter(user_id = request.user.id)
     dislike_list = smallFeed.userdislikesmallfeed_set.filter(user_id = request.user.id)
-
+    like_count = like_list.count()
+    
     if dislike_list.count() > 0 :
         smallFeed.userdislikesmallfeed_set.get(user_id = request.user.id).delete()
     else :
@@ -106,16 +149,20 @@ def smallFeed_dislike(request, pid, sfid, nfid):
         smallFeed.userlikesmallfeed_set.get(user_id = request.user.id).delete()
 
 
-    path = os.path.join('/feeds/politician/', str(pid))
-    return redirect(path)
+    context = {
+        'dislike_count': dislike_list.count(),
+        'like_count' : like_count
+    }
+
+
+    return JsonResponse(context)
 
 
 def normalFeed_like(request, pid, nfid):
-    politician = Politician.objects.get(id = pid)
     normalFeed = NormalFeed.objects.get(id = nfid)
     like_list = normalFeed.userlikenormalfeed_set.filter(user_id = request.user.id)
     dislike_list = normalFeed.userdislikenormalfeed_set.filter(user_id = request.user.id)
-
+    dislike_count = dislike_list.count()
     if like_list.count() > 0:
         normalFeed.userlikenormalfeed_set.get(user_id = request.user.id).delete()
     else :
@@ -125,9 +172,8 @@ def normalFeed_like(request, pid, nfid):
         normalFeed.userdislikenormalfeed_set.get(user_id = request.user.id).delete()
 
     context = {
-        'pid' : politician.id,
-        'nfid': normalFeed.id,
-        'like_count': like_list.count()
+        'like_count': like_list.count(),
+        'dislike_count': dislike_count
     }
 
     return JsonResponse(context)
@@ -138,6 +184,7 @@ def normalFeed_dislike(request, pid, nfid):
     normalFeed = NormalFeed.objects.get(id = nfid)
     like_list = normalFeed.userlikenormalfeed_set.filter(user_id = request.user.id)
     dislike_list = normalFeed.userdislikenormalfeed_set.filter(user_id = request.user.id)
+    like_count = like_list.count()
 
     if dislike_list.count() > 0 :
         normalFeed.userdislikenormalfeed_set.get(user_id = request.user.id).delete()
@@ -148,7 +195,8 @@ def normalFeed_dislike(request, pid, nfid):
         normalFeed.userlikenormalfeed_set.get(user_id = request.user.id).delete()
 
     context = {
-        'dislike_count': dislike_list.count()
+        'dislike_count': dislike_list.count(),
+        'like_count' : like_count
     }
 
 
@@ -159,6 +207,7 @@ def normalFeed_comment_like(request, pid, nfid, cid):
     comment = Comment.objects.get(id = cid)
     like_list = comment.userlikecomment_set.filter(user_id = request.user.id)
     dislike_list = comment.userdislikecomment_set.filter(user_id = request.user.id)
+    dislike_count = dislike_list.count()
 
     if like_list.count() > 0 :
         comment.userlikecomment_set.get(user_id = request.user.id).delete()
@@ -168,14 +217,18 @@ def normalFeed_comment_like(request, pid, nfid, cid):
     if dislike_list.count() > 0 :
         comment.userdislikecomment_set.get(user_id = request.user.id).delete()
 
-    path = os.path.join('/feeds/politician', str(pid), 'normalfeed', str(nfid), 'debate').replace("\\" , "/")
-    
-    return redirect(path)
+    context = {
+        'like_count': like_list.count(),
+        'dislike_count': dislike_count
+    }
+
+    return JsonResponse(context)
 
 def normalFeed_comment_dislike(request, pid, nfid, cid):
     comment = Comment.objects.get(id = cid)
     like_list = comment.userlikecomment_set.filter(user_id = request.user.id)
     dislike_list = comment.userdislikecomment_set.filter(user_id = request.user.id)
+    like_count = like_list.count()
 
     if dislike_list.count() > 0 :
         comment.userdislikecomment_set.get(user_id = request.user.id).delete()
@@ -185,8 +238,13 @@ def normalFeed_comment_dislike(request, pid, nfid, cid):
     if like_list.count() > 0 :
         comment.userlikecomment_set.get(user_id = request.user.id).delete()
 
-    path = os.path.join('/feeds/politician', str(pid), 'normalfeed', str(nfid), 'debate').replace("\\" , "/")
-    return redirect(path)
+    context = {
+        'dislike_count': dislike_list.count(),
+        'like_count' : like_count
+    }
+
+
+    return JsonResponse(context)
 
 def lawsearch(request):
     return render(request, 'feedpage/lawsearch.html')
@@ -240,6 +298,7 @@ def normalFeed_ctc_like(request, pid, nfid, cid,ctcid):
     ctc = CommentToComment.objects.get(id = ctcid)
     like_list = ctc.userlikectc_set.filter(user_id = request.user.id)
     dislike_list = ctc.userdislikectc_set.filter(user_id = request.user.id)
+    dislike_count = dislike_list.count()
 
     if like_list.count() > 0 :
         ctc.userlikectc_set.get(user_id = request.user.id).delete()
@@ -249,15 +308,19 @@ def normalFeed_ctc_like(request, pid, nfid, cid,ctcid):
     if dislike_list.count() > 0 :
         ctc.userdislikectc_set.get(user_id = request.user.id).delete()
 
-    path = os.path.join('/feeds/politician', str(pid), 'normalfeed', str(nfid), 'debate').replace("\\" , "/")
-    
-    return redirect(path)
+    context = {
+        'like_count': like_list.count(),
+        'dislike_count': dislike_count
+    }
+
+    return JsonResponse(context)
 
 
 def normalFeed_ctc_dislike(request, pid, nfid, cid,ctcid):
     ctc = CommentToComment.objects.get(id = ctcid)
     like_list = ctc.userlikectc_set.filter(user_id = request.user.id)
     dislike_list = ctc.userdislikectc_set.filter(user_id = request.user.id)
+    like_count = like_list.count()
 
     if dislike_list.count() > 0 :
         ctc.userdislikectc_set.get(user_id = request.user.id).delete()
@@ -267,6 +330,10 @@ def normalFeed_ctc_dislike(request, pid, nfid, cid,ctcid):
     if like_list.count() > 0 :
         ctc.userlikectc_set.get(user_id = request.user.id).delete()
 
-    path = os.path.join('/feeds/politician', str(pid), 'normalfeed', str(nfid), 'debate').replace("\\" , "/")
-    
-    return redirect(path)
+    context = {
+        'dislike_count': dislike_list.count(),
+        'like_count' : like_count
+    }
+
+
+    return JsonResponse(context)
