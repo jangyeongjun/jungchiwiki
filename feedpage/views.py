@@ -6,13 +6,35 @@ from .crawling import lawParsing
 from .crawling import poliParsing
 import os
 from django.http import JsonResponse
+import simplejson as json
+import math
+
 # Create your views here.
 def main(request):
     politicians = Politician.objects.all()
     return render(request,'feedpage/main.html', {'politicians' : politicians})
  
-def search(request):
-    return render(request,'feedpage/search.html')
+def search(request, page=1):
+    polis = Politician.objects.all()
+    paginated_by = 10
+    total_count = len(polis)
+    total_page = math.ceil(total_count/paginated_by)
+    initial=((page-1)//10)*10+1
+    next_end = initial+10
+    if (next_end>total_page):
+        next_end = total_page+1
+    page_range = range(initial, next_end)
+    if (initial==1):
+        before_end = 1
+    else:
+        before_end = next_end-12
+    start_index = paginated_by * (page-1)
+    end_index = paginated_by * page
+    polis = polis[start_index:end_index]
+
+    return render(request,'feedpage/search.html', {"polis":polis, 'total_page':total_page, 'page_range':page_range, 'initial':initial, 'next_end':next_end, 'before_end':before_end})
+
+
 
 
 def politician(request, pid):
@@ -188,8 +210,25 @@ def normalFeed_comment_dislike(request, pid, nfid, cid):
     path = os.path.join('/feeds/politician', str(pid), 'normalfeed', str(nfid), 'debate').replace("\\" , "/")
     return redirect(path)
 
-def lawsearch(request):
-    return render(request, 'feedpage/lawsearch.html')
+
+def lawsearch(request, page=1):
+    laws= Law.objects.all().order_by('-propose_dt')
+    paginated_by = 10
+    total_count = len(laws)
+    total_page = math.ceil(total_count/paginated_by)
+    initial=((page-1)//10)*10+1
+    next_end = initial+10
+    if (next_end>total_page):
+        next_end = total_page+1
+    page_range = range(initial, next_end)
+    if (initial==1):
+        before_end = 1
+    else:
+        before_end = next_end-12
+    start_index = paginated_by * (page-1)
+    end_index = paginated_by * page
+    laws = laws[start_index:end_index]
+    return render(request, 'feedpage/lawsearch.html', {"laws":laws,  'total_page':total_page, 'page_range':page_range, 'initial':initial, 'next_end':next_end, 'before_end':before_end})
 
 def lawupdate(request):
     politicians = Politician.objects.all()
@@ -228,7 +267,7 @@ def lawupdate(request):
                 #law = Law.objects.get(bill_name = laws[number]['BILL_NAME']
     return render(request, 'feedpage/lawsearch.html',{'laws':laws})
 
-def polisearch(request):
+def poliupdate(request):
     polis = poliParsing()
     for number in range(len(polis)):
         print(number)

@@ -75,7 +75,7 @@ class Politician(models.Model):
 
 class Law(models.Model):
     bill_name = models.CharField(max_length=100,blank=True)#법률이름
-    propse_dt = models.CharField(max_length=10,blank=True)
+    propose_dt = models.CharField(max_length=10,blank=True)
     committee = models.CharField(max_length=20,blank=True)
     detail_link = models.URLField(blank=True)#법률설명링크
     member_link = models.URLField(blank=True)#법률제안자링크
