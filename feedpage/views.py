@@ -3,7 +3,7 @@ from django.shortcuts import redirect
 from django.contrib.auth.models import User
 from .models import *
 import os
-
+from django.http import JsonResponse
 # Create your views here.
 def main(request):
     politicians = Politician.objects.all()
@@ -25,16 +25,25 @@ def politician(request, pid):
 
 def orientationVote(request, pid, value):
     politician = Politician.objects.get(id = pid)
-    OrientationVote.objects.create(user_id = request.user.id, politician= politician, value = value)
     numOfUsers = politician.orientationvote_set.count()
     total = politician.politicalOrientation * numOfUsers
-    politician.politicalOrientation = (total+value) / (numOfUsers+1)
+    OrientationVote.objects.create(user_id = request.user.id, politician= politician, value = value)
+    politician.politicalOrientation = (total+value-5) / (numOfUsers+1)
+    politician.save()
     path = os.path.join('/feeds/politician/', str(pid))
     return redirect(path)
     
 
 def orientationVoteCancel(request,  pid):
     politician = Politician.objects.get(id = pid)
+    numOfUsers = politician.orientationvote_set.count()
+    total = politician.politicalOrientation * numOfUsers
+    value = OrientationVote.objects.get(user_id = request.user.id, politician= politician).value
+    if numOfUsers != 1:
+        politician.politicalOrientation = (total - value) / (numOfUsers-1)
+    else:
+        politician.politicalOrientation = 0
+    politician.save()
     OrientationVote.objects.get(user_id = request.user.id, politician= politician).delete()
     path = os.path.join('/feeds/politician/', str(pid))
     return redirect(path)
@@ -103,6 +112,7 @@ def smallFeed_dislike(request, pid, sfid, nfid):
 
 
 def normalFeed_like(request, pid, nfid):
+    politician = Politician.objects.get(id = pid)
     normalFeed = NormalFeed.objects.get(id = nfid)
     like_list = normalFeed.userlikenormalfeed_set.filter(user_id = request.user.id)
     dislike_list = normalFeed.userdislikenormalfeed_set.filter(user_id = request.user.id)
@@ -115,8 +125,15 @@ def normalFeed_like(request, pid, nfid):
     if dislike_list.count() > 0 :
         normalFeed.userdislikenormalfeed_set.get(user_id = request.user.id).delete()
 
-    path = os.path.join('/feeds/politician/', str(pid))
-    return redirect(path)
+    context = {
+        'pid' : politician.id,
+        'nfid': normalFeed.id,
+        'like_count': like_list.count()
+    }
+
+    return JsonResponse(context)
+    # path = os.path.join('/feeds/politician/', str(pid))
+    # return redirect(path)
 
 def normalFeed_dislike(request, pid, nfid):
     normalFeed = NormalFeed.objects.get(id = nfid)
@@ -131,8 +148,12 @@ def normalFeed_dislike(request, pid, nfid):
     if like_list.count() > 0 :
         normalFeed.userlikenormalfeed_set.get(user_id = request.user.id).delete()
 
-    path = os.path.join('/feeds/politician/', str(pid))
-    return redirect(path)
+    context = {
+        'dislike_count': dislike_list.count()
+    }
+
+
+    return JsonResponse(context)
 
 
 def normalFeed_comment_like(request, pid, nfid, cid):

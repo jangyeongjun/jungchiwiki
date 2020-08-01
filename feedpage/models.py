@@ -61,7 +61,7 @@ class Politician(models.Model):
         ('9선', '9선'),
         ('10선', '10선'),
     ]
-    electedCount = models.CharField(max_length=10,blank=True, choices=genderChoices)
+    electedCount = models.CharField(max_length=10,blank=True, choices=countChoices)
     howChoices = [
         ('지역구', '지역구'),
         ('비례대표', '비례대표'),
