@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1> Create New SmallFeed! </h1>
+<h3> for {{ politician.hg_name }}'s {{ normalFeed.get_title_display }} </h3>
+
+<form method="POST" action="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/smallfeed/create/">
+    {% csrf_token %}
+    제목
+    <br>
+    <input name="title" type="text" value="">
+    <br>
+    <br>
+    내용
+    <br>
+    <input name="content" type="text" value="">
+    <br>
+    <br>
+    {% comment %} 사진 업로드
+    <br>
+    <input name="image" type="image" value="">
+    <br>
+    <br> {% endcomment %}
+    <input type="submit" value="Submit!">
+</form>
+{% endblock content %}

@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1> Create New NormalFeed! </h1>
+<h2> for {{ politician.hg_name }} </h2>
+
+<form method="POST" action="/feeds/politician/{{ politician.id }}/normalfeed/create/">
+    {% csrf_token %}
+    분류
+    <br>
+    <input name="title" type="text" list ="title">
+    <datalist id="title" style: "display: none;">
+        <option value='개요'>
+        <option value="경력">
+        <option value="과거 공약/이행률">
+        <option value="발의 법률안">
+        <option value="찬성/반대 법안">
+        <option value="발언 및 논란">
+    </datalist>
+    <br>
+    <br>
+    내용
+    <br>
+    <input name="content" type="text" value="">
+    <br>
+    <br>
+    {% comment %} 사진 업로드
+    <br>
+    <input name="image" type="image" value="">
+    <br>
+    <br> {% endcomment %}
+    <input type="submit" value="Submit">
+</form>
+{% endblock content %}
