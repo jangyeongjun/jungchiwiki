@@ -8,7 +8,7 @@
         <h3>더불어민주당 소속 의원</h3> 
         {% for politician in politicians %} 
           {% if politician.politicalParty == "더불어민주당" %}
-            <a href="/politician/{{ politician.id }}">{{ politician.name }}</a>
+            <a href="/politician/{{ politician.id }}">{{ politician.hg_name }}</a>
           {% endif %}
         {% endfor %}
       </div>        
@@ -18,7 +18,7 @@
         <h3>미래통합당 소속 의원</h3>
         {% for politician in politicians %} 
           {% if politician.politicalParty == "미래통합당" %}
-            <a href="/politician/{{ politician.id }}">{{ politician.name }}</a>
+            <a href="/politician/{{ politician.id }}">{{ politician.hg_name }}</a>
           {% endif %}
         {% endfor %}
       </div>
@@ -28,7 +28,7 @@
         <h3>정의당 소속 의원</h3>
           {% for politician in politicians %} 
           {% if politician.politicalParty == "정의당" %}
-            <a href="/politician/{{ politician.id }}">{{ politician.name }}</a>
+            <a href="/politician/{{ politician.id }}">{{ politician.hg_name }}</a>
           {% endif %}
         {% endfor %}
       </div>
@@ -38,7 +38,7 @@
         <h3>국민의당 소속 의원</h3>
         {% for politician in politicians %} 
           {% if politician.politicalParty == "국민의당" %}
-            <a href="/politician/{{ politician.id }}">{{ politician.name }}</a>
+            <a href="/politician/{{ politician.id }}">{{ politician.hg_name }}</a>
           {% endif %}
         {% endfor %}
       </div>
@@ -49,19 +49,19 @@
         <h5>열린민주당 소속 의원</h5>
         {% for politician in politicians %} 
           {% if politician.politicalParty == "열린민주당" %}
-            <a href="/politician/{{ politician.id }}">{{ politician.name }}</a>
+            <a href="/politician/{{ politician.id }}">{{ politician.hg_name }}</a>
           {% endif %}
         {% endfor %}
         <h5>기본소득당 소속 의원</h5>
         {% for politician in politicians %} 
           {% if politician.politicalParty == "기본소득당" %}
-            <a href="/politician/{{ politician.id }}">{{ politician.name }}</a>
+            <a href="/politician/{{ politician.id }}">{{ politician.hg_name }}</a>
           {% endif %}
         {% endfor %}
         <h5>시대전환 소속 의원</h5>
         {% for politician in politicians %} 
           {% if politician.politicalParty == "시대전환" %}
-            <a href="/politician/{{ politician.id }}">{{ politician.name }}</a>
+            <a href="/politician/{{ politician.id }}">{{ politician.hg_name }}</a>
           {% endif %}
         {% endfor %}
       </div>
@@ -71,7 +71,7 @@
         <h3>무소속 의원</h3> 
           {% for politician in politicians %} 
             {% if politician.politicalParty == "무소속" %}
-              <a href="/politician/{{ politician.id }}">{{ politician.name }}</a>
+              <a href="/politician/{{ politician.id }}">{{ politician.hg_name }}</a>
             {% endif %}
           {% endfor %}
       </div>        

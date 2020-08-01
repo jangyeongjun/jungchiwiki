@@ -20,7 +20,11 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 #국회의원 모델
 class Politician(models.Model):
-    name = models.CharField(max_length=10)
+    hg_name = models.CharField(max_length=10,blank=True)#한글이름
+    eng_name = models.CharField(max_length=10,blank=True)
+    bth_name = models.CharField(max_length=5,blank=True)#음력,양력
+    bth_date = models.CharField(max_length=10,blank=True)#1998-09-08
+    job_res_name = models.CharField(max_length=10,blank=True)#직책
     PartyChoices = [
         ('더불어민주당', '더불어민주당'),
         ('미래통합당', '미래통합당'),
@@ -31,9 +35,9 @@ class Politician(models.Model):
         ('시대전환', '시대전환'),
         ('무소속', '무소속'),
     ]
-    politicalParty = models.CharField(max_length=10, choices=PartyChoices)
-    politicalCommittee = models.CharField(max_length=20)
-    district = models.CharField(max_length=30)
+    politicalParty = models.CharField(max_length=10,blank=True,choices=PartyChoices)
+    politicalCommittee = models.CharField(max_length=20,blank=True,null=True )
+    district = models.CharField(max_length=30,blank=True)#지역구면 여기에 포함
     genderChoices = [
         ('남', '남자'),
         ('여', '여자'),
@@ -51,12 +55,11 @@ class Politician(models.Model):
         ('9선', '9선'),
         ('10선', '10선'),
     ]
-    electedCount = models.CharField(max_length=10,blank=True, choices=genderChoices)
-    howChoices = [
-        ('지역구', '지역구'),
-        ('비례대표', '비례대표'),
-    ]
-    how = models.CharField(max_length=20,blank=True)
+    electedCount = models.CharField(max_length=10,blank=True,choices=countChoices)
+    units = models.CharField(max_length=20,blank=True,null=True)#20대,21대
+    tel_num = models.CharField(max_length=10,blank=True,null=True)
+    e_mail = models.CharField(max_length=10,blank=True,null=True)
+    homepage = models.URLField(max_length=20,blank=True,null=True)
     photo = models.ImageField(blank=True)
     age = models.IntegerField(default=0,blank=True)
     politicalOrientation = models.IntegerField(default=0,blank=True)
@@ -76,8 +79,9 @@ class Law(models.Model):
     committee = models.CharField(max_length=20,blank=True)
     detail_link = models.URLField(blank=True)#법률설명링크
     member_link = models.URLField(blank=True)#법률제안자링크
+
     # 1:N
-    proposer = models.CharField(max_length=10,blank=True)
+    proposer = models.ForeignKey(Politician, null=True, on_delete = models.PROTECT)
     proposer_etc = models.CharField(max_length=10,blank=True)
 
     # M:N
