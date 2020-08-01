@@ -2,7 +2,6 @@
 
 
 {% block content %}
-
     
     {% comment %} 국회의원 페이지 상단 파트 {% endcomment %}
     <div class="middle-header">
@@ -14,10 +13,14 @@
 
             <div class ="mdl-card__photo">
                 {% if  politician.photo %}
-                    
                     <img src="{{ politician.photo.url }}"  alt="" width="100%" height="100%">
                 {% else %}
-                    <h>사진없음</h>
+                    <form enctype="multipart/form-data" action="/feeds/politician/{{ politician.id }}/insert-photo/" method="POST">
+                        {% csrf_token %}
+                        <p>사진 추가하기</p>
+                        <input name="photo" type="file"/> <br />
+                        <input type="submit" value="submit" />
+                    </form>
                 {% endif %}            
             </div>
             
@@ -127,37 +130,66 @@
                 <a href="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/debate/">해당 내용에 대한 토론방</a>
             </div>
             <div class="normal-feed__supporting-text">
-                <h3> {{ normalFeed.content }}
-                <h5>
-                    <a href = "/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/smallfeed/new/">smallFeed 추가하기</a>
-                </h5>
-                {% for smallFeed in smallFeeds %}
-                    {% if smallFeed.normalFeed == normalFeed %}   
-                        <h4>{{ normalFeed.title }}.{{ forloop.counter }} {{ smallFeed.title }}</h4>
-                        {% comment %} forloop.counter shibalalalalalalalalal {% endcomment %}
-                        <h5>{{ smallFeed.content }}</h5>
-
-                        <a href="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/smallfeed/{{ smallFeed.id }}/like/"    
-                           class = "material-icons mdl-badge smallFeed-Like"     
-                           data-pid={{ politician.id }} 
-                           data-nfid={{ normalFeed.id }} 
-                           data-sfid={{ smallFeed.id }} 
-                           data-csrfmiddlewaretoken="{{ csrf_token }}" 
-                           data-badge="{{ smallFeed.like_users.count }}">LIKES</a>
-                           
-                        <a href="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/smallfeed/{{ smallFeed.id }}/dislike/" 
-                           class = "material-icons mdl-badge smallFeed-Dislike"  
-                           data-pid={{ politician.id }} 
-                           data-nfid={{ normalFeed.id }} 
-                           data-sfid={{ smallFeed.id }} 
-                           data-csrfmiddlewaretoken="{{ csrf_token }}" 
-                           data-badge="{{ smallFeed.dislike_users.count }}">DISLIKES</a>
-                        
-                        
-                        {% comment %} smallfeed는 어떻게 sort할까 {% endcomment %}
-                    {% endif %}
-                {% endfor %}
+                {% comment %} 발의 법률안이면 {% endcomment %}
+                {% if normalFeed.title == '4' %}   
+                    {% for law in laws %}
+                        <div class="law-wrapper" style="border: solid 1px #dbdbdb;">
+                            <h4>{{ law.bill_name }}</h4>
+                            <h5>대표 발의자 : {{ law.proposer.hg_name }}</h5>
+                            <h6>발의된 날짜 : {{ law.propose_dt }}</h6>
+                            <h6>발의한 위원회 : {{ law.committee }}</h6>
+                            <h6>법안 상세 정보 : {{ law.detail_link }}</h6>
+                            <h6>발의자 명단 : {{ law.member_link }}</h6>
+                        </div>
+                        <div class = "like-wrapper">
+                            <a href="/feeds/politician/{{ politician.id }}/law/{{ law.id }}/like/"    
+                                class = "material-icons mdl-badge law-Like"     
+                                data-pid={{ politician.id }} 
+                                data-lid={{ law.id }} 
+                                data-csrfmiddlewaretoken="{{ csrf_token }}" 
+                                data-badge="{{ law.like_users.count }}">LIKES</a>
+                                
+                            <a href="/feeds/politician/{{ politician.id }}/law/{{ law.id }}/dislike/" 
+                                class = "material-icons mdl-badge law-Dislike"  
+                                data-pid={{ politician.id }} 
+                                data-lid={{ law.id }} 
+                                data-csrfmiddlewaretoken="{{ csrf_token }}" 
+                                data-badge="{{ law.dislike_users.count }}">DISLIKES</a>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    
+                    <h3> {{ normalFeed.content }}
+                    <h5>
+                        <a href = "/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/smallfeed/new/">smallFeed 추가하기</a>
+                    </h5>
+                    {% for smallFeed in smallFeeds %}
+                        {% if smallFeed.normalFeed == normalFeed %}   
+                            <h4>{{ normalFeed.title }}.{{ forloop.counter }} {{ smallFeed.title }}</h4>
+                            {% comment %} forloop.counter shibalalalalalalalalal {% endcomment %}
+                            <h5>{{ smallFeed.content }}</h5>
+                            <div class = "like-wrapper">
+                                <a href="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/smallfeed/{{ smallFeed.id }}/like/"    
+                                class = "material-icons mdl-badge smallFeed-Like"     
+                                data-pid={{ politician.id }} 
+                                data-nfid={{ normalFeed.id }} 
+                                data-sfid={{ smallFeed.id }} 
+                                data-csrfmiddlewaretoken="{{ csrf_token }}" 
+                                data-badge="{{ smallFeed.like_users.count }}">LIKES</a>
+                                
+                                <a href="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/smallfeed/{{ smallFeed.id }}/dislike/" 
+                                class = "material-icons mdl-badge smallFeed-Dislike"  
+                                data-pid={{ politician.id }} 
+                                data-nfid={{ normalFeed.id }} 
+                                data-sfid={{ smallFeed.id }} 
+                                data-csrfmiddlewaretoken="{{ csrf_token }}" 
+                                data-badge="{{ smallFeed.dislike_users.count }}">DISLIKES</a>
+                                {% comment %} smallfeed는 어떻게 sort할까 {% endcomment %}
+                            </div>
+                        {% endif %}
+                    {% endfor %}
                  
+                {% endif%} 
             </div>
 
             
