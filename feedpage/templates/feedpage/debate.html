@@ -1,21 +1,73 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    {% for c in comments %}
-        <div class="card comment">
-            {% comment %} <h3>{% c.author.profile.nickname %}</h3> {% endcomment %}
-            <div class="image">
-                <img src="{{ c.photo.url }}"  alt="" width="100%" height="100%">                    
-            </div> 
-            <div class="text">
-                <h3>{{ c.content }}</h3>
-                <h3>{{ c.created_at }}</h3>
-                <a href="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/comment/{{ c.id }}/like/">{{ c.like_users.count }} Likes</a>
-                <a href="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/comment/{{ c.id }}/dislike/">{{ c.dislike_users.count }} Dislikes</a>
-                
-            </div>
-            
-                       
+    <a>뒤로 가기</a>
+    <div class = "comment-box">
+        {% if comments %}
+            {% for c in comments %}
+                <div class="card-comment">
+                    {% comment %} <h3>{% c.author.profile.nickname %}</h3> {% endcomment %}
+                    <div class="image">
+                        {% if c.photo %}
+                            <img src="{{ c.photo.url }}"  alt="" width="100%" height="100%">                    
+                        {% endif %}
+                    </div> 
+                    <div class="text">
+                        <h3>{{ c.content }}</h3>
+                        
+                        <div class="comment-info">
+                            <h6>by {{ c.author.profile.nickname }}</h6>
+                            <h6>{{ c.created_at }}</h6> 
+                            <a href="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/debate/comment/{{ c.id }}/like/">{{ c.like_users.count }} Likes</a>
+                            <a href="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/debate/comment/{{ c.id }}/dislike/">{{ c.dislike_users.count }} Dislikes</a>
+                        </div>
+                    
+                    </div>
+                    <div class="ctc-box">
+                        {% for ctc in comments_to_comment|dictsort:"created_at" %}
+                            {% if ctc.comment == c %}
+                                <h5>{{ ctc.content }}</h5>
+                                <h6>by {{ ctc.author.profile.nickname }}</h6>
+                                <h6>{{ ctc.created_at }}</h6> 
+                                <a href="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/debate/comment/{{ c.id }}/ctc/{{ ctc.id }}/like/">{{ ctc.like_users.count }} Likes</a>
+                                <a href="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/debate/comment/{{ c.id }}/ctc/{{ ctc.id }}/dislike/">{{ ctc.dislike_users.count }} Dislikes</a>
+                            {% endif %}
+                        {% endfor %}    
+                    </div>
+                    
+
+                    <div class = "new-comment-wrapper">
+                        <form action="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/debate/comment/{{ c.id }}/new/" method="POST">
+                            {% csrf_token %}
+                            <div class="mdl-textfield mdl-js-textfield">
+                                <input class="mdl-textfield__input" type="text" name="content">
+                                <label class="mdl-textfield__label" for="sample1">New comment...</label>
+                                <button  type="submit" class="mdl-button mdl-js-button mdl-button--icon">
+                                    <i class="material-icons">send</i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                            
+                </div>
+            {% endfor %}
+        {% else %}
+            <h2>no comments yet</h2>
+        {% endif %}
+
+        <div class = "new-comment-wrapper">
+            <form action="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/debate/comment/new/" method="POST">
+                {% csrf_token %}
+                <div class="mdl-textfield mdl-js-textfield">
+                    <input class="mdl-textfield__input" type="text" name="content">
+                    <label class="mdl-textfield__label" for="sample1">New comment...</label>
+                    <button  type="submit" class="mdl-button mdl-js-button mdl-button--icon">
+                        <i class="material-icons">send</i>
+                    </button>
+                </div>
+            </form>
         </div>
-    {% endfor %}
+
+    </div>
 {% endblock content %}
