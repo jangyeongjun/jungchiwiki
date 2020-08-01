@@ -3,11 +3,13 @@ from feedpage import views
 
 
 urlpatterns = [
-    path('',                                                                                            views.main,                             name='main'),
-    path('search/',                                                                                     views.search,                           name='search'),
-    path('lawsearch/',                                                                                  views.lawsearch,                        name='lawsearch'),
-    path('lawsearch/lawupdate/',                                                                        views.lawupdate,                        name='lawupdate'),
-    path('search/poliupdate/',                                                                          views.polisearch,                       name='polisearch'),
+    path('', views.main, name='main'),
+    path('search/', views.search, name='search'),
+    path('search/<int:page>/', views.search, name='search'),
+    path('search/poliupdate/', views.poliupdate, name='poliupdate'),
+    path('lawsearch/', views.lawsearch, name='lawsearch'),
+    path('lawsearch/<int:page>/', views.lawsearch, name='lawsearch'),
+    path('lawsearch/lawupdate/', views.lawupdate, name='lawupdate'),
     path('politician/<int:pid>/',                                                                       views.politician,                       name='politician'), #pid = politician model id
     path('politician/<int:pid>/insert-photo/',                                                          views.insert_photo,                     name='insert_photo'),
     path('politician/<int:pid>/law/<int:lid>/like/',                                                    views.law_like,                         name='law_like'),

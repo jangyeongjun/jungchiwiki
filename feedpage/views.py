@@ -6,6 +6,23 @@ from .crawling import lawParsing
 from .crawling import poliParsing
 import os
 from django.http import JsonResponse
+import simplejson as json
+import math
+
+# Create your views here.
+def main(request):
+    politicians = Politician.objects.all()
+    return render(request,'feedpage/main.html', {'politicians' : politicians})
+ 
+
+
+def poliupdate(request):
+    polis = poliParsing()
+    for number in range(len(polis)):
+        print(number)
+        Politician.objects.create(hg_name = polis[number]['HG_NM'], eng_name = polis[number]['ENG_NM'], bth_name=polis[number]['BTH_GBN_NM'], bth_date=polis[number]['BTH_DATE'], job_res_name = polis[number]['JOB_RES_NM'], politicalParty = polis[number]['POLY_NM'], district = polis[number]['ORIG_NM'], politicalCommittee = polis[number]['CMITS'], electedCount = polis[number]['REELE_GBN_NM'], units = polis[number]['UNITS'], gender = polis[number]['SEX_GBN_NM'], tel_num = polis[number]['TEL_NO'], e_mail = polis[number]['E_MAIL'], homepage = polis[number]['HOMEPAGE'])
+    return render(request,'feedpage/search.html')
+
 
 #===============================================
 #CREATE
@@ -72,8 +89,26 @@ def main(request):
     politicians = Politician.objects.all()
     return render(request,'feedpage/main.html', {'politicians' : politicians})
  
-def search(request):
-    return render(request,'feedpage/search.html')
+def search(request, page=1):
+    polis = Politician.objects.all()
+    paginated_by = 10
+    total_count = len(polis)
+    total_page = math.ceil(total_count/paginated_by)
+    initial=((page-1)//10)*10+1
+    next_end = initial+10
+    if (next_end>total_page):
+        next_end = total_page+1
+    page_range = range(initial, next_end)
+    if (initial==1):
+        before_end = 1
+    else:
+        before_end = next_end-12
+    start_index = paginated_by * (page-1)
+    end_index = paginated_by * page
+    polis = polis[start_index:end_index]
+    print(page)
+    return render(request,'feedpage/search.html', {"polis":polis, 'total_page':total_page, 'page_range':page_range, 'initial':initial, 'next_end':next_end, 'before_end':before_end})
+
 
 def politician(request, pid):
     politician = Politician.objects.get(id = pid)
@@ -126,17 +161,17 @@ def lawupdate(request):
         elif len(laws) == 8: #발의법률안이 1개이거나, 발의 법률안이 8개인 경우
             try:#발의법률안 1개인 경우
                 try:
-                    Law.objects.create(committee=laws['COMMITTEE'],bill_name = laws['BILL_NAME'],proposer=Politician.objects.get(id=poli.id),proposer_etc=laws['PROPOSER'], propse_dt=laws['PROPOSE_DT'],detail_link=laws['DETAIL_LINK'],member_link=laws['MEMBER_LIST'])
+                    Law.objects.create(committee=laws['COMMITTEE'],bill_name = laws['BILL_NAME'],proposer=Politician.objects.get(id=poli.id),proposer_etc=laws['PROPOSER'], propose_dt=laws['PROPOSE_DT'],detail_link=laws['DETAIL_LINK'],member_link=laws['MEMBER_LIST'])
                 except:
-                    Law.objects.create(bill_name = laws['BILL_NAME'],proposer=Politician.objects.get(id=poli.id),proposer_etc=laws['PROPOSER'], propse_dt=laws['PROPOSE_DT'],detail_link=laws['DETAIL_LINK'],member_link=laws['MEMBER_LIST'])
+                    Law.objects.create(bill_name = laws['BILL_NAME'],proposer=Politician.objects.get(id=poli.id),proposer_etc=laws['PROPOSER'], propose_dt=laws['PROPOSE_DT'],detail_link=laws['DETAIL_LINK'],member_link=laws['MEMBER_LIST'])
             except:
                 for number in range(len(laws)):
                     print(len(laws))
                     print(poli.hg_name,number)
                     try:
-                        Law.objects.create(committee=laws[number]['COMMITTEE'],bill_name = laws[number]['BILL_NAME'],proposer=Politician.objects.get(id=poli.id),proposer_etc=laws[number]['PROPOSER'], propse_dt=laws[number]['PROPOSE_DT'],detail_link=laws[number]['DETAIL_LINK'],member_link=laws[number]['MEMBER_LIST'])
+                        Law.objects.create(committee=laws[number]['COMMITTEE'],bill_name = laws[number]['BILL_NAME'],proposer=Politician.objects.get(id=poli.id),proposer_etc=laws[number]['PROPOSER'], propose_dt=laws[number]['PROPOSE_DT'],detail_link=laws[number]['DETAIL_LINK'],member_link=laws[number]['MEMBER_LIST'])
                     except:
-                        Law.objects.create(bill_name = laws[number]['BILL_NAME'],proposer=Politician.objects.get(id=poli.id),proposer_etc=laws[number]['PROPOSER'], propse_dt=laws[number]['PROPOSE_DT'],detail_link=laws[number]['DETAIL_LINK'],member_link=laws[number]['MEMBER_LIST'])
+                        Law.objects.create(bill_name = laws[number]['BILL_NAME'],proposer=Politician.objects.get(id=poli.id),proposer_etc=laws[number]['PROPOSER'], propose_dt=laws[number]['PROPOSE_DT'],detail_link=laws[number]['DETAIL_LINK'],member_link=laws[number]['MEMBER_LIST'])
 
 
         else :
@@ -144,9 +179,9 @@ def lawupdate(request):
                 print(len(laws))
                 print(poli.hg_name,number)
                 try:
-                    Law.objects.create(committee=laws[number]['COMMITTEE'],bill_name = laws[number]['BILL_NAME'],proposer=Politician.objects.get(id=poli.id),proposer_etc=laws[number]['PROPOSER'], propse_dt=laws[number]['PROPOSE_DT'],detail_link=laws[number]['DETAIL_LINK'],member_link=laws[number]['MEMBER_LIST'])
+                    Law.objects.create(committee=laws[number]['COMMITTEE'],bill_name = laws[number]['BILL_NAME'],proposer=Politician.objects.get(id=poli.id),proposer_etc=laws[number]['PROPOSER'], propose_dt=laws[number]['PROPOSE_DT'],detail_link=laws[number]['DETAIL_LINK'],member_link=laws[number]['MEMBER_LIST'])
                 except:
-                    Law.objects.create(bill_name = laws[number]['BILL_NAME'],proposer=Politician.objects.get(id=poli.id),proposer_etc=laws[number]['PROPOSER'], propse_dt=laws[number]['PROPOSE_DT'],detail_link=laws[number]['DETAIL_LINK'],member_link=laws[number]['MEMBER_LIST'])
+                    Law.objects.create(bill_name = laws[number]['BILL_NAME'],proposer=Politician.objects.get(id=poli.id),proposer_etc=laws[number]['PROPOSER'], propose_dt=laws[number]['PROPOSE_DT'],detail_link=laws[number]['DETAIL_LINK'],member_link=laws[number]['MEMBER_LIST'])
 
                 #law = Law.objects.get(bill_name = laws[number]['BILL_NAME']
     return render(request, 'feedpage/lawsearch.html',{'laws':laws})
@@ -343,10 +378,27 @@ def normalFeed_debate_comment_dislike(request, pid, nfid, cid):
         'dislike_count': dislike_list.count(),
         'like_count' : like_count
     }
-
-
     return JsonResponse(context)
 
+
+def lawsearch(request, page=1):
+    laws= Law.objects.all().order_by('-propose_dt')
+    paginated_by = 10
+    total_count = len(laws)
+    total_page = math.ceil(total_count/paginated_by)
+    initial=((page-1)//10)*10+1
+    next_end = initial+10
+    if (next_end>total_page):
+        next_end = total_page+1
+    page_range = range(initial, next_end)
+    if (initial==1):
+        before_end = 1
+    else:
+        before_end = next_end-12
+    start_index = paginated_by * (page-1)
+    end_index = paginated_by * page
+    laws = laws[start_index:end_index]
+    return render(request, 'feedpage/lawsearch.html', {"laws":laws,  'total_page':total_page, 'page_range':page_range, 'initial':initial, 'next_end':next_end, 'before_end':before_end})
 
 def law_like(request, pid, lid):
     law = Law.objects.get(id = lid)
@@ -360,13 +412,12 @@ def law_like(request, pid, lid):
 
     if dislike_list.count() > 0 :
         law.userdislikelaw_set.get(user_id = request.user.id).delete()
-
     context = {
         'like_count': like_list.count(),
         'dislike_count': dislike_count
     }
 
-    return JsonResponse(context)
+    return JsonResponse(context) 
 
 def law_dislike(request, pid, lid):
     law = Law.objects.get(id = lid)

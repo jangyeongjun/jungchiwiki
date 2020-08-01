@@ -261,14 +261,50 @@
 	       								<th scope="col">지역</th>
 	       								<th scope="col">성별</th>
 	       								<th scope="col" class="m_none">당선횟수</th>
-	       								<th scope="col">당선방법</th>
+	       								<th scope="col">생년월일</th>
 	       							</tr>
 	       						</thead>
-	       						<tbody id="list-result-sect"><tr>	<td class="m_none rownum">1</td>	<td class="m_left"><a href="javascript:;" class="hgNm" title="새창열림">강기윤</a></td>	<td class="polyNm">미래통합당</td>	<td class="m_none cmits">보건복지위원회</td>	<td class="m_none origNm">경남 창원시성산구</td>	<td class="m_none sexGbnNm">남</td>	<td class="m_none reeleGbnNm">재선</td>	<td class="m_none eleGbnNm">지역구</td></tr><tr>	<td class="m_none rownum">2</td>	<td class="m_left"><a href="javascript:;" class="hgNm" title="새창열림">강대식</a></td>	<td class="polyNm">미래통합당</td>	<td class="m_none cmits">국방위원회</td>	<td class="m_none origNm">대구 동구을</td>	<td class="m_none sexGbnNm">남</td>	<td class="m_none reeleGbnNm">초선</td>	<td class="m_none eleGbnNm">지역구</td></tr><tr>	<td class="m_none rownum">3</td>	<td class="m_left"><a href="javascript:;" class="hgNm" title="새창열림">강득구</a></td>	<td class="polyNm">더불어민주당</td>	<td class="m_none cmits">교육위원회</td>	<td class="m_none origNm">경기 안양시만안구</td>	<td class="m_none sexGbnNm">남</td>	<td class="m_none reeleGbnNm">초선</td>	<td class="m_none eleGbnNm">지역구</td></tr><tr>	<td class="m_none rownum">4</td>	<td class="m_left"><a href="javascript:;" class="hgNm" title="새창열림">강민국</a></td>	<td class="polyNm">미래통합당</td>	<td class="m_none cmits">정무위원회</td>	<td class="m_none origNm">경남 진주시을</td>	<td class="m_none sexGbnNm">남</td>	<td class="m_none reeleGbnNm">초선</td>	<td class="m_none eleGbnNm">지역구</td></tr><tr>	<td class="m_none rownum">5</td>	<td class="m_left"><a href="javascript:;" class="hgNm" title="새창열림">강민정</a></td>	<td class="polyNm">열린민주당</td>	<td class="m_none cmits">교육위원회</td>	<td class="m_none origNm">비례대표</td>	<td class="m_none sexGbnNm">여</td>	<td class="m_none reeleGbnNm">초선</td>	<td class="m_none eleGbnNm">비례대표</td></tr><tr>	<td class="m_none rownum">6</td>	<td class="m_left"><a href="javascript:;" class="hgNm" title="새창열림">강병원</a></td>	<td class="polyNm">더불어민주당</td>	<td class="m_none cmits">보건복지위원회</td>	<td class="m_none origNm">서울 은평구을</td>	<td class="m_none sexGbnNm">남</td>	<td class="m_none reeleGbnNm">재선</td>	<td class="m_none eleGbnNm">지역구</td></tr><tr>	<td class="m_none rownum">7</td>	<td class="m_left"><a href="javascript:;" class="hgNm" title="새창열림">강선우</a></td>	<td class="polyNm">더불어민주당</td>	<td class="m_none cmits">국회운영위원회, 보건복지위원회</td>	<td class="m_none origNm">서울 강서구갑</td>	<td class="m_none sexGbnNm">여</td>	<td class="m_none reeleGbnNm">초선</td>	<td class="m_none eleGbnNm">지역구</td></tr><tr>	<td class="m_none rownum">8</td>	<td class="m_left"><a href="javascript:;" class="hgNm" title="새창열림">강은미</a></td>	<td class="polyNm">정의당</td>	<td class="m_none cmits">환경노동위원회</td>	<td class="m_none origNm">비례대표</td>	<td class="m_none sexGbnNm">여</td>	<td class="m_none reeleGbnNm">초선</td>	<td class="m_none eleGbnNm">비례대표</td></tr><tr>	<td class="m_none rownum">9</td>	<td class="m_left"><a href="javascript:;" class="hgNm" title="새창열림">강준현</a></td>	<td class="polyNm">더불어민주당</td>	<td class="m_none cmits">국토교통위원회</td>	<td class="m_none origNm">세종특별자치시을</td>	<td class="m_none sexGbnNm">남</td>	<td class="m_none reeleGbnNm">초선</td>	<td class="m_none eleGbnNm">지역구</td></tr><tr>	<td class="m_none rownum">10</td>	<td class="m_left"><a href="javascript:;" class="hgNm" title="새창열림">강훈식</a></td>	<td class="polyNm">더불어민주당</td>	<td class="m_none cmits">산업통상자원중소벤처기업위원회</td>	<td class="m_none origNm">충남 아산시을</td>	<td class="m_none sexGbnNm">남</td>	<td class="m_none reeleGbnNm">재선</td>	<td class="m_none eleGbnNm">지역구</td></tr></tbody>
+	       						<tbody id="list-result-sect">
+								   {% for poli in polis %}
+									<tr>	
+										<td class="m_none rownum">{{ poli.id }}</td>	
+										<td class="m_left"><a href="/feeds/politician/{{ poli.id }}/" class="hgNm" title="새창열림">{{ poli.hg_name }}</a></td>	
+										<td class="polyNm">{{ poli.politicalParty }}</td>	
+										<td class="m_none cmits">{{ poli.politicalCommittee }}</td>	
+										<td class="m_none origNm">{{ poli.district }}</td>
+										<td class="m_none sexGbnNm">{{ poli.gender }}</td>	
+										<td class="m_none reeleGbnNm">{{ poli.electedCount }}</td>
+										<td class="m_none eleGbnNm">{{ poli.bth_name }}{{ poli.bth_date }}</td>
+									</tr>
+								   {% endfor %}
+								</tbody>
 	       						</table>
+								
 	       						</div>
 	       						
-	       						<div id="list-sect-pager"><div class="paging-navigation">  <strong class="page-number" style="cursor:default;">1</strong> <a href="#" class="number page-number">2</a> <a href="#" class="number page-number">3</a> <a href="#" class="number page-number">4</a> <a href="#" class="number page-number">5</a> <a href="#" class="number page-number">6</a> <a href="#" class="number page-number">7</a> <a href="#" class="number page-number">8</a> <a href="#" class="number page-number">9</a> <a href="#" class="number page-number">10</a> <a href="#" class="btn-next btn_page_next next" title="다음 10페이지 이동"><strong>다음 10페이지 이동</strong></a> <a href="#" class="btn-last btn_page_last last" title="마지막페이지 이동"><strong>마지막페이지 이동</strong></a></div></div>
+	       						<div id="list-sect-pager">
+								   <div class="paging-navigation">  
+								   {% comment %} <strong class="page-number" style="cursor:default;">1</strong> 
+								   <a href="#" class="number page-number">2</a> 
+								   <a href="#" class="number page-number">3</a> <a href="#" class="number page-number">4</a> <a href="#" class="number page-number">5</a> <a href="#" class="number page-number">6</a> <a href="#" class="number page-number">7</a> <a href="#" class="number page-number">8</a> <a href="#" class="number page-number">9</a> <a href="#" class="number page-number">10</a> 
+								   <a href="#" class="btn-next btn_page_next next" title="다음 10페이지 이동"><strong>다음 10페이지 이동</strong></a> 
+								   <a href="#" class="btn-last btn_page_last last" title="마지막페이지 이동">
+								   <strong>마지막페이지 이동</strong>
+								   </a> {% endcomment %}
+										<ul class = "pagination">
+											<a class = "number page-number" href="/feeds/search/{{ before_end }}/">◀</a></li>
+											{% for page in page_range %}
+												<a class = "number page-number" href="/feeds/search/{{page}}/">{{page}}</a></li>
+														
+											{% endfor %}
+											<a class = "number page-number" href="/feeds/search/{{ next_end }}/">▶</a></li>
+
+										</ul>
+								   </div>
+								</div>
+								   <nav aria-label="page navigation example">
+										
+									</nav>
 	       					</form>
 	       					</div>
 	       					<!-- //목록보기 -->
@@ -289,10 +325,22 @@
 		       						<li><span class="politics101190">민중당</span></li>
 		       						<li><span class="politics101030">무소속</span></li>
 		       					</ul>
-		       					<div id="pic-result-sect">	       					
-	       						<ul class="nassem_result_ul"><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9771230.jpg" alt="강기윤 국회의원 사진"></div>		<span class="politics101198"><i>미래통합당</i>강기윤</span>	</a></li><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9771142.jpg" alt="강대식 국회의원 사진"></div>		<span class="politics101198"><i>미래통합당</i>강대식</span>	</a></li><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9771174.jpg" alt="강득구 국회의원 사진"></div>		<span class="politics101182"><i>더불어민주당</i>강득구</span>	</a></li><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9771233.jpg" alt="강민국 국회의원 사진"></div>		<span class="politics101198"><i>미래통합당</i>강민국</span>	</a></li><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9771283.jpg" alt="강민정 국회의원 사진"></div>		<span class="politics101203"><i>열린민주당</i>강민정</span>	</a></li><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9770933.jpg" alt="강병원 국회의원 사진"></div>		<span class="politics101182"><i>더불어민주당</i>강병원</span>	</a></li><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9771116.jpg" alt="강선우 국회의원 사진"></div>		<span class="politics101182"><i>더불어민주당</i>강선우</span>	</a></li><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9771276.jpg" alt="강은미 국회의원 사진"></div>		<span class="politics101180"><i>정의당</i>강은미</span>	</a></li><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9771168.jpg" alt="강준현 국회의원 사진"></div>		<span class="politics101182"><i>더불어민주당</i>강준현</span>	</a></li><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9771007.jpg" alt="강훈식 국회의원 사진"></div>		<span class="politics101182"><i>더불어민주당</i>강훈식</span>	</a></li><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9771109.jpg" alt="고민정 국회의원 사진"></div>		<span class="politics101182"><i>더불어민주당</i>고민정</span>	</a></li><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9771180.jpg" alt="고영인 국회의원 사진"></div>		<span class="politics101182"><i>더불어민주당</i>고영인</span>	</a></li><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9770931.jpg" alt="고용진 국회의원 사진"></div>		<span class="politics101182"><i>더불어민주당</i>고용진</span>	</a></li><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9770956.jpg" alt="곽상도 국회의원 사진"></div>		<span class="politics101198"><i>미래통합당</i>곽상도</span>	</a></li><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9771224.jpg" alt="구자근 국회의원 사진"></div>		<span class="politics101198"><i>미래통합당</i>구자근</span>	</a></li><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9771165.jpg" alt="권명호 국회의원 사진"></div>		<span class="politics101198"><i>미래통합당</i>권명호</span>	</a></li><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9770679.jpg" alt="권성동 국회의원 사진"></div>		<span class="politics101030"><i>무소속</i>권성동</span>	</a></li><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9771108.jpg" alt="권영세 국회의원 사진"></div>		<span class="politics101198"><i>미래통합당</i>권영세</span>	</a></li><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9770977.jpg" alt="권은희 국회의원 사진"></div>		<span class="politics101200"><i>국민의당</i>권은희</span>	</a></li><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9771259.jpg" alt="권인숙 국회의원 사진"></div>		<span class="politics101182"><i>더불어민주당</i>권인숙</span>	</a></li><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9770998.jpg" alt="권칠승 국회의원 사진"></div>		<span class="politics101182"><i>더불어민주당</i>권칠승</span>	</a></li><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9770927.jpg" alt="기동민 국회의원 사진"></div>		<span class="politics101182"><i>더불어민주당</i>기동민</span>	</a></li><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9771258.jpg" alt="김경만 국회의원 사진"></div>		<span class="politics101182"><i>더불어민주당</i>김경만</span>	</a></li><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9770712.jpg" alt="김경협 국회의원 사진"></div>		<span class="politics101182"><i>더불어민주당</i>김경협</span>	</a></li><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9771152.jpg" alt="김교흥 국회의원 사진"></div>		<span class="politics101182"><i>더불어민주당</i>김교흥</span>	</a></li><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9771164.jpg" alt="김기현 국회의원 사진"></div>		<span class="politics101198"><i>미래통합당</i>김기현</span>	</a></li><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9771181.jpg" alt="김남국 국회의원 사진"></div>		<span class="politics101182"><i>더불어민주당</i>김남국</span>	</a></li><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9770719.jpg" alt="김도읍 국회의원 사진"></div>		<span class="politics101198"><i>미래통합당</i>김도읍</span>	</a></li><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9770997.jpg" alt="김두관 국회의원 사진"></div>		<span class="politics101182"><i>더불어민주당</i>김두관</span>	</a></li><li>	<a href="javascript:;" class="nassem_reslut_pic" title="새창열림">		<div><img src="https://www.assembly.go.kr/photo/9771136.jpg" alt="김미애 국회의원 사진"></div>		<span class="politics101198"><i>미래통합당</i>김미애</span>	</a></li></ul>
-	       						
-	       						<div id="pic-sect-pager"><div class="paging-navigation">  <strong class="page-number" style="cursor:default;">1</strong> <a href="#" class="number page-number">2</a> <a href="#" class="number page-number">3</a> <a href="#" class="number page-number">4</a> <a href="#" class="number page-number">5</a> <a href="#" class="number page-number">6</a> <a href="#" class="number page-number">7</a> <a href="#" class="number page-number">8</a> <a href="#" class="number page-number">9</a> <a href="#" class="number page-number">10</a> <a href="#" class="btn-next btn_page_next" title="다음 10페이지 이동" style="cursor: default;"><strong>다음 10페이지 이동</strong></a> <a href="#" class="btn-last btn_page_last last" title="마지막페이지 이동"><strong>마지막페이지 이동</strong></a></div></div>
+	       						<div id="pic-sect-pager">
+								   <div class="paging-navigation">  
+								   
+										
+								   {% comment %} <strong class="page-number" style="cursor:default;">1</strong> 
+								   <a href="#" class="number page-number">2</a> 
+								   <a href="#" class="number page-number">3</a> 
+								   <a href="#" class="number page-number">4</a> 
+								   <a href="#" class="number page-number">5</a> 
+								   <a href="#" class="number page-number">6</a>
+								    <a href="#" class="number page-number">7</a> 
+									<a href="#" class="number page-number">8</a> 
+									<a href="#" class="number page-number">9</a>
+									 <a href="#" class="number page-number">10</a>
+									  <a href="#" class="btn-next btn_page_next" title="다음 10페이지 이동" style="cursor: default;"><strong>다음 10페이지 이동</strong></a> 
+									  <a href="#" class="btn-last btn_page_last last" title="마지막페이지 이동"><strong>마지막페이지 이동</strong></a></div></div> {% endcomment %}
 	       						</div>
 	       					</form>
 	       					</div>

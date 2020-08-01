@@ -1,9 +1,120 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<a href="/feeds/lawsearch/lawupdate/" >발의법안 정보 업데이트</a>
-<div class="lawsearch"> 
+<div class="container" id="container">
+	<a href="/feeds/lawsearch/lawupdate/" >발의법안 업데이트</a>
+	<article>
+		<div class="contents" id="contents">
+       		<div class="layout_flex_100">   		
+       			
+       			<div class="national_assemblyman_search">
+	       			<!-- left 검색 -->
+	       			<div class="theme_select_box response_theme_box response_theme_layout">
+	       			<form id="schform" method="post">
+		       			<div class="response_theme_header">
+			       			<h4>법률안 검색</h4>
+		       			</div>
+	       				<table>
+	       				<colgroup>
+	       				<col style="width:3%;">
+	       				<col style="">
+	       				<col style="width:3%;">
+	       				</colgroup>
+	       				<tbody>
+	       					<tr>
+								<th scope="row">법률안 이름</th>
+	       						<td class = "tdforlaw"><input type="text" title="이름" id="schHgNm" name="schHgNm"></td>
+	       						
+	       					</tr>
+	       					
+	       				</tbody>
+	       				</table>
+	       				<div class="btn_group">
+		       				<ul>
+		       					<li><a href="javascript:;" class="btn_inquiries" id="btnSearch">검색</a></li>
+		       					<li><a href="javascript:;" class="btn_checkchart" id="btnInit">초기화</a></li>
+		       				</ul>
+	       				</div>
+	       			</form>
+	       			<div class="bgshadow_modal">&nbsp;</div>
+	       			</div>
+	       			<!-- //left 검색 -->
+	       			
+	       			<!-- right 결과 -->
+	       			<div class="nassem_bottom">
+	       				<div class="nassem_reslut_view">
+	       					<!-- 목록보기 -->
+	       					<div class="nassem_result_list" style="display: block;">
+	       					<h4 class="hide">목록보기</h4>
+	       					<form id="listform" method="post">
+	       						<input type="hidden" name="page" title="page" value="1">
+								<input type="hidden" name="rows" title="rows" value="10">
+	       						<div class="themeB response_theme">
+	       						<table>
+	       						<colgroup>
+	       						<col style="width:50px;" class="m_none">
+	       						<col style="width:200px;" class="m_none">
+	       						<col style="width:100px;" class="m_none">
+	       						<col style="width:100px;" class="m_none">
+	       						<col style="width:100px;" class="m_none">
+	       						<col style="width:80px;" class="m_none">
+	       						<col style="width:80px;" class="m_none">
+	       						</colgroup>
+	       						<thead>
+	       							<tr>
+	       								<th scope="col">번호</th>
+	       								<th scope="col">법률안명</th>
+	       								<th scope="col">소관위원회</th>
+	       								<th scope="col">제안일자</th>
+	       								<th scope="col">대표제안자</th>
+	       								<th scope="col">공동제안자</th>
+	       								<th scope="col" class="m_none">자세히보기</th>
+	       							</tr>
+	       						</thead>
+                                
+								   {% for law in laws %}
+									<tr>	
+										<td class="m_none rownum">{{ law.id }}</td>	
+										<td class="m_left"><a href="/feeds/politician/{{ poli.id }}/" class="hgNm" title="새창열림">{{ law.bill_name }}</a></td>	
+										<td class="polyNm">{{ law.committee }}</td>	
+										<td class="m_none cmits">{{ law.propose_dt }}</td>	
+										<td class="m_none origNm">{{ law.proposer_etc }}</td>
+										<td class="m_none sexGbnNm"><a href="{{ law.member_link }}" class="hgNm" title="새창열림">공동제안자</a></td>	
+										<td class="m_none reeleGbnNm"><a href="{{ law.detail_link }}" class="hgNm" title="새창열림">법안 자세히보기</a></td>
+									</tr>
+								   {% endfor %}
+								</tbody>
+	       						</table>
+								
+	       						</div>
+	       						
+	       						<div id="list-sect-pager">
+								   <div class="paging-navigation">  
+										<ul class = "pagination">
+											<a class = "number page-number" href="/feeds/lawsearch/{{ before_end }}/">◀</a></li>
+											{% for page in page_range %}
+												<a class = "number page-number" href="/feeds/lawsearch/{{page}}/">{{page}}</a></li>
+														
+											{% endfor %}
+											<a class = "number page-number" href="/feeds/lawsearch/{{ next_end }}/">▶</a></li>
 
-     {{ laws }}
-</div>
+										</ul>
+								   </div>
+								</div>
+								   <nav aria-label="page navigation example">
+										
+									</nav>
+	       					</form>
+	       					</div>
+	       					<!-- //목록보기 -->
+	       					
+	       				</div>
+	       			</div>
+	       			<!-- //right 결과 -->
+       			</div>
+       		</div>
+		</div>
+	</article>
+	</div>
+
 {% endblock content %}
