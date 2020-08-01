@@ -5,20 +5,20 @@
     <input type="radio" name="tabs" id="tabone" checked="checked">     
     <label for="tabone">더불어민주당</label> 
       <div class="tab"> 
-        <h3>더불어민주당 소속 의원</h3>
-        {% for politician in politicians|dictsort:"name"%}
-          {% if politician.politicalParty == '더불어민주당'%}
-            <a href="/feeds/politician/{{ politician.id }}/">{{ politician.name }}</a>
+        <h3>더불어민주당 소속 의원</h3> 
+        {% for politician in politicians|dictsort:"hg_name" %} 
+          {% if politician.politicalParty == "더불어민주당" %}
+            <a href="/feeds/politician/{{ politician.id }}/">{{ politician.hg_name }}</a>
           {% endif %}
         {% endfor %}
       </div>        
     <input type="radio" name="tabs" id="tabtwo">     
     <label for="tabtwo">미래통합당</label> 
       <div class="tab"> 
-        <h3>미래통합당 소속 의원</h3> 
-        {% for politician in politicians|dictsort:"name"%}
-          {% if politician.politicalParty == '미래통합당'%}
-            <a href="/feeds/politician/{{ politician.id }}/">{{ politician.name }}</a>
+        <h3>미래통합당 소속 의원</h3>
+        {% for politician in politicians|dictsort:"hg_name" %} 
+          {% if politician.politicalParty == "미래통합당" %}
+            <a href="/feeds/politician/{{ politician.id }}/">{{ politician.hg_name }}</a>
           {% endif %}
         {% endfor %}
       </div>
@@ -26,54 +26,54 @@
     <label for="tabthree">정의당</label> 
       <div class="tab"> 
         <h3>정의당 소속 의원</h3>
-        {% for politician in politicians|dictsort:"name"%}
-          {% if politician.politicalParty == '정의당'%}
-            <a href="/feeds/politician/{{ politician.id }}/">{{ politician.name }}</a>
+          {% for politician in politicians|dictsort:"hg_name" %} 
+          {% if politician.politicalParty == "정의당" %}
+            <a href="/feeds/politician/{{ politician.id }}/">{{ politician.hg_name }}</a>
           {% endif %}
-        {% endfor %}   
+        {% endfor %}
       </div>
     <input type="radio" name="tabs" id="tabfour"> 
     <label for="tabfour">국민의당</label> 
       <div class="tab"> 
-        <h3>국민의당 소속 의원</h3> 
-        {% for politician in politicians|dictsort:"name"%}
-          {% if politician.politicalParty == '국민의당'%}
-            <a href="/feeds/politician/{{ politician.id }}/">{{ politician.name }}</a>
+        <h3>국민의당 소속 의원</h3>
+        {% for politician in politicians|dictsort:"hg_name" %} 
+          {% if politician.politicalParty == "국민의당" %}
+            <a href="/feeds/politician/{{ politician.id }}/">{{ politician.hg_name }}</a>
           {% endif %}
-        {% endfor %}     
+        {% endfor %}
       </div>
     <input type="radio" name="tabs" id="tabfive"> 
     <label for="tabfive">기타정당</label> 
       <div class="tab"> 
         <h3>기타정당 소속 의원</h3> 
-        <h4>열린민주당</h4>
-        {% for politician in politicians|dictsort:"name"%}
-          {% if politician.politicalParty == '열린민주당'%}
-            <a href="/feeds/politician/{{ politician.id }}/">{{ politician.name }}</a>
+        <h5>열린민주당 소속 의원</h5>
+        {% for politician in politicians|dictsort:"hg_name" %} 
+          {% if politician.politicalParty == "열린민주당" %}
+            <a href="/feeds/politician/{{ politician.id }}/">{{ politician.hg_name }}</a>
           {% endif %}
-        {% endfor %}  
-        <h4>기본소득당</h4>
-        {% for politician in politicians|dictsort:"name"%}
-          {% if politician.politicalParty == '기본소득당'%}
-            <a href="/feeds/politician/{{ politician.id }}/">{{ politician.name }}</a>
+        {% endfor %}
+        <h5>기본소득당 소속 의원</h5>
+        {% for politician in politicians %} 
+          {% if politician.politicalParty == "기본소득당" %}
+            <a href="/feeds/politician/{{ politician.id }}/">{{ politician.hg_name }}</a>
           {% endif %}
-        {% endfor %}  
-        <h4>시대전환</h4>
-        {% for politician in politicians|dictsort:"name"%}
-          {% if politician.politicalParty == '시대전환'%}
-            <a href="/feeds/politician/{{ politician.id }}/">{{ politician.name }}</a>
+        {% endfor %}
+        <h5>시대전환 소속 의원</h5>
+        {% for politician in politicians %} 
+          {% if politician.politicalParty == "시대전환" %}
+            <a href="/feeds/politician/{{ politician.id }}/">{{ politician.hg_name }}</a>
           {% endif %}
-        {% endfor %}     
+        {% endfor %}
       </div>
     <input type="radio" name="tabs" id="tabsix"> 
     <label for="tabsix">무소속</label> 
       <div class="tab"> 
         <h3>무소속 의원</h3> 
-        {% for politician in politicians|dictsort:"name"%}
-          {% if politician.politicalParty == '무소속'%}
-            <a href="/feeds/politician/{{ politician.id }}/">{{ politician.name }}</a>
-          {% endif %}
-        {% endfor %}    
+          {% for politician in politicians|dictsort:"hg_name" %} 
+            {% if politician.politicalParty == "무소속" %}
+              <a href="/feeds/politician/{{ politician.id }}">{{ politician.hg_name }}</a>
+            {% endif %}
+          {% endfor %}
       </div>        
 </div>
 {% endblock content %}

@@ -15,22 +15,16 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 
-class Law(models.Model):
-    name = models.CharField(max_length=10)
-    content = models.TextField()
-    created_at = models.CharField(max_length=10)
-    link = models.URLField() #link는 URLS
-
-    # 1:N, M:N
-    like_users             = models.ManyToManyField(User, blank=True, related_name = 'like_law',             through='UserLikeLaw')
-    dislike_users          = models.ManyToManyField(User, blank=True, related_name = 'dislike_law',          through='UserDislikeLaw' )
-    
 
 
 
 #국회의원 모델
 class Politician(models.Model):
-    name = models.CharField(max_length=10)
+    hg_name = models.CharField(max_length=10,blank=True)#한글이름
+    eng_name = models.CharField(max_length=10,blank=True)
+    bth_name = models.CharField(max_length=5,blank=True)#음력,양력
+    bth_date = models.CharField(max_length=10,blank=True)#1998-09-08
+    job_res_name = models.CharField(max_length=10,blank=True)#직책
     PartyChoices = [
         ('더불어민주당', '더불어민주당'),
         ('미래통합당', '미래통합당'),
@@ -41,9 +35,9 @@ class Politician(models.Model):
         ('시대전환', '시대전환'),
         ('무소속', '무소속'),
     ]
-    politicalParty = models.CharField(max_length=10, choices=PartyChoices)
-    politicalCommittee = models.CharField(max_length=20)
-    district = models.CharField(max_length=30)
+    politicalParty = models.CharField(max_length=10,blank=True,choices=PartyChoices)
+    politicalCommittee = models.CharField(max_length=20,blank=True,null=True )
+    district = models.CharField(max_length=30,blank=True)#지역구면 여기에 포함
     genderChoices = [
         ('남', '남자'),
         ('여', '여자'),
@@ -61,12 +55,11 @@ class Politician(models.Model):
         ('9선', '9선'),
         ('10선', '10선'),
     ]
-    electedCount = models.CharField(max_length=10,blank=True, choices=countChoices)
-    howChoices = [
-        ('지역구', '지역구'),
-        ('비례대표', '비례대표'),
-    ]
-    how = models.CharField(max_length=20,blank=True)
+    electedCount = models.CharField(max_length=10,blank=True,choices=countChoices)
+    units = models.CharField(max_length=20,blank=True,null=True)#20대,21대
+    tel_num = models.CharField(max_length=10,blank=True,null=True)
+    e_mail = models.CharField(max_length=10,blank=True,null=True)
+    homepage = models.URLField(max_length=20,blank=True,null=True)
     photo = models.ImageField(blank=True)
     age = models.IntegerField(default=0,blank=True)
     politicalOrientation = models.IntegerField(default=0,blank=True)
@@ -78,10 +71,26 @@ class Politician(models.Model):
     like_users             = models.ManyToManyField(User, blank=True, related_name = 'like_politican',             through='UserLikePolitican')
     dislike_users          = models.ManyToManyField(User, blank=True, related_name = 'dislike_politican',          through='UserDislikePolitican' )
     orientation_vote_users = models.ManyToManyField(User, blank=True, related_name = 'orientation_vote_politican', through='OrientationVote')
-    agree_law              = models.ManyToManyField(Law,  blank=True, related_name = 'agree_politican',            through='PoliticanAgreeLaw')
-    disagree_law           = models.ManyToManyField(Law,  blank=True, related_name = 'disagree_politican',         through='PoliticanDisagreeLaw')
-    abstain_law            = models.ManyToManyField(Law,  blank=True, related_name = 'abstain_politican',          through='PoliticanAbstainLaw')
-    propose_law            = models.ManyToManyField(Law,  blank=True, related_name = 'propose_politican',          through='PoliticanProposeLaw')
+    #propose_law            = models.ManyToManyField(Law,  blank=True, related_name = 'propose_politican',          through='PoliticanProposeLaw')
+
+class Law(models.Model):
+    bill_name = models.CharField(max_length=100,blank=True)#법률이름
+    propse_dt = models.CharField(max_length=10,blank=True)
+    committee = models.CharField(max_length=20,blank=True)
+    detail_link = models.URLField(blank=True)#법률설명링크
+    member_link = models.URLField(blank=True)#법률제안자링크
+
+    # 1:N
+    proposer = models.ForeignKey(Politician, null=True, on_delete = models.PROTECT)
+    proposer_etc = models.CharField(max_length=10,blank=True)
+
+    # M:N
+    like_users             = models.ManyToManyField(User, blank=True, related_name = 'like_law',             through='UserLikeLaw')
+    dislike_users          = models.ManyToManyField(User, blank=True, related_name = 'dislike_law',          through='UserDislikeLaw' )
+    agree_politican        = models.ManyToManyField(Politician,  blank=True, related_name = 'agree_law',            through='PoliticanAgreeLaw')
+    disagree_politican     = models.ManyToManyField(Politician,  blank=True, related_name = 'disagree_law',         through='PoliticanDisagreeLaw')
+    abstain_politican      = models.ManyToManyField(Politician,  blank=True, related_name = 'abstain_law',          through='PoliticanAbstainLaw')
+
 
 #normal_feed
 class NormalFeed(models.Model):
@@ -232,10 +241,10 @@ class PoliticanAbstainLaw(models.Model):
     politican = models.ForeignKey(Politician, on_delete = models.CASCADE)
     created_at = models.DateTimeField(auto_now_add = True)
 
-class PoliticanProposeLaw(models.Model):
-    law = models.ForeignKey(Law, on_delete = models.CASCADE)
-    politican = models.ForeignKey(Politician, on_delete = models.CASCADE)
-    created_at = models.DateTimeField(auto_now_add = True)
+# class PoliticanProposeLaw(models.Model):
+#     law = models.ForeignKey(Law, on_delete = models.CASCADE)
+#     politican = models.ForeignKey(Politician, on_delete = models.CASCADE)
+#     created_at = models.DateTimeField(auto_now_add = True)
 
 #normal_feed relate
 class UserLikeNormalFeed(models.Model):
