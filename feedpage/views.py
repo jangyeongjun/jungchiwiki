@@ -171,7 +171,6 @@ def normalFeed_debate(request, pid, nfid):
     return render(request,'feedpage/debate.html', {'politician': politician ,'normalFeed' : normalFeed, 'comments' : comments, 'comments_to_comment' : comments_to_comment})
 
 
-
 def law_debate(request, pid, lid):
     politician = Politician.objects.get(id=pid)
     law = Law.objects.get(id = lid)
@@ -182,7 +181,6 @@ def law_debate(request, pid, lid):
         comments_to_comment = comments_to_comment.union(temp)
     
     return render(request,'feedpage/law_debate.html', {'politician':politician, 'law': law , 'comments' : comments, 'comments_to_comment' : comments_to_comment})
-
 
 #======================================================
 #UPDATE
