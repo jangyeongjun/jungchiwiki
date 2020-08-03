@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_list_or_404
 from django.shortcuts import redirect
 from django.contrib.auth.models import User
 from .models import *
@@ -8,6 +8,7 @@ import os
 from django.http import JsonResponse
 import simplejson as json
 import math
+
 
 # Create your views here.
 def main(request):
@@ -90,7 +91,10 @@ def main(request):
     return render(request,'feedpage/main.html', {'politicians' : politicians})
  
 def search(request, page=1):
-    polis = Politician.objects.all()
+    polis = Politician.objects.all().order_by('hg_name')
+    
+
+    #페이징 작업 위함
     paginated_by = 10
     total_count = len(polis)
     total_page = math.ceil(total_count/paginated_by)
@@ -174,7 +178,7 @@ def lawupdate(request):
                         Law.objects.create(bill_name = laws[number]['BILL_NAME'],proposer=Politician.objects.get(id=poli.id),proposer_etc=laws[number]['PROPOSER'], propose_dt=laws[number]['PROPOSE_DT'],detail_link=laws[number]['DETAIL_LINK'],member_link=laws[number]['MEMBER_LIST'])
 
 
-        else :
+        else :#발의 법안 2개 이상인 경우
             for number in range(len(laws)):
                 print(len(laws))
                 print(poli.hg_name,number)
@@ -185,6 +189,8 @@ def lawupdate(request):
 
                 #law = Law.objects.get(bill_name = laws[number]['BILL_NAME']
     return render(request, 'feedpage/lawsearch.html',{'laws':laws})
+
+
 
 def normalFeed_debate_comment_edit(request, pid, nfid, cid):
     comment = Comment.objects.get(id = cid)
@@ -382,7 +388,13 @@ def normalFeed_debate_comment_dislike(request, pid, nfid, cid):
 
 
 def lawsearch(request, page=1):
-    laws= Law.objects.all().order_by('-propose_dt')
+    lawsearch_key = request.POST.get('lawseach_key',None)
+    print("lawsearch는",lawsearch_key)
+    if lawsearch_key:
+        #laws = get_list_or_404(Law, bill_name__contains=lawsearch_key)
+        laws = Law.objects.all().order_by('-propose_dt').filter(bill_name__icontains = lawsearch_key)
+    else:
+        laws = Law.objects.all().order_by('-propose_dt')
     paginated_by = 10
     total_count = len(laws)
     total_page = math.ceil(total_count/paginated_by)
