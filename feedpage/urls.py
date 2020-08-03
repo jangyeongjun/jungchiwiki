@@ -3,17 +3,18 @@ from feedpage import views
 
 
 urlpatterns = [
-    path('', views.main, name='main'),
-    path('search/', views.search, name='search'),
-    path('search/<int:page>/', views.search, name='search'),
-    path('search/poliupdate/', views.poliupdate, name='poliupdate'),
-    path('lawsearch/', views.lawsearch, name='lawsearch'),
-    path('lawsearch/<int:page>/', views.lawsearch, name='lawsearch'),
-    path('lawsearch/lawupdate/', views.lawupdate, name='lawupdate'),
+    path('',                                                                                            views.main,                             name='main'),
+    path('search/',                                                                                     views.search,                           name='search'),
+    path('search/<int:page>/',                                                                          views.search,                           name='search'),
+    path('search/poliupdate/',                                                                          views.poliupdate,                       name='poliupdate'),
+    path('lawsearch/',                                                                                  views.lawsearch,                        name='lawsearch'),
+    path('lawsearch/<int:page>/',                                                                       views.lawsearch,                        name='lawsearch'),
+    path('lawsearch/lawupdate/',                                                                        views.lawupdate,                        name='lawupdate'),
     path('politician/<int:pid>/',                                                                       views.politician,                       name='politician'), #pid = politician model id
     path('politician/<int:pid>/insert-photo/',                                                          views.insert_photo,                     name='insert_photo'),
     path('politician/<int:pid>/law/<int:lid>/like/',                                                    views.law_like,                         name='law_like'),
     path('politician/<int:pid>/law/<int:lid>/dislike/',                                                 views.law_dislike,                      name='law_dislike'),
+    path('politician/<int:pid>/law/<int:lid>/debate/',                                                  views.law_debate,                       name='law_debate'),
     path('politician/<int:pid>/orientationVote/<int:value>/',                                           views.orientationVote,                  name='orientationVote'),
     path('politician/<int:pid>/orientationVote/cancel/',                                                views.orientationVoteCancel,            name='orientationVoteCancel'),
     path('politician/<int:pid>/normalfeed/<int:nfid>/smallfeed/<int:sfid>/like/',                       views.smallFeed_like,                   name='smallFeed_like'),

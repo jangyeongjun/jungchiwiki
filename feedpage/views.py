@@ -155,6 +155,9 @@ def normalFeed_debate_new_CTC(request, pid, nfid, cid):
     return redirect(path)
 
 
+def law_debate(request, pid, lid):
+    
+
 
 #======================================================
 #UPDATE

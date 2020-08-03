@@ -137,7 +137,7 @@
             </div>
             <div class="normal-feed__supporting-text">
                 {% comment %} 발의 법률안이면 {% endcomment %}
-                {% if normalFeed.title == '4' %}   
+                {% if normalFeed.title == '4' %} 
                     {% for law in laws %}
                         <div class="law-wrapper" style="border: solid 1px #dbdbdb;">
                             <h4>{{ law.bill_name }}</h4>
@@ -161,9 +161,12 @@
                                 data-lid={{ law.id }} 
                                 data-csrfmiddlewaretoken="{{ csrf_token }}" 
                                 data-badge="{{ law.dislike_users.count }}">DISLIKES</a>
+
+                             <a href="/feeds/politician/{{ politician.id }}/law/{{ law.id }}/debate/">{{ law.bill_name }}에 대한 토론방</a>
                         </div>
                     {% endfor %}
-                {% else %}
+                {% else %} 
+                {% comment %} 법률안 NORMALFEED가 아니면 {% endcomment %}
                     
                     <h3> {{ normalFeed.content }}
                     <form action=                 "/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/edit/" 
