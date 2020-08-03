@@ -45,7 +45,8 @@
                                   data-pid=                 "{{ politician.id }}" 
                                   data-nfid=                "{{ normalFeed.id }}"
                                   data-cid=                 "{{ c.id }}" 
-                                  data-csrfmiddlewaretoken= "{{ csrf_token }}">
+                                  data-csrfmiddlewaretoken= "{{ csrf_token }}"
+                                  onclick="return confirm('정말 삭제하시겠습니까?')">
 
                                 {% csrf_token %}
                                 <button class="mdl-button mdl-js-button mdl-button--icon">
@@ -115,7 +116,8 @@
                                         data-nfid=               "{{ normalFeed.id }}"
                                         data-cid=                "{{ c.id }}"
                                         data-ctcid=              "{{ ctc.id }}" 
-                                        data-csrfmiddlewaretoken="{{ csrf_token }}">
+                                        data-csrfmiddlewaretoken="{{ csrf_token }}"
+                                        onclick="return confirm('정말 삭제하시겠습니까?')">
 
                                         {% csrf_token %}
                                         <button class="mdl-button mdl-js-button mdl-button--icon">

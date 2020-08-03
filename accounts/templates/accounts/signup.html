@@ -1,0 +1,46 @@
+<h1> Sign Up! </h1>
+
+<form method="POST" action="{%url 'signup'%}">
+    {% csrf_token %}
+    아이디
+    <br>
+    <input name="username" type="text" value="">
+    <br>
+    <br>
+    비밀번호
+    <br>
+    <input name="password1" type="password" value="">
+    <br>
+    <br>
+    비밀번호 확인
+    <br>
+    <input name="password2" type="password" value="">
+    <br>
+    <br>
+    성별
+    <br>
+    <select name="gender" id="gender" type = "text">
+        <option value="M">남자</option>
+        <option value="W">여자</option>
+    </select>
+    <br>
+    <br>
+    나의 성향
+    <br>
+    <select name="politicalOrientation" id="politicalOrientation">
+        <option value="-5">-5</option>
+        <option value="-4">-4</option>
+        <option value="-3">-3</option>
+        <option value="-2">-2</option>
+        <option value="-1">-1</option>
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+    </select>
+    <br>
+    <br>
+    <input type="submit" value="Sign Up!">
+</form>

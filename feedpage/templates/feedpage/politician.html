@@ -103,10 +103,11 @@
             </div>
         </div>    
     </div>
-
+    {% if user.is_superuser %}
     <h5>
         <a href = "/feeds/politician/{{ politician.id }}/normalfeed/new/">normalFeed 추가하기</a>
     </h5>
+    {% endif %}
     {% comment %} normal Feed 보여주는 part {% endcomment %}
     {%for normalFeed in normalFeeds|dictsort:"title"%}
         <div class="demo-card-wide mdl-card mdl-shadow--2dp normal-feed" id ="normalFeed">
@@ -128,10 +129,15 @@
                    data-badge="{{ normalFeed.dislike_users.count }}">DISLIKE</a>
 
                 <a href="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/debate/">해당 내용에 대한 토론방</a>
+                
+                <button class="mdl-button mdl-js-button mdl-button--icon normalFeed-edit">
+                    <i class="material-icons">edit</i>
+                </button>
+                
             </div>
             <div class="normal-feed__supporting-text">
                 {% comment %} 발의 법률안이면 {% endcomment %}
-                {% if normalFeed.title == '4' %}   
+                {% if normalFeed.title == '4' %} 
                     {% for law in laws %}
                         <div class="law-wrapper" style="border: solid 1px #dbdbdb;">
                             <h4>{{ law.bill_name }}</h4>
@@ -155,20 +161,39 @@
                                 data-lid={{ law.id }} 
                                 data-csrfmiddlewaretoken="{{ csrf_token }}" 
                                 data-badge="{{ law.dislike_users.count }}">DISLIKES</a>
+
+                             <a href="/feeds/politician/{{ politician.id }}/law/{{ law.id }}/debate/">{{ law.bill_name }}에 대한 토론방</a>
                         </div>
                     {% endfor %}
-                {% else %}
+                {% else %} 
+                {% comment %} 법률안 NORMALFEED가 아니면 {% endcomment %}
                     
                     <h3> {{ normalFeed.content }}
-                    <h5>
-                        <a href = "/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/smallfeed/new/">smallFeed 추가하기</a>
-                    </h5>
+                    <form action=                 "/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/edit/" 
+                        method=                   "POST" 
+                        class=                    "normalFeed-edit-form" 
+                        data-pid=                 "{{ politician.id }}" 
+                        data-nfid=                "{{ normalFeed.id }}"
+                        data-csrfmiddlewaretoken= "{{ csrf_token }}"
+                        style= "display:none;">
+                        {% csrf_token %}
+                        <div class="mdl-textfield mdl-js-textfield">
+                            <input class="mdl-textfield__input" type="text" name="content" value="{{ normalFeed.content }}">
+                            <button  type="submit" class="mdl-button mdl-js-button mdl-button--icon">
+                                <i class="material-icons">send</i>
+                            </button>
+                        </div>
+                    </form>
+                    {% if user.is_superuser %}
+                        <h5>
+                            <a href = "/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/smallfeed/new/">smallFeed 추가하기</a>
+                        </h5>
+                    {% endif %}
                     {% for smallFeed in smallFeeds %}
                         {% if smallFeed.normalFeed == normalFeed %}   
-                            <h4>{{ normalFeed.title }}.{{ forloop.counter }} {{ smallFeed.title }}</h4>
                             {% comment %} forloop.counter shibalalalalalalalalal {% endcomment %}
-                            <h5>{{ smallFeed.content }}</h5>
-                            <div class = "like-wrapper">
+                            <div class = "mdl-card__title">
+                                <h4>{{ normalFeed.title }}.{{ forloop.counter }} {{ smallFeed.title }}</h4>
                                 <a href="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/smallfeed/{{ smallFeed.id }}/like/"    
                                 class = "material-icons mdl-badge smallFeed-Like"     
                                 data-pid={{ politician.id }} 
@@ -184,7 +209,29 @@
                                 data-sfid={{ smallFeed.id }} 
                                 data-csrfmiddlewaretoken="{{ csrf_token }}" 
                                 data-badge="{{ smallFeed.dislike_users.count }}">DISLIKES</a>
-                                {% comment %} smallfeed는 어떻게 sort할까 {% endcomment %}
+                                {% comment %} smallfeed는 어떻게 sort할까 {% endcomment %}       
+                                <button class="mdl-button mdl-js-button mdl-button--icon smallFeed-edit">
+                                    <i class="material-icons">edit</i>
+                                </button>
+                            </div>
+                            <div class="small-feed__supporting-text">
+                                <h5>{{ smallFeed.content }}</h5>
+                                <form action=                 "/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/smallfeed/{{ smallFeed.id }}/edit/" 
+                                    method=                   "POST" 
+                                    class=                    "smallFeed-edit-form" 
+                                    data-pid=                 "{{ politician.id }}" 
+                                    data-nfid=                "{{ normalFeed.id }}"
+                                    data-sfid=                "{{ smallFeed.id  }}"
+                                    data-csrfmiddlewaretoken= "{{ csrf_token }}"
+                                    style= "display:none;">
+                                    {% csrf_token %}
+                                    <div class="mdl-textfield mdl-js-textfield">
+                                        <input class="mdl-textfield__input" type="text" name="content" value="{{ smallFeed.content }}">
+                                        <button  type="submit" class="mdl-button mdl-js-button mdl-button--icon">
+                                            <i class="material-icons">send</i>
+                                        </button>
+                                    </div>
+                                </form>
                             </div>
                         {% endif %}
                     {% endfor %}
