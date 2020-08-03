@@ -387,20 +387,25 @@ def normalFeed_debate_comment_dislike(request, pid, nfid, cid):
     return JsonResponse(context)
 
 
-def lawsearch(request, page=1):
-    lawsearch_key = request.POST.get('lawseach_key',None)
+def lawsearch(request, page=1, lawkey=None):
+    if lawkey == None:
+        lawsearch_key = request.POST.get('lawsearch_key',None)
+    else:
+        lawsearch_key = lawkey
     print("lawsearch는",lawsearch_key)
     if lawsearch_key:
         #laws = get_list_or_404(Law, bill_name__contains=lawsearch_key)
         laws = Law.objects.all().order_by('-propose_dt').filter(bill_name__icontains = lawsearch_key)
     else:
         laws = Law.objects.all().order_by('-propose_dt')
+    
+    #paging 작업
     paginated_by = 10
     total_count = len(laws)
     total_page = math.ceil(total_count/paginated_by)
     initial=((page-1)//10)*10+1
     next_end = initial+10
-    if (next_end>total_page):
+    if (next_end>total_page): 
         next_end = total_page+1
     page_range = range(initial, next_end)
     if (initial==1):
@@ -410,7 +415,7 @@ def lawsearch(request, page=1):
     start_index = paginated_by * (page-1)
     end_index = paginated_by * page
     laws = laws[start_index:end_index]
-    return render(request, 'feedpage/lawsearch.html', {"laws":laws,  'total_page':total_page, 'page_range':page_range, 'initial':initial, 'next_end':next_end, 'before_end':before_end})
+    return render(request, 'feedpage/lawsearch.html', {"laws":laws, 'lawsearch_keyword':lawsearch_key, 'total_page':total_page, 'page_range':page_range, 'initial':initial, 'next_end':next_end, 'before_end':before_end})
 
 def law_like(request, pid, lid):
     law = Law.objects.get(id = lid)
