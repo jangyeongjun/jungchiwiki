@@ -129,11 +129,16 @@
                    data-badge="{{ normalFeed.dislike_users.count }}">DISLIKE</a>
 
                 <a href="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/debate/">해당 내용에 대한 토론방</a>
-                
-                <button class="mdl-button mdl-js-button mdl-button--icon normalFeed-edit">
-                    <i class="material-icons">edit</i>
-                </button>
-                
+                {% if normalFeed.title != '4' %}
+                    {% if user.is_authenticated %} 
+                        <button class="mdl-button mdl-js-button mdl-button--icon normalFeed-edit">
+                            <i class="material-icons">edit</i>
+                        </button>
+                    {% endif %}
+                {% endif %}
+                {% if user.is_superuser %}
+                    <a href = "/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/delete/">삭제</a>
+                {% endif %}
             </div>
             <div class="normal-feed__supporting-text">
                 {% comment %} 발의 법률안이면 {% endcomment %}
@@ -141,11 +146,11 @@
                     {% for law in laws %}
                         <div class="law-wrapper" style="border: solid 1px #dbdbdb;">
                             <h4>{{ law.bill_name }}</h4>
-                            <h5>대표 발의자 : {{ law.proposer.hg_name }}</h5>
+                            {% comment %} <h5>대표 발의자 : {{ law.proposer.hg_name }}</h5> {% endcomment %}
                             <h6>발의된 날짜 : {{ law.propose_dt }}</h6>
-                            <h6>발의한 위원회 : {{ law.committee }}</h6>
+                            {% comment %} <h6>발의한 위원회 : {{ law.committee }}</h6>
                             <h6>법안 상세 정보 : {{ law.detail_link }}</h6>
-                            <h6>발의자 명단 : {{ law.member_link }}</h6>
+                            <h6>발의자 명단 : {{ law.member_link }}</h6> {% endcomment %}
                         </div>
                         <div class = "like-wrapper">
                             <a href="/feeds/politician/{{ politician.id }}/law/{{ law.id }}/like/"    
@@ -169,21 +174,23 @@
                 {% comment %} 법률안 NORMALFEED가 아니면 {% endcomment %}
                     
                     <h3> {{ normalFeed.content }}
-                    <form action=                 "/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/edit/" 
-                        method=                   "POST" 
-                        class=                    "normalFeed-edit-form" 
-                        data-pid=                 "{{ politician.id }}" 
-                        data-nfid=                "{{ normalFeed.id }}"
-                        data-csrfmiddlewaretoken= "{{ csrf_token }}"
-                        style= "display:none;">
-                        {% csrf_token %}
-                        <div class="mdl-textfield mdl-js-textfield">
-                            <input class="mdl-textfield__input" type="text" name="content" value="{{ normalFeed.content }}">
-                            <button  type="submit" class="mdl-button mdl-js-button mdl-button--icon">
-                                <i class="material-icons">send</i>
-                            </button>
-                        </div>
-                    </form>
+                    {% if user.is_authenticated %}
+                        <form action=                 "/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/edit/" 
+                            method=                   "POST" 
+                            class=                    "normalFeed-edit-form" 
+                            data-pid=                 "{{ politician.id }}" 
+                            data-nfid=                "{{ normalFeed.id }}"
+                            data-csrfmiddlewaretoken= "{{ csrf_token }}"
+                            style= "display:none;">
+                            {% csrf_token %}
+                            <div class="mdl-textfield mdl-js-textfield">
+                                <input class="mdl-textfield__input" type="text" name="content" value="{{ normalFeed.content }}">
+                                <button  type="submit" class="mdl-button mdl-js-button mdl-button--icon">
+                                    <i class="material-icons">send</i>
+                                </button>
+                            </div>
+                        </form>
+                    {% endif %}
                     {% if user.is_superuser %}
                         <h5>
                             <a href = "/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/smallfeed/new/">smallFeed 추가하기</a>
@@ -209,10 +216,15 @@
                                 data-sfid={{ smallFeed.id }} 
                                 data-csrfmiddlewaretoken="{{ csrf_token }}" 
                                 data-badge="{{ smallFeed.dislike_users.count }}">DISLIKES</a>
-                                {% comment %} smallfeed는 어떻게 sort할까 {% endcomment %}       
-                                <button class="mdl-button mdl-js-button mdl-button--icon smallFeed-edit">
-                                    <i class="material-icons">edit</i>
-                                </button>
+                                {% comment %} smallfeed는 어떻게 sort할까 {% endcomment %}
+                                {% if user.is_authenticated %}       
+                                    <button class="mdl-button mdl-js-button mdl-button--icon smallFeed-edit">
+                                        <i class="material-icons">edit</i>
+                                    </button>
+                                {% endif %}
+                                {% if user.is_superuser %}
+                                    <a href = "/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/smallfeed/{{ smallFeed.id }}/delete/">삭제</a>
+                                {% endif %}
                             </div>
                             <div class="small-feed__supporting-text">
                                 <h5>{{ smallFeed.content }}</h5>
