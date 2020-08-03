@@ -19,9 +19,14 @@ def main(request):
 
 def poliupdate(request):
     polis = poliParsing()
+    currentPoliticians = Politician.objects.all()
+
     for number in range(len(polis)):
         print(number)
-        Politician.objects.create(hg_name = polis[number]['HG_NM'], eng_name = polis[number]['ENG_NM'], bth_name=polis[number]['BTH_GBN_NM'], bth_date=polis[number]['BTH_DATE'], job_res_name = polis[number]['JOB_RES_NM'], politicalParty = polis[number]['POLY_NM'], district = polis[number]['ORIG_NM'], politicalCommittee = polis[number]['CMITS'], electedCount = polis[number]['REELE_GBN_NM'], units = polis[number]['UNITS'], gender = polis[number]['SEX_GBN_NM'], tel_num = polis[number]['TEL_NO'], e_mail = polis[number]['E_MAIL'], homepage = polis[number]['HOMEPAGE'])
+        if currentPoliticians.filter(hg_name = polis[number]['HG_NM']):
+            print(number)
+        else :
+            Politician.objects.create(hg_name = polis[number]['HG_NM'], eng_name = polis[number]['ENG_NM'], bth_name=polis[number]['BTH_GBN_NM'], bth_date=polis[number]['BTH_DATE'], job_res_name = polis[number]['JOB_RES_NM'], politicalParty = polis[number]['POLY_NM'], district = polis[number]['ORIG_NM'], politicalCommittee = polis[number]['CMITS'], electedCount = polis[number]['REELE_GBN_NM'], units = polis[number]['UNITS'], gender = polis[number]['SEX_GBN_NM'], tel_num = polis[number]['TEL_NO'], e_mail = polis[number]['E_MAIL'], homepage = polis[number]['HOMEPAGE'])
     return render(request,'feedpage/search.html')
 
 
@@ -150,6 +155,9 @@ def normalFeed_debate_new_CTC(request, pid, nfid, cid):
     return redirect(path)
 
 
+def law_debate(request, pid, lid):
+    
+
 
 #======================================================
 #UPDATE
@@ -190,6 +198,24 @@ def lawupdate(request):
                 #law = Law.objects.get(bill_name = laws[number]['BILL_NAME']
     return render(request, 'feedpage/lawsearch.html',{'laws':laws})
 
+
+def normalFeed_edit(request, pid, nfid):
+    normalFeed= NormalFeed.objects.get(id = nfid)
+    content = request.POST['content']
+    normalFeed.content = content
+    normalFeed.updated_at = timezone.now()
+    normalFeed.save()
+    path = os.path.join('/feeds/politician', str(pid)).replace("\\" , "/")
+    return redirect(path)
+
+def smallFeed_edit(request, pid, nfid, sfid):
+    smallFeed= SmallFeed.objects.get(id = sfid)
+    content = request.POST['content']
+    smallFeed.content = content
+    smallFeed.updated_at = timezone.now()
+    smallFeed.save()
+    path = os.path.join('/feeds/politician', str(pid)).replace("\\" , "/")
+    return redirect(path)
 
 
 def normalFeed_debate_comment_edit(request, pid, nfid, cid):
