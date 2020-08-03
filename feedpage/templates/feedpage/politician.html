@@ -106,7 +106,7 @@
 
     <h5>
         <a href = "/feeds/politician/{{ politician.id }}/normalfeed/new/">normalFeed 추가하기</a>
-    </h5>
+    </h5> 
     {% comment %} normal Feed 보여주는 part {% endcomment %}
     {%for normalFeed in normalFeeds|dictsort:"title"%}
         <div class="demo-card-wide mdl-card mdl-shadow--2dp normal-feed" id ="normalFeed">
@@ -128,6 +128,26 @@
                    data-badge="{{ normalFeed.dislike_users.count }}">DISLIKE</a>
 
                 <a href="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/debate/">해당 내용에 대한 토론방</a>
+                <div class = "normalFeed-edit-wrapper">
+                    <button class="mdl-button mdl-js-button mdl-button--icon normalFeed-edit">
+                        <i class="material-icons">edit</i>
+                    </button>
+                    <form action=                 "/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/edit/" 
+                        method=                   "POST" 
+                        class=                    "normalFeed-edit-form" 
+                        data-pid=                 "{{ politician.id }}" 
+                        data-nfid=                "{{ normalFeed.id }}" 
+                        data-csrfmiddlewaretoken= "{{ csrf_token }}"
+                        style= "display:none;">
+                        {% csrf_token %}
+                        <div class="mdl-textfield mdl-js-textfield">
+                            <textarea class="mdl-textfield__input" type="text" name="content" value="{{ noramlFeed.content }}">
+                            <button  type="submit" class="mdl-button mdl-js-button mdl-button--icon">
+                                <i class="material-icons">send</i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
             <div class="normal-feed__supporting-text">
                 {% comment %} 발의 법률안이면 {% endcomment %}

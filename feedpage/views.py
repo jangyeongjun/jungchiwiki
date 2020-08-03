@@ -18,9 +18,13 @@ def main(request):
 
 def poliupdate(request):
     polis = poliParsing()
+    currentPoliticians = Politician.objects.all()
     for number in range(len(polis)):
-        print(number)
-        Politician.objects.create(hg_name = polis[number]['HG_NM'], eng_name = polis[number]['ENG_NM'], bth_name=polis[number]['BTH_GBN_NM'], bth_date=polis[number]['BTH_DATE'], job_res_name = polis[number]['JOB_RES_NM'], politicalParty = polis[number]['POLY_NM'], district = polis[number]['ORIG_NM'], politicalCommittee = polis[number]['CMITS'], electedCount = polis[number]['REELE_GBN_NM'], units = polis[number]['UNITS'], gender = polis[number]['SEX_GBN_NM'], tel_num = polis[number]['TEL_NO'], e_mail = polis[number]['E_MAIL'], homepage = polis[number]['HOMEPAGE'])
+        if currentPoliticians.filter(hg_name = polis[number]['HG_NM']):
+            print(number)
+        else:
+            Politician.objects.create(hg_name = polis[number]['HG_NM'], eng_name = polis[number]['ENG_NM'], bth_name=polis[number]['BTH_GBN_NM'], bth_date=polis[number]['BTH_DATE'], job_res_name = polis[number]['JOB_RES_NM'], politicalParty = polis[number]['POLY_NM'], district = polis[number]['ORIG_NM'], politicalCommittee = polis[number]['CMITS'], electedCount = polis[number]['REELE_GBN_NM'], units = polis[number]['UNITS'], gender = polis[number]['SEX_GBN_NM'], tel_num = polis[number]['TEL_NO'], e_mail = polis[number]['E_MAIL'], homepage = polis[number]['HOMEPAGE'])
+    
     return render(request,'feedpage/search.html')
 
 
@@ -38,6 +42,8 @@ def normalFeedAdd(request, pid):
     politician = Politician.objects.get(id = pid)
     return render (request,'feedpage/newNormalFeed.html', {'politician': politician})
 
+    
+
 def normalFeedCreate(request, pid):
     politician = Politician.objects.get(id = pid)
     title = request.POST['title']
@@ -54,7 +60,8 @@ def normalFeedCreate(request, pid):
         title = '5'
     else:
         title = '6'
-    NormalFeed.objects.create(title = title, content = content, author=request.user, politician=politician)
+    
+    NormalFeed.objects.create(title = title, content = content, author=request.user, politician=politician)    
     path = os.path.join('/feeds/politician/', str(pid))
     return redirect(path)
 

@@ -64,6 +64,7 @@ $(document).ready(() => {
                 }    
             },
             error: function(response, status, error) {
+                console.log(response);
                 console.log(response, status, error);
             },
             complete: function(response) {
@@ -440,6 +441,14 @@ $(document).ready(() => {
                 console.log(response);
             }
         })
+    });
+
+    $(".normalFeed-edit").click((e) => {
+        const $this = $(e.currentTarget);
+        const $edit_form = $this.siblings('.normalFeed-edit-form');
+        $($edit_form).fadeToggle(
+            500
+        );
     });
 
 
