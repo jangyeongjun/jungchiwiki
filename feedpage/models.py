@@ -163,7 +163,7 @@ class Comment(models.Model):
     evaluation = models.CharField(max_length = 35, choices = evaluationChoices, blank=True)#일반토론인 경우에는 blank값
     #1:N
     author = models.ForeignKey(User, blank=True, null=True, on_delete=models.PROTECT) #유저가 사라져도 댓글은 사라지지 않음
-    law = models.ForeignKey(Law, blank=True,  null=True, on_delete=models.CASCADE)
+    law = models.ForeignKey(Law, blank=True,  null=True, on_delete=models.CASCADE, related_name='comments' )
     normalFeed = models.ForeignKey(NormalFeed, blank=True, null=True, on_delete=models.CASCADE, related_name = 'comments')
     smallFeed = models.ForeignKey(SmallFeed,blank=True,  null=True, on_delete=models.CASCADE, related_name = 'comments')
     politician = models.ForeignKey(Politician, blank=True,  null=True, on_delete=models.CASCADE, related_name = 'comments')
