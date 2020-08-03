@@ -198,6 +198,7 @@ def lawupdate(request):
                 #law = Law.objects.get(bill_name = laws[number]['BILL_NAME']
     return render(request, 'feedpage/lawsearch.html',{'laws':laws})
 
+
 def normalFeed_edit(request, pid, nfid):
     normalFeed= NormalFeed.objects.get(id = nfid)
     content = request.POST['content']
@@ -215,6 +216,7 @@ def smallFeed_edit(request, pid, nfid, sfid):
     smallFeed.save()
     path = os.path.join('/feeds/politician', str(pid)).replace("\\" , "/")
     return redirect(path)
+
 
 def normalFeed_debate_comment_edit(request, pid, nfid, cid):
     comment = Comment.objects.get(id = cid)
