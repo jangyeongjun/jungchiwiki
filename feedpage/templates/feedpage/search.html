@@ -26,10 +26,7 @@
 	       				</colgroup>
 	       				<tbody>
 	       					<tr>
-	       						<input type="hidden" id="allCnt" value="300" title="총건수">
-	       						<input type="hidden" name="unitCd" value="" title="대수">
-	       						<input type="hidden" name="gubunId" value="MA" title="구분코드">
-	       						<input type="hidden" name="excelNm" value="" title="엑셀 다운로드명">
+	       						
 								<th scope="row">이름</th>
 	       						<td><input type="text" title="이름" id="schHgNm" name="schHgNm"></td>
 	       						<th scope="row">정치성향</th>
@@ -254,7 +251,7 @@
 	       						</colgroup>
 	       						<thead>
 	       							<tr>
-	       								<th scope="col">번호</th>
+	       								<th scope="col">성향</th>
 	       								<th scope="col">의원명</th>
 	       								<th scope="col">정당</th>
 	       								<th scope="col">소속위원회</th>
@@ -267,7 +264,7 @@
 	       						<tbody id="list-result-sect">
 								   {% for poli in polis %}
 									<tr>	
-										<td class="m_none rownum">{{ poli.id }}</td>	
+										<td class="m_none rownum">{{ poli.politicalOrientation }}</td>	
 										<td class="m_left"><a href="/feeds/politician/{{ poli.id }}/" class="hgNm" title="새창열림">{{ poli.hg_name }}</a></td>	
 										<td class="polyNm">{{ poli.politicalParty }}</td>	
 										<td class="m_none cmits">{{ poli.politicalCommittee }}</td>	

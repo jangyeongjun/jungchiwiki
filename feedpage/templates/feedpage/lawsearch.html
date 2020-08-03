@@ -21,20 +21,22 @@
 	       				<col style="width:3%;">
 	       				</colgroup>
 	       				<tbody>
+                           <form class="btn_group" action="{% url 'search'%}" method = "post" id = "search_form">
+                           {% csrf_token %}
 	       					<tr>
 								<th scope="row">법률안 이름</th>
-	       						<td class = "tdforlaw"><input type="text" title="이름" id="schHgNm" name="schHgNm"></td>
+	       						<td class = "tdforlaw">
+                                    <input type="text" title="이름" id="schHgNm" name="lawseach_key" style="width:800px;height:30px;font-size:20px"></input>
+                                    <button class="btn_inquiries" id="btnSearch" type="submit">검색</button>
+                                
+                                </td>
 	       						
 	       					</tr>
+                            </form>
 	       					
 	       				</tbody>
 	       				</table>
-	       				<div class="btn_group">
-		       				<ul>
-		       					<li><a href="javascript:;" class="btn_inquiries" id="btnSearch">검색</a></li>
-		       					<li><a href="javascript:;" class="btn_checkchart" id="btnInit">초기화</a></li>
-		       				</ul>
-	       				</div>
+	       				
 	       			</form>
 	       			<div class="bgshadow_modal">&nbsp;</div>
 	       			</div>

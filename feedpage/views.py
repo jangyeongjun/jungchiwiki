@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_list_or_404
 from django.shortcuts import redirect
 from django.contrib.auth.models import User
 from .models import *
@@ -8,6 +8,7 @@ import os
 from django.http import JsonResponse
 import simplejson as json
 import math
+
 
 # Create your views here.
 def main(request):
@@ -19,12 +20,13 @@ def main(request):
 def poliupdate(request):
     polis = poliParsing()
     currentPoliticians = Politician.objects.all()
+
     for number in range(len(polis)):
+        print(number)
         if currentPoliticians.filter(hg_name = polis[number]['HG_NM']):
             print(number)
-        else:
+        else :
             Politician.objects.create(hg_name = polis[number]['HG_NM'], eng_name = polis[number]['ENG_NM'], bth_name=polis[number]['BTH_GBN_NM'], bth_date=polis[number]['BTH_DATE'], job_res_name = polis[number]['JOB_RES_NM'], politicalParty = polis[number]['POLY_NM'], district = polis[number]['ORIG_NM'], politicalCommittee = polis[number]['CMITS'], electedCount = polis[number]['REELE_GBN_NM'], units = polis[number]['UNITS'], gender = polis[number]['SEX_GBN_NM'], tel_num = polis[number]['TEL_NO'], e_mail = polis[number]['E_MAIL'], homepage = polis[number]['HOMEPAGE'])
-    
     return render(request,'feedpage/search.html')
 
 
@@ -42,8 +44,6 @@ def normalFeedAdd(request, pid):
     politician = Politician.objects.get(id = pid)
     return render (request,'feedpage/newNormalFeed.html', {'politician': politician})
 
-    
-
 def normalFeedCreate(request, pid):
     politician = Politician.objects.get(id = pid)
     title = request.POST['title']
@@ -60,8 +60,7 @@ def normalFeedCreate(request, pid):
         title = '5'
     else:
         title = '6'
-    
-    NormalFeed.objects.create(title = title, content = content, author=request.user, politician=politician)    
+    NormalFeed.objects.create(title = title, content = content, author=request.user, politician=politician)
     path = os.path.join('/feeds/politician/', str(pid))
     return redirect(path)
 
@@ -97,7 +96,10 @@ def main(request):
     return render(request,'feedpage/main.html', {'politicians' : politicians})
  
 def search(request, page=1):
-    polis = Politician.objects.all()
+    polis = Politician.objects.all().order_by('hg_name')
+    
+
+    #페이징 작업 위함
     paginated_by = 10
     total_count = len(polis)
     total_page = math.ceil(total_count/paginated_by)
@@ -181,7 +183,7 @@ def lawupdate(request):
                         Law.objects.create(bill_name = laws[number]['BILL_NAME'],proposer=Politician.objects.get(id=poli.id),proposer_etc=laws[number]['PROPOSER'], propose_dt=laws[number]['PROPOSE_DT'],detail_link=laws[number]['DETAIL_LINK'],member_link=laws[number]['MEMBER_LIST'])
 
 
-        else :
+        else :#발의 법안 2개 이상인 경우
             for number in range(len(laws)):
                 print(len(laws))
                 print(poli.hg_name,number)
@@ -192,6 +194,24 @@ def lawupdate(request):
 
                 #law = Law.objects.get(bill_name = laws[number]['BILL_NAME']
     return render(request, 'feedpage/lawsearch.html',{'laws':laws})
+
+def normalFeed_edit(request, pid, nfid):
+    normalFeed= NormalFeed.objects.get(id = nfid)
+    content = request.POST['content']
+    normalFeed.content = content
+    normalFeed.updated_at = timezone.now()
+    normalFeed.save()
+    path = os.path.join('/feeds/politician', str(pid)).replace("\\" , "/")
+    return redirect(path)
+
+def smallFeed_edit(request, pid, nfid, sfid):
+    smallFeed= SmallFeed.objects.get(id = sfid)
+    content = request.POST['content']
+    smallFeed.content = content
+    smallFeed.updated_at = timezone.now()
+    smallFeed.save()
+    path = os.path.join('/feeds/politician', str(pid)).replace("\\" , "/")
+    return redirect(path)
 
 def normalFeed_debate_comment_edit(request, pid, nfid, cid):
     comment = Comment.objects.get(id = cid)
@@ -389,7 +409,13 @@ def normalFeed_debate_comment_dislike(request, pid, nfid, cid):
 
 
 def lawsearch(request, page=1):
-    laws= Law.objects.all().order_by('-propose_dt')
+    lawsearch_key = request.POST.get('lawseach_key',None)
+    print("lawsearch는",lawsearch_key)
+    if lawsearch_key:
+        #laws = get_list_or_404(Law, bill_name__contains=lawsearch_key)
+        laws = Law.objects.all().order_by('-propose_dt').filter(bill_name__icontains = lawsearch_key)
+    else:
+        laws = Law.objects.all().order_by('-propose_dt')
     paginated_by = 10
     total_count = len(laws)
     total_page = math.ceil(total_count/paginated_by)

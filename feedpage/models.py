@@ -118,6 +118,7 @@ class NormalFeed(models.Model):
     dislike_users          = models.ManyToManyField(User, blank=True, related_name = 'dislike_normalFeed',          through='UserDislikeNormalFeed' )
 
 
+
 #small_feed
 class SmallFeed(models.Model):
     title = models.CharField(max_length=256)

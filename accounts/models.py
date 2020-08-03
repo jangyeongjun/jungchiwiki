@@ -6,7 +6,7 @@ from django.dispatch import receiver
 from django.core.validators import MaxValueValidator, MinValueValidator
 
 class Profile(models.Model):  
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     nickname = models.CharField(max_length=10, blank=True)
     genderChoices = [
         ('M', '남성'),
@@ -15,8 +15,6 @@ class Profile(models.Model):
     gender = models.CharField(max_length=1, choices=genderChoices, blank=True)
     politicalOrientation = models.IntegerField(default=5, validators=[MaxValueValidator(10), MinValueValidator(0)])
 
-    def __str__(self):   # 추가
-        return 'id=%d, user_id=%d, nickname=%s, gender=%s, politicalOrientation=%d' % (self.id, self.user.id, self.nickname, self.gender, self.politicalOrientation)
 
     @receiver(post_save, sender=User)
     def create_user_profile(sender, instance, created, **kwargs):  

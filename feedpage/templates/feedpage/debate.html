@@ -17,7 +17,7 @@
                         <h3>{{ c.content }}</h3>
                         {% if request.user == c.author %}
                             {% comment %} comment edit {% endcomment %}
-                            <div class = "comment-edit-wrapper">
+                            <div class = "comment-edit-form">
                                 <button class="mdl-button mdl-js-button mdl-button--icon comment-edit">
                                     <i class="material-icons">edit</i>
                                 </button>
@@ -46,7 +46,7 @@
                                   data-nfid=                "{{ normalFeed.id }}"
                                   data-cid=                 "{{ c.id }}" 
                                   data-csrfmiddlewaretoken= "{{ csrf_token }}"
-                                  onclick=                  "return confirm('정말 삭제하시겠습니까?')">
+                                  onclick="return confirm('정말 삭제하시겠습니까?')">
 
                                 {% csrf_token %}
                                 <button class="mdl-button mdl-js-button mdl-button--icon">
@@ -117,7 +117,7 @@
                                         data-cid=                "{{ c.id }}"
                                         data-ctcid=              "{{ ctc.id }}" 
                                         data-csrfmiddlewaretoken="{{ csrf_token }}"
-                                        onclick=                  "return confirm('정말 삭제하시겠습니까?')">
+                                        onclick="return confirm('정말 삭제하시겠습니까?')">
 
                                         {% csrf_token %}
                                         <button class="mdl-button mdl-js-button mdl-button--icon">
