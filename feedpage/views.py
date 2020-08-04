@@ -11,6 +11,7 @@ import math
 
 
 # Create your views here.
+
 def main(request):
     politicians = Politician.objects.all()
     return render(request,'feedpage/main.html', {'politicians' : politicians})
@@ -122,10 +123,6 @@ def polisearch(request):
 
 def lawsearch(request):
     return render(request, 'feedpage/lawsearch.html')
-
-def main(request):
-    politicians = Politician.objects.all()
-    return render(request,'feedpage/main.html', {'politicians' : politicians})
  
 def search(request, page=1):
     polis = Politician.objects.all().order_by('hg_name')
@@ -171,7 +168,6 @@ def normalFeed_debate(request, pid, nfid):
     return render(request,'feedpage/debate.html', {'politician': politician ,'normalFeed' : normalFeed, 'comments' : comments, 'comments_to_comment' : comments_to_comment})
 
 
-
 def law_debate(request, pid, lid):
     if request.method =='GET':
         politician = Politician.objects.get(id=pid)
@@ -193,7 +189,6 @@ def law_debate(request, pid, lid):
             'dislike_count': dislike_count
         }
         return JsonResponse(context)
-
 
 
 
