@@ -21,16 +21,19 @@
 	       				<col style="width:3%;">
 	       				</colgroup>
 	       				<tbody>
-                           <form class="btn_group" action="{% url 'search'%}" method = "post" id = "search_form">
+                           <form class="btn_group" action="{% url 'lawsearch'%}" method = "post" id = "search_form">
                            {% csrf_token %}
 	       					<tr>
 								<th scope="row">법률안 이름</th>
 	       						<td class = "tdforlaw">
-                                    <input type="text" title="이름" id="schHgNm" name="lawseach_key" style="width:800px;height:30px;font-size:20px"></input>
-                                    <button class="btn_inquiries" id="btnSearch" type="submit">검색</button>
-                                
+                                    {%if lawsearch_keyword == None %}
+                                        <input type="text" title="이름" id="schHgNm" name="lawsearch_key" style="width:800px;height:30px;font-size:20px"></input>
+                                        <button class="btn_inquiries" id="btnSearch" type="submit">검색</button>
+                                    {% else %}
+                                        <input type="text" title="이름" id="schHgNm" name="lawsearch_key" value = "{{ lawsearch_keyword }}"style="width:800px;height:30px;font-size:20px"></input>
+                                        <button class="btn_inquiries" id="btnSearch" type="submit">검색</button>
+                                    {% endif %}
                                 </td>
-	       						
 	       					</tr>
                             </form>
 	       					
@@ -93,12 +96,11 @@
 	       						<div id="list-sect-pager">
 								   <div class="paging-navigation">  
 										<ul class = "pagination">
-											<a class = "number page-number" href="/feeds/lawsearch/{{ before_end }}/">◀</a></li>
+											<a class = "number page-number" href="/feeds/lawsearch/{{ before_end }}/{{ lawsearch_keyword }}/">◀</a></li>
 											{% for page in page_range %}
-												<a class = "number page-number" href="/feeds/lawsearch/{{page}}/">{{page}}</a></li>
-														
+												<a class = "number page-number" href="/feeds/lawsearch/{{page}}/{{ lawsearch_keyword }}/">{{page}}</a></li>
 											{% endfor %}
-											<a class = "number page-number" href="/feeds/lawsearch/{{ next_end }}/">▶</a></li>
+											<a class = "number page-number" href="/feeds/lawsearch/{{ next_end }}/{{ lawsearch_keyword }}/">▶</a></li>
 
 										</ul>
 								   </div>

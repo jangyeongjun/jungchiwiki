@@ -115,19 +115,43 @@ def law_debate_new_CTC(request, pid, lid, cid):
 #===========================================================
 #READ  
 def polisearch(request):
-    polis = poliParsing()
-    for number in range(len(polis)):
-        print(number)
-        Politician.objects.create(hg_name = polis[number]['HG_NM'], eng_name = polis[number]['ENG_NM'], bth_name=polis[number]['BTH_GBN_NM'], bth_date=polis[number]['BTH_DATE'], job_res_name = polis[number]['JOB_RES_NM'], politicalParty = polis[number]['POLY_NM'], district = polis[number]['ORIG_NM'], politicalCommittee = polis[number]['CMITS'], electedCount = polis[number]['REELE_GBN_NM'], units = polis[number]['UNITS'], gender = polis[number]['SEX_GBN_NM'], tel_num = polis[number]['TEL_NO'], e_mail = polis[number]['E_MAIL'], homepage = polis[number]['HOMEPAGE'])
+
+    lawsearch_key = request.POST('lawseach_key')
     return render(request,'feedpage/search.html')
 
-def lawsearch(request):
-    return render(request, 'feedpage/lawsearch.html')
- 
-def search(request, page=1):
-    polis = Politician.objects.all().order_by('hg_name')
-    
 
+
+
+ 
+def search(request, page=1,poliname='',poliparty='',policommi='',polidisstrict='',poligender='',polielected=''):
+    if request.method == "POST":
+        print(request.POST)
+        #대조가 가능한 변수
+        poliname        = request.POST["poliname"]
+        poliparty       = request.POST["poliparty"]
+        policommi       = request.POST["policommi"]
+        polidisstrict   = request.POST["polidisstrict"]
+        poligender      = request.POST["poligender"]
+        polielected     = request.POST["polielected"]
+
+        polis = Politician.objects.all().order_by('hg_name').filter(
+            hg_name__icontains              = poliname,
+            politicalCommittee__icontains   = policommi,
+            politicalParty__icontains       = poliparty,
+            district__icontains             = polidisstrict,
+            gender__icontains               = poligender,
+            electedCount__icontains         = polielected
+        )
+        print(polis)
+        #대조가 안되는 변수
+        Poliori         = request.POST["Poliori"]
+        polihow         = request.POST["polihow"]
+        poliAge         = request.POST["poliAge"]
+        
+        
+    else:
+        polis = Politician.objects.all().order_by('hg_name')
+    
     #페이징 작업 위함
     paginated_by = 10
     total_count = len(polis)
@@ -145,7 +169,44 @@ def search(request, page=1):
     end_index = paginated_by * page
     polis = polis[start_index:end_index]
     print(page)
-    return render(request,'feedpage/search.html', {"polis":polis, 'total_page':total_page, 'page_range':page_range, 'initial':initial, 'next_end':next_end, 'before_end':before_end})
+    return render(request,'feedpage/search.html', 
+    {"polis":polis, 'total_page':total_page, 'page_range':page_range,
+    'initial':initial, 'next_end':next_end, 'before_end':before_end,
+    "poliname":poliname, "poliparty":poliparty, "policommi":policommi,
+    "polidisstrict":polidisstrict, "poligender":poligender, "polielected":polielected
+    })
+
+
+def lawsearch(request, page=1, lawkey=None):
+    if lawkey == None:
+        lawsearch_key = request.POST.get('lawsearch_key',None)
+    else:
+        lawsearch_key = lawkey
+    
+    if lawsearch_key:
+        #laws = get_list_or_404(Law, bill_name__contains=lawsearch_key)
+        laws = Law.objects.all().order_by('-propose_dt').filter(bill_name__icontains = lawsearch_key)
+    else:
+        laws = Law.objects.all().order_by('-propose_dt')
+     #paging 작업
+    paginated_by = 10
+    total_count = len(laws)
+    total_page = math.ceil(total_count/paginated_by)
+    initial=((page-1)//10)*10+1
+    next_end = initial+10
+    if (next_end>total_page):
+        next_end = total_page+1
+    page_range = range(initial, next_end)
+    if (initial==1):
+        before_end = 1
+    else:
+        before_end = next_end-12
+    start_index = paginated_by * (page-1)
+    end_index = paginated_by * page
+    laws = laws[start_index:end_index]
+    return render(request, 'feedpage/lawsearch.html', {"laws":laws, 'lawsearch_keyword':lawsearch_key, 'total_page':total_page, 'page_range':page_range, 'initial':initial, 'next_end':next_end, 'before_end':before_end})
+
+
 
 
 def politician(request, pid):
@@ -155,6 +216,7 @@ def politician(request, pid):
     # 더 좋은 방법이 뭘가
     smallFeeds = SmallFeed.objects.filter(normalFeed__in=normalFeeds)
     return render(request,'feedpage/politician.html', {'politician': politician ,'normalFeeds' : normalFeeds, 'smallFeeds':smallFeeds, 'laws':laws})
+
 
 def normalFeed_debate(request, pid, nfid):
     politician = Politician.objects.get(id = pid)
@@ -553,31 +615,6 @@ def law_debate_comment_dislike(request, pid, lid, cid):
 
 
 
-
-def lawsearch(request, page=1):
-    lawsearch_key = request.POST.get('lawseach_key',None)
-    print("lawsearch는",lawsearch_key)
-    if lawsearch_key:
-        #laws = get_list_or_404(Law, bill_name__contains=lawsearch_key)
-        laws = Law.objects.all().order_by('-propose_dt').filter(bill_name__icontains = lawsearch_key)
-    else:
-        laws = Law.objects.all().order_by('-propose_dt')
-    paginated_by = 10
-    total_count = len(laws)
-    total_page = math.ceil(total_count/paginated_by)
-    initial=((page-1)//10)*10+1
-    next_end = initial+10
-    if (next_end>total_page):
-        next_end = total_page+1
-    page_range = range(initial, next_end)
-    if (initial==1):
-        before_end = 1
-    else:
-        before_end = next_end-12
-    start_index = paginated_by * (page-1)
-    end_index = paginated_by * page
-    laws = laws[start_index:end_index]
-    return render(request, 'feedpage/lawsearch.html', {"laws":laws,  'total_page':total_page, 'page_range':page_range, 'initial':initial, 'next_end':next_end, 'before_end':before_end})
 
 def law_like(request, pid, lid):
     law = Law.objects.get(id = lid)

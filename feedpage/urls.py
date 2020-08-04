@@ -9,6 +9,7 @@ urlpatterns = [
     path('search/poliupdate/',                                                                          views.poliupdate,                       name='poliupdate'),
     path('lawsearch/',                                                                                  views.lawsearch,                        name='lawsearch'),
     path('lawsearch/<int:page>/',                                                                       views.lawsearch,                        name='lawsearch'),
+    path('lawsearch/<int:page>/<str:lawkey>/',                                                          views.lawsearch,                        name='lawsearch'),
     path('lawsearch/lawupdate/',                                                                        views.lawupdate,                        name='lawupdate'),
     path('politician/<int:pid>/',                                                                       views.politician,                       name='politician'), #pid = politician model id
     path('politician/<int:pid>/insert-photo/',                                                          views.insert_photo,                     name='insert_photo'),

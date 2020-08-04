@@ -2,7 +2,6 @@
 $(document).ready(() => {
     $(".popup").mouseenter(() => {
         $("#test").fadeToggle(
-            1000
         );
     });
 

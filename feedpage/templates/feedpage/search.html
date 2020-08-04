@@ -11,7 +11,8 @@
        			<div class="national_assemblyman_search">
 	       			<!-- left 검색 -->
 	       			<div class="theme_select_box response_theme_box response_theme_layout">
-	       			<form id="schform" method="post">
+	       			<form id="poliform" method="post", action="{% url 'search'%}">
+					   {% csrf_token %}
 		       			<div class="response_theme_header">
 			       			<h4>의원검색</h4>
 		       			</div>
@@ -26,203 +27,141 @@
 	       				</colgroup>
 	       				<tbody>
 	       					<tr>
-	       						
 								<th scope="row">이름</th>
-	       						<td><input type="text" title="이름" id="schHgNm" name="schHgNm"></td>
+	       						<td><input type="text" title="poliname" id="poliname" name="poliname"></td>
 	       						<th scope="row">정치성향</th>
 	       						<td>
-								    <select id="Polychar" name="Polychar" title="성향">
+								    <select id="Poliori" name="Poliori" title="성향">
 										<option value="">전체</option>
-										
-											<option value="">보수 4.0~</option>										
-										
-											<option value="">보수 3.0~3.9</option>										
-										
-											<option value="">보수 2.0~2.9</option>		
-
-											<option value="">보수 1.0~1.9</option>
-
-											<option value="">보수 0.0~0.9</option>
-
-											<option value="">진보 0.0~0.9</option>				
-										
-											<option value="">진보 1.0~1.9</option>										
-										
-											<option value="">진보 2.0~2.9</option>			
-										
-											<option value="">진보 3.0~3.9</option>										
-										
-											<option value="">진보 4.0~</option>										
+											<option value="4">보수 4.0~</option>			
+											<option value="3">보수 3.0~3.9</option>	
+											<option value="2">보수 2.0~2.9</option>	
+											<option value="1">보수 1.0~1.9</option>
+											<option value="0">보수 0.0~0.9</option>
+											<option value="-1">진보 0.0~0.9</option>	
+											<option value="-2">진보 1.0~1.9</option>	
+											<option value="-3">진보 2.0~2.9</option>	
+											<option value="-4">진보 3.0~3.9</option>	
+											<option value="-5">진보 4.0~</option>										
 									</select>
 								</td>
 	       						<th scope="row">정당</th>
 	       						<td>
-		       						<select id="schPoly" name="schPoly" title="정당">
+		       						<select id="poliparty" name="poliparty" title="정당">
 										<option value="">전체</option>
-										
-											<option value="101182">더불어민주당</option>										
-										
-											<option value="101198">미래통합당</option>										
-										
-											<option value="101180">정의당</option>		
-
-											<option value="101200">국민의당</option>		
-										
-											<option value="101203">열린민주당</option>										
-										
-											<option value="101208">기본소득당</option>			
-										
-											<option value="101209">시대전환</option>										
-										
-											<option value="101030">무소속</option>										
+											<option value="더불어민주당">더불어민주당</option>
+											<option value="미래통합당">미래통합당</option>	
+											<option value="정의당">정의당</option>	
+											<option value="국민의당">국민의당</option>
+											<option value="열린민주당">열린민주당</option>	
+											<option value="기본소득당">기본소득당</option>	
+											<option value="시대전환">시대전환</option>
+											<option value="무소속">무소속</option>										
 									</select>
 	       						</td>
 	       					</tr>
 	       					<tr>
 	       						<th scope="row">위원회</th>
 	       						<td>
-		       						<select id="schCmit" name="schCmit" title="위원회">
+		       						<select id="policommi" name="policommi" title="위원회">
 										<option value="">전체</option>
 										
-											<option value="9700005">국회운영위원회</option>
-										
-											<option value="9700006">법제사법위원회</option>
-										
-											<option value="9700008">정무위원회</option>
-										
-											<option value="9700300">기획재정위원회</option>
-										
-											<option value="9700512">교육위원회</option>
-										
-											<option value="9700479">과학기술정보방송통신위원회</option>
-										
-											<option value="9700409">외교통일위원회</option>
-										
-											<option value="9700019">국방위원회</option>
-										
-											<option value="9700480">행정안전위원회</option>
-										
-											<option value="9700513">문화체육관광위원회</option>
-										
-											<option value="9700408">농림축산식품해양수산위원회</option>
-										
-											<option value="9700481">산업통상자원중소벤처기업위원회</option>
-										
-											<option value="9700341">보건복지위원회</option>
-										
-											<option value="9700038">환경노동위원회</option>
-										
-											<option value="9700407">국토교통위원회</option>
-										
-											<option value="9700047">정보위원회</option>
-										
-											<option value="9700342">여성가족위원회</option>
-										
-											<option value="9700049">예산결산특별위원회</option>
+											<option value="국회운영위원회">국회운영위원회</option>
+											<option value="법제사법위원회">법제사법위원회</option>
+											<option value="정무위원회">정무위원회</option>
+											<option value="기획재정위원회">기획재정위원회</option>
+											<option value="교육위원회">교육위원회</option>
+											<option value="과학기술정보방송통신위원회">과학기술정보방송통신위원회</option>
+											<option value="외교통일위원회">외교통일위원회</option>
+											<option value="국방위원회">국방위원회</option>
+											<option value="행정안전위원회">행정안전위원회</option>
+											<option value="문화체육관광위원회">문화체육관광위원회</option>
+											<option value="농림축산식품해양수산위원회">농림축산식품해양수산위원회</option>
+											<option value="산업통상자원중소벤처기업위원회">산업통상자원중소벤처기업위원회</option>
+											<option value="보건복지위원회">보건복지위원회</option>
+											<option value="환경노동위원회">환경노동위원회</option>
+											<option value="국토교통위원회">국토교통위원회</option>
+											<option value="정보위원회">정보위원회</option>
+											<option value="여성가족위원회">여성가족위원회</option>
+											<option value="예산결산특별위원회">예산결산특별위원회</option>
 										
 									</select>
 	       						</td>
 	       						<th scope="row">지역선거구</th>
 	       						<td>
-				       						<select id="schUpOrig" name="schUpOrig" title="시/도 지역 선택">
+				       						<select id="polidisstrict" name="polidisstrict" title="시/도 지역 선택">
 												<option value="">전체</option>
-														<option value="021001">서울</option>
-														<option value="021002">부산</option>
-														<option value="021003">대구</option>
-														<option value="021004">인천</option>
-														<option value="021005">광주</option>
-														<option value="021006">대전</option>
-														<option value="021007">울산</option>
-														<option value="021008">경기</option>
-														<option value="021009">강원</option>
-														<option value="021010">충북</option>
-														<option value="021011">충남</option>
-														<option value="021012">전북</option>
-														<option value="021013">전남</option>
-														<option value="021014">경북</option>
-														<option value="021015">경남</option>																									
-														<option value="021016">제주</option>													
-														<option value="021168">세종</option>
+														<option value="서울">서울</option>
+														<option value="부산">부산</option>
+														<option value="대구">대구</option>
+														<option value="인천">인천</option>
+														<option value="광주">광주</option>
+														<option value="대전">대전</option>
+														<option value="울산">울산</option>
+														<option value="경기">경기</option>
+														<option value="강원">강원</option>
+														<option value="충북">충북</option>
+														<option value="충남">충남</option>
+														<option value="전북">전북</option>
+														<option value="전남">전남</option>
+														<option value="경북">경북</option>
+														<option value="경남">경남</option>																									
+														<option value="제주">제주</option>													
+														<option value="세종">세종</option>
 											
 											</select>
 	       						</td>
 	       						<th scope="row">성별</th>
 	       						<td>
-	       							<select id="schSexGbn" name="schSexGbn" title="성별">
+	       							<select id="poligender" name="poligender" title="성별">
 										<option value="">전체</option>
-											<option value="1">남</option>
-											<option value="2">여</option>
+											<option value="M">남</option>
+											<option value="F">여</option>
 									</select>
 	       						</td>
 	       					</tr>
 	       					<tr>
 	       						<th scope="row">연령</th>
 	       						<td>
-		       						<select id="schAge" name="schAge" title="연령">
+		       						<select id="poliAge" name="poliAge" title="연령">
 										<option value="" selected="selected">전체</option>
-										
 											<option value="29">30세미만</option>
-											
 											<option value="30">30대</option>
-											
 											<option value="40">40대</option>
-											
 											<option value="50">50대</option>
-											
 											<option value="60">60대</option>
-										
 											<option value="70">70세이상</option>
-											
-										
 									</select>
 	       						</td>
 	       						<th scope="row">당선횟수</th>
 	       						<td>
-		       						<select id="schReeleGbn" name="schReeleGbn" title="당선횟수">
+		       						<select id="polielected" name="polielected" title="당선횟수">
 										<option value="">전체</option>
-										
-											<option value="105001">초선</option>
-											
-											<option value="105002">재선</option>
-											
-											<option value="105003">3선</option>
-											
-											<option value="105004">4선</option>
-											
-											<option value="105005">5선</option>
-											
-											<option value="105006">6선</option>
-											
-											<option value="105007">7선</option>
-											
-											<option value="105008">8선</option>
-
-											<option value="105009">9선</option>
-											
-											<option value="105010">10선</option>
-											
+											<option value="초선">초선</option>
+											<option value="재선">재선</option>
+											<option value="3선">3선</option>
+											<option value="4선">4선</option>
+											<option value="5선">5선</option>
+											<option value="6선">6선</option>
+											<option value="7선">7선</option>
+											<option value="8선">8선</option>
+											<option value="9선">9선</option>
+											<option value="10선">10선</option>
 									</select>
 	       						</td>
 	       						<th scope="row">당선방법</th>
 	       						<td>
-		       						<select id="schElectGbn" name="schElectGbn" title="당선방법">
+		       						<select id="polihow" name="polihow" title="당선방법">
 										<option value="">전체</option>
-										
-											<option value="102010">지역구</option>
-										
-											<option value="102020">비례대표</option>
-										
+											<option value="지역구">지역구</option>
+											<option value="비례대표">비례대표</option>
 									</select>
 	       						</td>
 	       					</tr>
 	       				</tbody>
 	       				</table>
-	       				<div class="btn_group">
-		       				<ul>
-		       					<li><a href="javascript:;" class="btn_inquiries" id="btnSearch">검색</a></li>
-		       					<li><a href="javascript:;" class="btn_checkchart" id="btnInit">초기화</a></li>
-		       				</ul>
-	       				</div>
+                        <button class="btn_inquiries" id="btnSearch" type="submit">검색</button>
+                        
 	       			</form>
 	       			<div class="bgshadow_modal">&nbsp;</div>
 	       			</div>
