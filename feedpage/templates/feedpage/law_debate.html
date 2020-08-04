@@ -12,89 +12,9 @@
         <h4>싫어한 사람 {{ law.dislike_users.count }}</h4>
         <a href={{ law.detail_link }}>상세내용 보기</a>
         <a href={{ law.member_link }}>발의자 전체명단 보기</a>    
+        
     </div>
 
-
-<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
-<script type="text/javascript" src="https://code.highcharts.com/highcharts.js" /></script>
-<script type="text/javascript" src="https://code.highcharts.com/modules/exporting.js" /></script>
-<script type="text/javascript">
-	$("#getPieChart").click((e) => {
-            const $this = $(e.currentTarget); 
-            const lid = $this.data('lid');
-            const csrfmiddlewaretoken = $this.data('csrfmiddlewaretoken');
-            $.ajax({
-                url: `feeds/politician/${pid}/law/${law.id}/debate/`,
-                type: 'POST',
-                data: {
-                    pid: pid,
-                    lid: lid,
-                    csrfmiddlewaretoken: csrfmiddlewaretoken,
-                },
-                dataType: 'json',
-                success: function (result) {
-                    drawPieChart(result);
-                },
-                error: function (result) {}
-            });
-        }
-    );
-
-	function drawPieChart(jsonData) {
-	    var data = jsonData.ncocpgfiaoituanbr[1].row;
-	
-	    $('#pieChart').highcharts({
-	        credits: {
-	            enabled: false
-	        },
-	        chart: {
-	            plotBackgroundColor: null,
-	            plotBorderWidth: null,
-	            plotShadow: false,
-	            type: 'pie'
-	        },
-	        title: {
-	            text: data[0].BILL_NAME
-	        },
-	        tooltip: {
-	            pointFormat: '{series.name}: {point.percentage:.0f}%'
-	        },
-	        plotOptions: {
-	            pie: {
-	                allowPointSelect: true,
-	                cursor: 'pointer',
-	                dataLabels: {
-	                    enabled: false
-	                },
-	                showInLegend: true
-	            }
-	        },
-	        series: [{
-	            name: '',
-	            colorByPoint: true,
-	            data: [{
-	                name: '찬성',
-	                y: data[0].YES_TCNT
-	            }, {
-	                name: '반대',
-	                y: data[0].NO_TCNT
-	            }, {
-	                name: '기권',
-	                y: data[0].BLANK_TCNT
-	            }]
-	        }]
-	    });
-	}
-</script>
-
-<div id="pieChart" style="min-width:300px;height:400px;margin:0 auto;">파이차트</div>
-<div id="getPieChart" 
-     data-lid = {{ law.id }}
-     data-pid = {{ politician.id }}
-     data-csrfmiddlewaretoken="{{ csrf_token }}"
-     >
-     차트 부르기
-</div>
 
 
 

@@ -187,7 +187,12 @@ def law_debate(request, pid, lid):
         law = Law.objects.get(id=request.POST['lid'])
         like_count = law.like_users.count()
         dislike_count = law.like_user.count()
-        
+        context = {
+            'title'     : law.bill_name,
+            'like_count': like_count,
+            'dislike_count': dislike_count
+        }
+        return JsonResponse(context)
 
 
 
