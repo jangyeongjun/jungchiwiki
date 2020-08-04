@@ -63,4 +63,5 @@ urlpatterns = [
     path('politician/<int:pid>/normalfeed/<int:nfid>/debate/comment/<int:cid>/ctc/<int:ctcid>/delete/', views.normalFeed_debate_ctc_delete,     name='normalFeed_ctc_delete'),
     path('politician/<int:pid>/normalfeed/<int:nfid>/debate/comment/<int:cid>/new/',                    views.normalFeed_debate_new_CTC,        name='normalFeed_debate_new_comment'),
     path('politician/<int:pid>/normalfeed/<int:nfid>/debate/comment/<int:cid>/ctc/<int:ctcid>/edit/',   views.normalFeed_debate_ctc_edit,       name='normalFeed_ctc_edit'),
+
 ] 

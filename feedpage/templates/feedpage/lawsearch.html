@@ -77,7 +77,7 @@
 								   {% for law in laws %}
 									<tr>	
 										<td class="m_none rownum">{{ law.id }}</td>	
-										<td class="m_left"><a href="/feeds/politician/{{ poli.id }}/" class="hgNm" title="새창열림">{{ law.bill_name }}</a></td>	
+										<td class="m_left"><a href="/feeds/politician/{{ law.proposer.id }}/law/{{ law.id }}/debate/" class="hgNm" title="새창열림">{{ law.bill_name }}</a></td>	
 										<td class="polyNm">{{ law.committee }}</td>	
 										<td class="m_none cmits">{{ law.propose_dt }}</td>	
 										<td class="m_none origNm">{{ law.proposer_etc }}</td>

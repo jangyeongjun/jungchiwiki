@@ -6,9 +6,9 @@
     {% comment %} 국회의원 페이지 상단 파트 {% endcomment %}
     <div class="middle-header">
         {% comment %} 국회의원 프로필 카드 {% endcomment %}
-        <div class="demo-card-wide mdl-card mdl-shadow--2dp profile">
+        <div class="demo-card-wide mdl-card mdl-shadow--2dp profile" id = "{{ politician.politicalParty }}">
             <div class="mdl-card__title">
-                <h2 class="mdl-card__title-text">{{ politician.hg_name }}</h2>
+                <div class="mdl-card__title-text" style="font-weight: bold; font-size:30px;">{{ politician.hg_name }}</div>
             </div>
 
             <div class ="mdl-card__photo">
@@ -62,10 +62,11 @@
                                 <div class = "popup">
                                     <span>투표하기</span>
                                 </div>
-                            {% endif %}    
+                            {% endif %}
+   
                         </td>
                     </tr>
-                    <tr id="test" style="display:none; background-color:black;">
+                    <tr id="test" style="display:none; ">
                         
                         <td class = "vote">
                             <a href="/feeds/politician/{{ politician.id }}/orientationVote/0/">-5</a>
@@ -83,7 +84,7 @@
                         </td>
                     </tr>
                 </table>
-                
+                <a href = "/feeds/pie-chart/{{ politician.id }}">파이차트</a>
             </div>
         </div>
 
