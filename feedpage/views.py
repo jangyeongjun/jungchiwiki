@@ -11,6 +11,7 @@ import math
 
 
 # Create your views here.
+
 def main(request):
     politicians = Politician.objects.all()
     return render(request,'feedpage/main.html', {'politicians' : politicians})
@@ -122,10 +123,6 @@ def polisearch(request):
 
 def lawsearch(request):
     return render(request, 'feedpage/lawsearch.html')
-
-def main(request):
-    politicians = Politician.objects.all()
-    return render(request,'feedpage/main.html', {'politicians' : politicians})
  
 def search(request, page=1):
     polis = Politician.objects.all().order_by('hg_name')

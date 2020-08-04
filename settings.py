@@ -41,10 +41,16 @@ INSTALLED_APPS = [
     'feedpage.apps.FeedpageConfig',
     'accounts.apps.AccountsConfig',
     'import_export',
-     #allauth
+    'sass_processor',
+
+    #allauth
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+
+    #providers
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.naver', #allauth
 ]
 SITE_ID = 1
 
@@ -144,6 +150,12 @@ AUTHENTICATION_BACKENDS = (
 SITE_ID = 1
 
 ACCOUNT_LOGOUT_ON_GET = True 
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+SASS_PROCESSOR_ENABLED =  True
+SASS_PROCESSOR_ROOT =  os.path.join(BASE_DIR, 'feedpage', 'static')
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
