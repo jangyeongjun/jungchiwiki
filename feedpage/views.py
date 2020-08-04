@@ -169,15 +169,29 @@ def normalFeed_debate(request, pid, nfid):
 
 
 def law_debate(request, pid, lid):
-    politician = Politician.objects.get(id=pid)
-    law = Law.objects.get(id = lid)
-    comments = law.comments.all()
-    comments_to_comment = CommentToComment.objects.none()
-    for c in comments:
-        temp = c.ctc.all()
-        comments_to_comment = comments_to_comment.union(temp)
-    
-    return render(request,'feedpage/law_debate.html', {'politician':politician, 'law': law , 'comments' : comments, 'comments_to_comment' : comments_to_comment})
+    if request.method =='GET':
+        politician = Politician.objects.get(id=pid)
+        law = Law.objects.get(id = lid)
+        comments = law.comments.all()
+        comments_to_comment = CommentToComment.objects.none()
+        for c in comments:
+            temp = c.ctc.all()
+            comments_to_comment = comments_to_comment.union(temp)
+        
+        return render(request,'feedpage/law_debate.html', {'politician':politician, 'law': law , 'comments' : comments, 'comments_to_comment' : comments_to_comment})
+    elif request.method == 'POST':
+        law = Law.objects.get(id=request.POST['lid'])
+        like_count = law.like_users.count()
+        dislike_count = law.like_user.count()
+        context = {
+            'title'     : law.bill_name,
+            'like_count': like_count,
+            'dislike_count': dislike_count
+        }
+        return JsonResponse(context)
+
+
+
 
 #======================================================
 #UPDATE

@@ -11,9 +11,13 @@
         <h4>좋아한 사람 {{ law.like_users.count }}</h4>
         <h4>싫어한 사람 {{ law.dislike_users.count }}</h4>
         <a href={{ law.detail_link }}>상세내용 보기</a>
-        <a href={{ law.member_link }}>발의자 전체명단 보기</a>
-
+        <a href={{ law.member_link }}>발의자 전체명단 보기</a>    
+        
     </div>
+
+
+
+
 
     <div class = "comment-box">
         {% if comments %}
