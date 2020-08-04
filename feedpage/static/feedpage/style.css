@@ -104,9 +104,11 @@ a:hover {
 }
 
 a {
-  font-size : 20px;
   color: black;
-  text-decoration: none;
+}
+
+.name a {
+  font-size: 20px;
 }
 
 .contents {
@@ -406,13 +408,6 @@ th {
 
 /* polition.html normalFeed css */
 
-.demo-card-wide.mdl-card.normal-feed {
-	width: 95%;
-	height: auto;
-	margin-top:40px;
-  margin-left: 20px;
-  margin-bottom: 40px;
-}
 
 /* #endregion */
 
@@ -472,4 +467,65 @@ form {
   justify-content: flex-end;
 }
 
+.demo-card-wide.mdl-card.normal-feed {
+	width: 95%;
+	height: auto;
+	margin-top:40px;
+  margin-left: 20px;
+  margin-bottom: 40px;
+  z-index:1;
+}
+.normal-feed > .card-title {
+  display:flex;
+  justify-content:center;
+  align-items: center;
+  /* background: url('../assets/demos/welcome_card.jpg') center / cover; */
+  height:70px;
+  margin:0;
+  border: solid 1px #dbdbdb;
+}
+
+
+
+.normal-feed__supporting-text {
+  width:100%;
+  height: auto;
+}
+
+.normalFeed-edit-form > .submit-form{
+  width: 100%;
+  height: 100%;
+  
+  position: absolute;
+  top: 70px;
+  z-index: 10;
+  background-color:white;
+
+  display:flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+
+.normalFeed-edit-form > .submit-form > textarea {
+  width:100%;
+  height: calc(100% - 100px);
+  margin:0;
+}
+
+.small-feed.card-title {
+  display:flex;
+  justify-content:flex-start;
+  align-items: center;
+  height:30px;
+  margin-top:30px;
+}
+
+
+.normal-feed a {
+  font-size: 18px;
+  padding-bottom: 10px;
+  padding-left:8px;
+  padding-right:8px;
+}
 /* #endregion */
