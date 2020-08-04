@@ -10,10 +10,11 @@ class Profile(models.Model):
     nickname = models.CharField(max_length=10, blank=True)
     genderChoices = [
         ('M', '남성'),
-        ('W', '여성'),
+        ('F', '여성'),
     ]#튜플의 첫번째 요소가 저장될 값, 두번째 요소가 사람이 읽을 수 있는 이름
     gender = models.CharField(max_length=1, choices=genderChoices, blank=True)
     politicalOrientation = models.IntegerField(default=5, validators=[MaxValueValidator(10), MinValueValidator(0)])
+    birth_dt = models.DateTimeField(blank=True,null = True)
 
 
     @receiver(post_save, sender=User)

@@ -25,6 +25,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',feedpage.views.main, name='main'),
     path('feeds/',include('feedpage.urls')),
+    path('accounts/signup/', accounts.views.signup, name='account_signup'),
+    path('accounts/', include('allauth.urls')),
     # path('accounts/signup/', accounts.views.signup, name='account_signup'),
     # path('accounts/', include('allauth.urls')),
     # path('accounts/mypage/', accounts.views.mypage, name='mypage'),

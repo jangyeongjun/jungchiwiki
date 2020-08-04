@@ -1,0 +1,66 @@
+
+
+<div class="modal fade" id="signupModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+            <h4 class="modal-title">회원 가입</h4>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body mx-3">
+            <form id="signup-form" method="post" data-csrfmiddlewaretoken="{{ csrf_token }}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="username" class="col-form-label">사용자 이름</label>
+                    <input type="text" class="form-control" name="username" id="username" required="required">		
+                </div>
+                <div class="form-group">
+                    <label for="nickname" class="col-form-label">사용자 닉네임</label>
+                    <input type="text" class="form-control" name="nickname" id="nickname" required="required">		
+                </div>
+                <div class="form-group">
+                    <label for="usergender" class="col-form-label">사용자 성별</label>
+                    <br>
+                    <input type="radio" name="usergender" id ="usergender" value="M" checked>남성
+                    <input type="radio" name="usergender" id ="usergender" value="F">여성	
+                </div>
+                <div class="form-group">
+                    <label for="userbirth_dt" class="col-form-label">생년 월일</label> 
+                    <br>
+                    <input type="date" title="생년월일" name="userbirth_dt" id="userbirth_dt" value="", required="required"> 
+                </div>
+                <div class="form-group">
+                    <label for="user_Orientation" class="col-form-label">정치 성향</label>
+                    <br>
+                    <select name="user_Orientation" id="user_Orientation">
+                        <option value="-5">진보 5</option>
+                        <option value="-4">진보 4</option>
+                        <option value="-3">진보 3</option>
+                        <option value="-2">진보 2</option>
+                        <option value="-1">진보 1</option>
+                        <option value="5" selected>중도 0</option>
+                        <option value="1">보수 1</option>
+                        <option value="2">보수 2</option>
+                        <option value="3">보수 3</option>
+                        <option value="4">보수 4</option>
+                        <option value="5">보수 5</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="password1" class="col-form-label">비밀 번호</label>
+                    <input type="password" class="form-control" name="password1" id="password1" required="required">	
+                </div>
+                <div class="form-group">
+                    <label for="password2" class="col-form-label">비밀 번호 확인</label>
+                    <input type="password" class="form-control" name="password2" id="password2" required="required">	
+                </div>   
+                <div class="form-group">
+                    <button type="submit" class="btn btn-warning btn-lg btn-block login-btn">가입하기</button>
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+</div>
