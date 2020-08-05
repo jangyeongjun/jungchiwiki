@@ -1,6 +1,6 @@
 
 $(document).ready(() => {
-    $(".popup").mouseenter(() => {
+    $(".popup").click(() => {
         $("#test").fadeToggle(
             1000
         );
@@ -24,7 +24,7 @@ $(document).ready(() => {
     
     $(".normalFeed-edit").click((e) => {
         const $this = $(e.currentTarget);
-        const $form_parent = $this.parent().siblings('.normal-feed__supporting-text');
+        const $form_parent = $this.parent().parent().siblings('.normal-feed__supporting-text');
         const $edit_form = $form_parent.find('.normalFeed-edit-form');
         $($edit_form).fadeToggle(
             500
@@ -33,7 +33,7 @@ $(document).ready(() => {
 
     $(".smallFeed-edit").click((e) => {
         const $this = $(e.currentTarget);
-        const $form_parent = $this.parent().siblings('.small-feed__supporting-text');
+        const $form_parent = $this.parent().parent().siblings('.small-feed__supporting-text');
         const $edit_form = $form_parent.find('.smallFeed-edit-form');
         $($edit_form).fadeToggle(
             500

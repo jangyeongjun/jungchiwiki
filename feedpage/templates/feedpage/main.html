@@ -5,7 +5,7 @@
     <input type="radio" name="tabs" id="tabone" checked="checked">     
     <label for="tabone"><img src = '../media/더불어민주당.png'></label> 
     <div class="tab"> 
-      <h3 style="color:white;">더불어민주당 소속 의원</h3>  
+      <h3>더불어민주당 소속 의원</h3>  
       <div class = "name-wrapper">  
         {% for dang in politician_chosung.0 %}
           {% for chosung in chosung_list %}
@@ -14,7 +14,7 @@
                 <h2>{{ chosung }} </h2>
                 <div >
                   {% for politician in dang|dictsort:"hg_name" %}
-                    <a href="/feeds/politician/{{ politician.id }}/" style="color:white;">{{ politician.hg_name }}</a>
+                    <a href="/feeds/politician/{{ politician.id }}/">{{ politician.hg_name }}</a>
                   {% endfor %}
                 </div>
               </div>

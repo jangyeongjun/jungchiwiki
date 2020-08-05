@@ -12,6 +12,22 @@ body  {
   justify-content: center;   
 } 
 
+.tabs h3 {
+  color:white;
+}
+
+.tabs h5 {
+  color:white;
+}
+
+.tabs .name-wrapper {
+  color:white;
+}
+
+.tabs .name-wrapper a {
+  color:white;
+}
+
 .tabs img {
   height:50px;
   width:auto;
@@ -272,7 +288,7 @@ th {
 .politician-header > .card {
   width: 30rem; 
   height: auto;
-  margin-top:3rem;"
+  margin-top:3rem;
 }
 
 .card-header[id="더불어민주당"] {	
@@ -346,6 +362,15 @@ th {
 
 
 
+.politician-header .table-of-contents .list-group-item {
+  padding-left:8px;
+  margin-top: 5px;
+  margin-bottom:5px;
+  display:flex;
+  align-items: center;
+}
+
+
 .politician-header .large-number {
   font-size: 24px;
 }
@@ -356,130 +381,6 @@ th {
   padding-top:10px;
   font-size:18px;
 }
-
-
-/*politician 프로필 카드 */
-
-/* 
-.demo-card-wide.mdl-card.profile[id="더불어민주당"] {
-	width: 30%;
-	height: 100%;	
-	
-  background-color : rgb(114, 114, 255); 
-}
-
-.demo-card-wide.mdl-card.profile[id="미래통합당"] {
-	width: 30%;
-	height: 100%;	
-	
-  background-color : rgb(255, 152, 152); 
-}
-
-.demo-card-wide.mdl-card.profile[id="정의당"] {
-	width: 30%;
-	height: 100%;	
-	
-  background-color : yellow; 
-}
-
-.demo-card-wide.mdl-card.profile[id="국민의당"] {
-	width: 30%;
-	height: 100%;	
-	
-  background-color : green;
-}
-
-.demo-card-wide.mdl-card.profile {
-	width: 30%;
-	height: 100%;	
-	
-  background-color : #92B6D5; 
-}
-
-
-.demo-card-wide > .mdl-card__title {
-	display:flex;
-	justify-content:center;
-	background: url('../assets/demos/welcome_card.jpg') center / cover;
-}
-
-.demo-card-wide > .mdl-card__photo {
-	width: 100%;
-	height: 100%;
-	display: flex;
-	justify-content: center;
-}
-
-.demo-card-wide > .mdl-card__supporting-text {
-	width: 100%;
-	display: flex;
-	justify-content: center;
-	padding:0;
-	margin-left:-2px;
-}
-
-.demo-card-wide > .mdl-card__supporting-text table {
-	width: 100%;
-	font-size:20px;
-	
-}
-
-
-.demo-card-wide > .mdl-card__supporting-text table tr{
-	width: 100%;
-  min-height: 50px;
-  height: auto;
-	display: flex;
-	justify-content: space-between;
-	
-}
-
-
-.demo-card-wide > .mdl-card__supporting-text table td{
-	min-height: 100%;
-	display: flex;
-  align-items: center;
-  
-	border: solid 1px #dbdbdb;
-	
-}
-
-.demo-card-wide > .mdl-card__supporting-text .category {
-	width:30%;
-	color: white;
-	background-color: rgb(25, 8, 177); 
-	
-}
-
-.demo-card-wide > .mdl-card__supporting-text .content {
-  width:70%;
-  min-height:100%;
-	color: black;
-  display:flex;
-  flex-direction:column;
-  align-items: center;
-  justify-content: center;
-}
-
-.popup span{
-  height:auto;
-  font-size: 14px;
-}
-
-#test .vote {
-  width:100%;
-  display:flex;
-  justify-content: space-evenly;
-} */
-
-/* politician 페이지 목차 */
-
-
-
-
-
-/* polition.html normalFeed css */
-
 
 /* #endregion */
 
@@ -545,24 +446,28 @@ form {
 	margin-top:40px;
   margin-left: 20px;
   margin-bottom: 40px;
-  z-index:1;
+  
 }
 
-.demo-card-wide.mdl-card.small-feed {
-	width: 95%;
+.demo-card-wide.small-feed .card-title {
+	width: 100%;
 	height:auto;
   min-height:0;
   z-index:1;
-  
+  display:flex;
+  justify-content: space-between;
+  border-bottom: solid 1px #dbdbdb;
 }
 .normal-feed > .card-title {
   display:flex;
-  justify-content:center;
+  padding-left: 20px;
+  padding-right: 20px;
+  justify-content:space-between;
   align-items: center;
   /* background: url('../assets/demos/welcome_card.jpg') center / cover; */
   height:70px;
   margin:0;
-  border: solid 1px #dbdbdb;
+  border-bottom: solid 1px #dbdbdb;
 }
 
 .small-feed.card-title {
@@ -576,15 +481,35 @@ form {
 
 
 .normal-feed__supporting-text {
-  width:95%;
+  width:100%;
   height: auto;
-  border: solid 1px #dbdbdb;
-  margin-left:25px;
+  margin-top:10px;
+  margin-left:20px;
   
 }
 
+.normal-feed__supporting-text .law-wrapper {
+  width:100%;
+  height: auto;
+  
+
+  display:flex;
+  flex-direction:column;
+  justify-content: space-between;
+  margin-top:30px;
+  
+}
+
+.normal-feed__supporting-text .law-wrapper .like-wrapper {
+  width: 100%;
+  border-bottom: 1px solid #dbdbdb;
+  padding-right:40px;
+  display:flex;
+  justify-content: space-between;
+}
+
 .small-feed__supporting-text {
-  width:95%;
+  width:100%;
   height: auto;
   
   margin-bottom:20px;
@@ -594,8 +519,9 @@ form {
 .normal-feed__supporting-text > .normalFeed-content {
   width:100%;
   height:100%;
-  display:block;
+  
   position:relative;
+  
 }
 
 .small-feed__supporting-text > .smallFeed-content {
@@ -608,6 +534,7 @@ form {
 .normalFeed-edit-form > .submit-form{
   width: 100%;
   height:calc(100% + 20px);
+  padding-right:20px;
   position: absolute;
   top: 0;
   z-index: 10;
@@ -622,6 +549,7 @@ form {
 .smallFeed-edit-form > .submit-form{
   width: 100%;
   height:calc(100% + 20px);
+  padding-right:20px;
   position: absolute;
   top: 0;
   z-index: 15;
@@ -653,5 +581,9 @@ form {
   padding-right:8px;
 }
 
-
+.mdl-badge[data-badge]:after {
+  background-color: white;
+  color:black;
+  border: solid 1px red;
+}
 /* #endregion */
