@@ -4,6 +4,7 @@
 body  {
   background-color:  white;
   height: 100%;
+
 }
 .tabs { 
   display: flex; 
@@ -252,16 +253,114 @@ th {
 /* #region POLITICIAN.HTML CSS */
 
 
-.middle-header {
-	width:100%;
+.politician-header {
+  width:100%;
 	display: flex;
 	justify-content: space-around;
 
 }
 
+.politician-header .card-header {
+  color:white;
+}
+
+.politician-header img {
+  width: 100%;
+  height: auto;
+}
+
+.politician-header > .card {
+  width: 30rem; 
+  height: auto;
+  margin-top:3rem;"
+}
+
+.card-header[id="더불어민주당"] {	
+  background:rgb(0, 59,150); 
+}
+
+.card-header[id="미래통합당"] {	
+  background:rgb(250, 187, 203); 
+}
+
+.card-header[id="정의당"] {	
+  background: rgb(255, 204, 0);
+}
+
+.card-header[id="국민의당"] {	
+  background:rgb(234, 85, 4); 
+}
+
+.politician-header .list-group-item {
+  display:flex;
+  justify-content: flex-start;
+  align-items:center;
+  padding:0;
+  min-height: 40px;
+  font-size: 18px;
+}
+
+.politician-header .category {
+  width:30%;
+  height:100%;
+  margin:0;
+  color:white;
+  display: flex;
+  justify-content:center;
+  align-items: center;
+}
+.politician-header .content {
+  width:70%;
+  height:100%;
+  margin:0;
+  display: flex;
+  justify-content:center;
+  align-items: center;
+}
+
+
+.politician-header .category[id="더불어민주당"] {	
+  background:rgb(0, 59,150);
+   
+  
+}
+
+.category[id="미래통합당"] {	
+  background:rgb(250, 187, 203); 
+}
+
+.category[id="정의당"] {	
+  background: rgb(255, 204, 0);
+}
+
+.category[id="국민의당"] {	
+  background:rgb(234, 85, 4); 
+}
+
+
+
+.politician-header > .table-of-contents {
+	height:30%;
+
+}
+
+
+
+.politician-header .large-number {
+  font-size: 24px;
+}
+
+
+.politician-header .multiple-items .small-number {
+  margin-left:20px;
+  padding-top:10px;
+  font-size:18px;
+}
+
+
 /*politician 프로필 카드 */
 
-
+/* 
 .demo-card-wide.mdl-card.profile[id="더불어민주당"] {
 	width: 30%;
 	height: 100%;	
@@ -301,8 +400,7 @@ th {
 .demo-card-wide > .mdl-card__title {
 	display:flex;
 	justify-content:center;
-	/* background: url('../assets/demos/welcome_card.jpg') center / cover; */
-	border: solid 1px #dbdbdb;
+	background: url('../assets/demos/welcome_card.jpg') center / cover;
 }
 
 .demo-card-wide > .mdl-card__photo {
@@ -372,43 +470,13 @@ th {
   width:100%;
   display:flex;
   justify-content: space-evenly;
-}
+} */
 
 /* politician 페이지 목차 */
 
-.middle-header > .table-of-contents {
-	width: 20%;
-	height:100%;
-	margin-top: 20px;
-	padding:10px;
-	background-color:lightskyblue;
-	display:flex;
-	flex-direction: column;
-  align-items:flex-start;
-  
-}
 
-.middle-header > .table-of-contents > .title {
-	font-size: 20px;
-}
 
-.middle-header > .table-of-contents > .content {
-	font-size: 15px;
-	display: flex;
-	flex-direction : column;
-	margin-top: 5px;
-}
 
-.middle-header > .table-of-contents > .content > .large-number{
-	font-size: 15px;
-	
-}
-
-.middle-header > .table-of-contents > .content > .small-number {
-	font-size: 15px;
-	padding-left: 15px;
-	
-}
 
 /* polition.html normalFeed css */
 

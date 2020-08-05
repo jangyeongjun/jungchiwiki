@@ -2,112 +2,154 @@
 
 
 {% block content %}
-    
-    {% comment %} 국회의원 페이지 상단 파트 {% endcomment %}
-    <div class="middle-header">
-        {% comment %} 국회의원 프로필 카드 {% endcomment %}
-        <div class="demo-card-wide mdl-card mdl-shadow--2dp profile" id = "{{ politician.politicalParty }}">
-            <div class="mdl-card__title">
-                <div class="mdl-card__title-text" style="font-weight: bold; font-size:30px;">{{ politician.hg_name }}</div>
-            </div>
-
-            <div class ="mdl-card__photo">
-                {% if  politician.photo %}
-                    <img src="{{ politician.photo.url }}"  alt="" width="100%" height="100%">
-                {% else %}
-                    <form enctype="multipart/form-data" action="/feeds/politician/{{ politician.id }}/insert-photo/" method="POST">
-                        {% csrf_token %}
-                        <p>사진 추가하기</p>
-                        <input name="photo" type="file"/> <br />
-                        <input type="submit" value="submit" />
-                    </form>
-                {% endif %}            
-            </div>
-            
-            <div class="mdl-card__supporting-text">
-                <table>
-                    <tr>
-                        <td class = "category">나이</td>
-                        <td class = "content">{{ politician.age }}</td>
-                    </tr>
-                    <tr>
-                        <td class = "category">성별</td>
-                        <td class = "content">{{ politician.gender }}</td>
-                    </tr>
-                    <tr>
-                        <td class = "category">지역구</td>
-                        <td class = "content">{{ politician.district }}</td>
-                    </tr>
-                    <tr>
-                        <td class = "category">소속당</td>
-                        <td class = "content">{{ politician.politicalParty }}</td>
-                    </tr>
-                    <tr>
-                        <td class = "category">소속 위원회</td>
-                        <td class = "content">{{ politician.politicalCommittee }}</td>
-                    </tr>
-                    <tr>
-                        <td class = "category">의원선수</td>
-                        <td class = "content">{{ politician.electedCount }}</td>
-                    </tr>
-                    <tr>
-                        <td class = "category">성향</td>
-                        <td class = "content">
-                            {% comment %} 투표 결과 표시하기 점수 {% endcomment %}
-                            <span>{{ politician.politicalOrientation }}</span>
-                            <span>{{ politician.orientation_vote_users.count }} 명 참여</span>
-                            {% if user in politician.orientation_vote_users.all %}
-                                <a href="/feeds/politician/{{ politician.id }}/orientationVote/cancel/">투표취소</a>
-                            {% else%}
-                                <div class = "popup">
-                                    <span>투표하기</span>
-                                </div>
-                            {% endif %}
-   
-                        </td>
-                    </tr>
-                    <tr id="test" style="display:none; ">
-                        
-                        <td class = "vote">
-                            <a href="/feeds/politician/{{ politician.id }}/orientationVote/0/">-5</a>
-                            <a href="/feeds/politician/{{ politician.id }}/orientationVote/1/">-4</a>
-                            <a href="/feeds/politician/{{ politician.id }}/orientationVote/2/">-3</a>
-                            <a href="/feeds/politician/{{ politician.id }}/orientationVote/3/">-2</a>
-                            <a href="/feeds/politician/{{ politician.id }}/orientationVote/4/">-1</a>
-                            <a href="/feeds/politician/{{ politician.id }}/orientationVote/5/">0</a>
-                            <a href="/feeds/politician/{{ politician.id }}/orientationVote/6/">1</a>
-                            <a href="/feeds/politician/{{ politician.id }}/orientationVote/7/">2</a>
-                            <a href="/feeds/politician/{{ politician.id }}/orientationVote/8/">3</a>
-                            <a href="/feeds/politician/{{ politician.id }}/orientationVote/9/">4</a>
-                            <a href="/feeds/politician/{{ politician.id }}/orientationVote/10/">5</a>
-                            
-                        </td>
-                    </tr>
-                </table>
-            </div>
+    <div class="politician-header">
+        <div class="card"> 
+            <h5 class="card-header" id = "{{ politician.politicalParty}}" style = "font-size:24px; display:flex; justify-content:center;">{{ politician.hg_name }}({{politician.eng_name}})</h5>
+            {% if  politician.photo %}
+                <img src="{{ politician.photo.url }}" class="card-img-top" alt="" >
+            {% else %}
+            <form enctype="multipart/form-data" action="/feeds/politician/{{ politician.id }}/insert-photo/" method="POST">
+                    {% csrf_token %}
+                    <p>사진 추가하기</p>
+                    <input name="photo" type="file"/> <br />
+                    <input type="submit" value="submit" />
+                </form>
+            {% endif %}   
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <div class="category" id ="{{ politician.politicalParty }}">
+                        <span>출생</span>
+                    </div>
+                    <div class="content">
+                        <span>{{ politician.bth_date}}({{ politician.bth_name}}력)</span>
+                        {% comment %} <span>{{ politician.age}}</span> {% endcomment %}
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="category" id ="{{ politician.politicalParty }}">
+                        <span>성별</span>
+                    </div>
+                    <div class="content">
+                        <span>{{ politician.gender }}성</span>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="category" id ="{{ politician.politicalParty }}">
+                        <span>소속 정당</span>
+                    </div>
+                    <div class="content">
+                        <span>{{ politician.politicalParty}}</span>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="category" id ="{{ politician.politicalParty }}">
+                        <span>지역구</span>
+                    </div>
+                    <div class="content">
+                        <span>{{ politician.district}}</span>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="category" id ="{{ politician.politicalParty }}">
+                        <span>의원 선수</span>
+                    </div>
+                    <div class="content">
+                        <span>{{ politician.electedCount}}</span>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="category" id ="{{ politician.politicalParty }}">
+                        <span>의원 대수</span>
+                    </div>
+                    <div class="content">
+                        <span>{{ politician.units}}</span>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="category" id ="{{ politician.politicalParty }}">
+                        <span>직위</span>
+                    </div>
+                    <div class="content">
+                        <span>{{ politician.job_res_name}}</span>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="category" id ="{{ politician.politicalParty }}">
+                        <span>소속 위원회</span>
+                    </div>
+                    <div class="content">
+                        <span>{{ politician.politicalCommittee}}</span>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="category" id ="{{ politician.politicalParty }}">
+                        <span>전화번호</span>
+                    </div>
+                    <div class="content">
+                        <span>{{ politician.tel_num }}</span>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="category" id ="{{ politician.politicalParty }}">
+                        <span>이메일</span>
+                    </div>
+                    <div class="content">
+                        <span >{{ politician.e_mail }}</span>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="category" id ="{{ politician.politicalParty }}">
+                        <span>홈페이지</span>
+                    </div>
+                    <div class="content">
+                        <a href="{{ politician.homepage }}" class="card-link">링크</a>
+                    </div>
+                </li>
+            </ul>
         </div>
 
-        {% comment %} 국회의원 페이지 목차 {% endcomment %}
-        <div class ="table-of-contents">
-            <div class="title">목차</div>
-            <div class="content">
-                <a class = "large-number scroll-down" data-id = "1">1. 개요</a>
-                <a class = "large-number scroll-down" data-id = "2">2. 경력</a>
-                <a class = "large-number scroll-down" data-id = "3">3. 과거 공약/이행률</a>
-                <a class = "large-number scroll-down" data-id = "4">4. 발의 법률안</a>
-                <a class = "large-number scroll-down" data-id = "5">5. 찬성/반대 법안</a>
-                <a class = "small-number scroll-down" data-id = "6">5.1. 찬성 법안</a>
-                <a class = "small-number scroll-down" data-id = "7">5.2. 반대 법안</a>
-                <a class = "large-number scroll-down" data-id = "8">6. 발언 및 논란</a>
-                
+
+        <div class="card table-of-contents" style="width: 18rem; ">
+            <div class="card-header" id = "{{ politician.politicalParty}}" style="font-size:24px; text-align:center;">
+                목차
             </div>
-        </div>    
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <a class = "large-number scroll-down" data-id = "1">1. 개요</a>
+                </li>
+                <li class="list-group-item">
+                    <a class = "large-number scroll-down" data-id = "2">2. 경력</a>
+                </li>
+                <li class="list-group-item">
+                    <a class = "large-number scroll-down" data-id = "3">3. 과거 공약/이행률</a>
+                </li>
+                <li class="list-group-item">
+                    <a class = "large-number scroll-down" data-id = "4">4. 발의 법률안</a>
+                </li>
+                <li class="list-group-item">
+                    <div class="multiple-items" style="display: flex;
+                                                       flex-direction: column;
+                                                       align-items: flex-start;">
+                        <a class = "large-number scroll-down" data-id = "5">5. 찬성/반대 법안</a>
+                        <a class = "small-number scroll-down" data-id = "6">5.1. 찬성 법안</a>
+                        <a class = "small-number scroll-down" data-id = "7">5.2. 반대 법안</a>
+                    </div>               
+                </li>
+                
+                <li class="list-group-item">
+                    <a class = "large-number scroll-down" data-id = "8">6. 발언 및 논란</a>
+                </li>
+            </ul>
+        </div> 
     </div>
-    {% if user.is_superuser %}
+    
+
+       
+    {% comment %} {% if user.is_superuser %} {% endcomment %}
     <h5>
         <a href = "/feeds/politician/{{ politician.id }}/normalfeed/new/">normalFeed 추가하기</a>
     </h5>
-    {% endif %}
+    {% comment %} {% endif %} {% endcomment %}
     {% comment %} normal Feed 보여주는 part {% endcomment %}
     {%for normalFeed in normalFeeds|dictsort:"title"%}
         <div class="demo-card-wide mdl-card mdl-shadow--2dp normal-feed" id ="normalFeed">
