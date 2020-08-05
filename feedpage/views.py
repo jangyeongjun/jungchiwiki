@@ -13,8 +13,34 @@ import math
 # Create your views here.
 
 def main(request):
-    politicians = Politician.objects.all()
-    return render(request,'feedpage/main.html', {'politicians' : politicians})
+    party_list = [
+        '더불어민주당', 
+        '미래통합당', 
+        '정의당',
+        '국민의당',
+        '열린민주당',
+        '기본소득당',
+        '시대전환',
+        '무소속',
+    ]
+    politicians_by_party = []
+    for party in party_list:
+        politicians_by_party.append(Politician.objects.filter(politicalParty=party))
+
+
+    politician_chosung = []
+    chosung_list = 'ㄱㄲㄴㄷㄸㄹㅁㅂㅃㅅㅆㅇㅈㅉㅊㅋㅌㅍㅎ'
+    for politicians in politicians_by_party:
+        list1 = []
+        for ch in  chosung_list:
+            list2 = []
+            for politician in politicians:
+                if politician.korean_chosung() == ch:
+                    list2.append(politician)
+            list1.append(list2)
+        politician_chosung.append(list1)
+
+    return render(request,'feedpage/main.html', {'politicians_by_party' : politicians_by_party, 'politician_chosung' : politician_chosung, 'chosung_list':chosung_list})
 
 def poliupdate(request):
     polis = poliParsing()

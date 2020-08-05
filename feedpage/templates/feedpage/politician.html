@@ -172,73 +172,78 @@
                     {% endfor %}
                 {% else %} 
                 {% comment %} 법률안 NORMALFEED가 아니면 {% endcomment %}
-                    
-                    <h3> {{ normalFeed.content }}
-                    {% if user.is_authenticated %}
-                        <form action=                 "/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/edit/" 
-                            method=                   "POST" 
-                            class=                    "normalFeed-edit-form" 
-                            data-pid=                 "{{ politician.id }}" 
-                            data-nfid=                "{{ normalFeed.id }}"
-                            data-csrfmiddlewaretoken= "{{ csrf_token }}"
-                            style= "display:none;">
-                            {% csrf_token %}
-                            <div class="submit-form">
-                                <textarea type="text" name="content">{{ normalFeed.content }}</textarea>
-                                <button  type="submit" class="mdl-button mdl-js-button mdl-button--icon">
-                                    <i class="material-icons">send</i>
-                                </button>
-                            </div>
-                        </form>
-                    {% endif %}
+                    <div class= "normalFeed-content">
+                        <h3> {{ normalFeed.content }}
+                        {% if user.is_authenticated %}
+                            <form action=                 "/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/edit/" 
+                                method=                   "POST" 
+                                class=                    "normalFeed-edit-form" 
+                                data-pid=                 "{{ politician.id }}" 
+                                data-nfid=                "{{ normalFeed.id }}"
+                                data-csrfmiddlewaretoken= "{{ csrf_token }}"
+                                style= "display:none;">
+                                {% csrf_token %}
+                                <div class="submit-form">
+                                    <textarea type="text" name="content">{{ normalFeed.content }}</textarea>
+                                    <button  type="submit" class="mdl-button mdl-js-button mdl-button--icon">
+                                        <i class="material-icons">send</i>
+                                    </button>
+                                </div>
+                            </form>
+                        {% endif %}
+                    </div>
                     {% for smallFeed in smallFeeds %}
                         {% if smallFeed.normalFeed == normalFeed %}   
                             {% comment %} forloop.counter shibalalalalalalalalal {% endcomment %}
-                            <div class = "small-feed card-title">
-                                <h4>{{ normalFeed.title }}.{{ forloop.counter }} {{ smallFeed.title }}</h4>
-                                <a href="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/smallfeed/{{ smallFeed.id }}/like/"    
-                                class = "material-icons mdl-badge smallFeed-Like"     
-                                data-pid={{ politician.id }} 
-                                data-nfid={{ normalFeed.id }} 
-                                data-sfid={{ smallFeed.id }} 
-                                data-csrfmiddlewaretoken="{{ csrf_token }}" 
-                                data-badge="{{ smallFeed.like_users.count }}" >LIKES</a>
-                                
-                                <a href="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/smallfeed/{{ smallFeed.id }}/dislike/" 
-                                class = "material-icons mdl-badge smallFeed-Dislike"  
-                                data-pid={{ politician.id }} 
-                                data-nfid={{ normalFeed.id }} 
-                                data-sfid={{ smallFeed.id }} 
-                                data-csrfmiddlewaretoken="{{ csrf_token }}" 
-                                data-badge="{{ smallFeed.dislike_users.count }}">DISLIKES</a>
-                                {% comment %} smallfeed는 어떻게 sort할까 {% endcomment %}
-                                {% if user.is_authenticated %}       
-                                    <button class="mdl-button mdl-js-button mdl-button--icon smallFeed-edit">
-                                        <i class="material-icons">edit</i>
-                                    </button>
-                                {% endif %}
-                                {% if user.is_superuser %}
-                                    <a href = "/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/smallfeed/{{ smallFeed.id }}/delete/">삭제</a>
-                                {% endif %}
-                            </div>
-                            <div class="small-feed__supporting-text">
-                                <h5>{{ smallFeed.content }}</h5>
-                                <form action=                 "/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/smallfeed/{{ smallFeed.id }}/edit/" 
-                                    method=                   "POST" 
-                                    class=                    "smallFeed-edit-form" 
-                                    data-pid=                 "{{ politician.id }}" 
-                                    data-nfid=                "{{ normalFeed.id }}"
-                                    data-sfid=                "{{ smallFeed.id  }}"
-                                    data-csrfmiddlewaretoken= "{{ csrf_token }}"
-                                    style= "display:none;">
-                                    {% csrf_token %}
-                                    <div class="mdl-textfield mdl-js-textfield">
-                                        <input class="mdl-textfield__input" type="text" name="content" value="{{ smallFeed.content }}">
-                                        <button  type="submit" class="mdl-button mdl-js-button mdl-button--icon">
-                                            <i class="material-icons">send</i>
+                            <div class="demo-card-wide mdl-card mdl-shadow--2dp small-feed" id ="smallFeed">
+                                <div class = "small-feed card-title">
+                                    <h4>{{ normalFeed.title }}.{{ forloop.counter }} {{ smallFeed.title }}</h4>
+                                    <a href="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/smallfeed/{{ smallFeed.id }}/like/"    
+                                    class = "material-icons mdl-badge smallFeed-Like"     
+                                    data-pid={{ politician.id }} 
+                                    data-nfid={{ normalFeed.id }} 
+                                    data-sfid={{ smallFeed.id }} 
+                                    data-csrfmiddlewaretoken="{{ csrf_token }}" 
+                                    data-badge="{{ smallFeed.like_users.count }}" >LIKES</a>
+                                    
+                                    <a href="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/smallfeed/{{ smallFeed.id }}/dislike/" 
+                                    class = "material-icons mdl-badge smallFeed-Dislike"  
+                                    data-pid={{ politician.id }} 
+                                    data-nfid={{ normalFeed.id }} 
+                                    data-sfid={{ smallFeed.id }} 
+                                    data-csrfmiddlewaretoken="{{ csrf_token }}" 
+                                    data-badge="{{ smallFeed.dislike_users.count }}">DISLIKES</a>
+                                    {% comment %} smallfeed는 어떻게 sort할까 {% endcomment %}
+                                    {% if user.is_authenticated %}       
+                                        <button class="mdl-button mdl-js-button mdl-button--icon smallFeed-edit">
+                                            <i class="material-icons">edit</i>
                                         </button>
+                                    {% endif %}
+                                    {% if user.is_superuser %}
+                                        <a href = "/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/smallfeed/{{ smallFeed.id }}/delete/">삭제</a>
+                                    {% endif %}
+                                </div>
+                                <div class="small-feed__supporting-text">
+                                    <div class = "smallFeed-content">
+                                        <h5>{{ smallFeed.content }}</h5>
+                                        <form action=                 "/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/smallfeed/{{ smallFeed.id }}/edit/" 
+                                            method=                   "POST" 
+                                            class=                    "smallFeed-edit-form" 
+                                            data-pid=                 "{{ politician.id }}" 
+                                            data-nfid=                "{{ normalFeed.id }}"
+                                            data-sfid=                "{{ smallFeed.id  }}"
+                                            data-csrfmiddlewaretoken= "{{ csrf_token }}"
+                                            style= "display:none;">
+                                            {% csrf_token %}
+                                            <div class="submit-form">
+                                                <textarea type="text" name="content">{{ smallFeed.content }}</textarea>
+                                                <button  type="submit" class="mdl-button mdl-js-button mdl-button--icon">
+                                                    <i class="material-icons">send</i>
+                                                </button>
+                                            </div>
+                                        </form>
                                     </div>
-                                </form>
+                                </div>
                             </div>
                         {% endif %}
                     {% endfor %}

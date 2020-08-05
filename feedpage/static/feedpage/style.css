@@ -2,7 +2,8 @@
 
 
 body  {
-	background-color:  white;
+  background-color:  white;
+  height: 100%;
 }
 .tabs { 
   display: flex; 
@@ -25,6 +26,7 @@ body  {
   background: white; 
   font-weight: bold; 
   transition: background ease 0.2s; 
+  margin:0;
 	
 } 
 /*박스배경*/ 
@@ -55,31 +57,31 @@ body  {
 /*탭 눌렀을때 컬러*/ 
 /* 더불어민주당 */
 .tabs input[type="radio"][id="tabone"]:checked + label + .tab { 
-  background:rgb(114, 114, 255); 
+  background:rgb(0, 59,150);
 } 
 .tabs input[type="radio"][id="tabone"]:checked + label { 
-  background:rgb(114, 114, 255); 
+  background:rgba(0, 59,150); 
 } 
 /* 미래통합당 */
 .tabs input[type="radio"][id="tabtwo"]:checked + label + .tab { 
-  background: rgb(255, 152, 152); 
+  background: rgb(250, 187, 203); 
 } 
 .tabs input[type="radio"][id="tabtwo"]:checked + label { 
-  background:rgb(255, 152, 152); 
+  background:rgb(250, 187, 203); 
 } 
 /* 정의당 */
 .tabs input[type="radio"][id="tabthree"]:checked + label + .tab { 
-  background: yellow; 
+  background: rgb(255, 204, 0); 
 } 
 .tabs input[type="radio"][id="tabthree"]:checked + label { 
-  background:yellow; 
+  background: rgb(255, 204, 0); 
 } 
 /* 국민의 당 */
 .tabs input[type="radio"][id="tabfour"]:checked + label + .tab { 
-  background: green; 
+  background: rgb(234, 85, 4); 
 } 
 .tabs input[type="radio"][id="tabfour"]:checked + label { 
-  background:green; 
+  background:rgb(234, 85, 4); 
 } 
 /* 기타정당 */
 .tabs input[type="radio"][id="tabfive"]:checked + label + .tab { 
@@ -107,7 +109,9 @@ a {
   color: black;
 }
 
-.name a {
+.name-wrapper {
+  display:flex;
+  flex-direction:column;
   font-size: 20px;
 }
 
@@ -475,6 +479,14 @@ form {
   margin-bottom: 40px;
   z-index:1;
 }
+
+.demo-card-wide.mdl-card.small-feed {
+	width: 95%;
+	height:auto;
+  min-height:0;
+  z-index:1;
+  
+}
 .normal-feed > .card-title {
   display:flex;
   justify-content:center;
@@ -483,34 +495,6 @@ form {
   height:70px;
   margin:0;
   border: solid 1px #dbdbdb;
-}
-
-
-
-.normal-feed__supporting-text {
-  width:100%;
-  height: auto;
-}
-
-.normalFeed-edit-form > .submit-form{
-  width: 100%;
-  height: 100%;
-  
-  position: absolute;
-  top: 70px;
-  z-index: 10;
-  background-color:white;
-
-  display:flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-end;
-}
-
-.normalFeed-edit-form > .submit-form > textarea {
-  width:100%;
-  height: calc(100% - 100px);
-  margin:0;
 }
 
 .small-feed.card-title {
@@ -522,10 +506,84 @@ form {
 }
 
 
+
+.normal-feed__supporting-text {
+  width:95%;
+  height: auto;
+  border: solid 1px #dbdbdb;
+  margin-left:25px;
+  
+}
+
+.small-feed__supporting-text {
+  width:95%;
+  height: auto;
+  
+  margin-bottom:20px;
+  
+}
+
+.normal-feed__supporting-text > .normalFeed-content {
+  width:100%;
+  height:100%;
+  display:block;
+  position:relative;
+}
+
+.small-feed__supporting-text > .smallFeed-content {
+  width:100%;
+  height:100%;
+  display:block;
+  position:relative;
+}
+
+.normalFeed-edit-form > .submit-form{
+  width: 100%;
+  height:calc(100% + 20px);
+  position: absolute;
+  top: 0;
+  z-index: 10;
+  background-color:white;
+
+  display:flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+
+.smallFeed-edit-form > .submit-form{
+  width: 100%;
+  height:calc(100% + 20px);
+  position: absolute;
+  top: 0;
+  z-index: 15;
+  background-color:white;
+
+  display:flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+
+.normalFeed-edit-form > .submit-form > textarea {
+  width:100%;
+  height: 100%;
+  margin:0;
+}
+
+.smallFeed-edit-form > .submit-form > textarea {
+  width:100%;
+  height: 100%;
+  margin:0;
+}
+
+
 .normal-feed a {
   font-size: 18px;
   padding-bottom: 10px;
   padding-left:8px;
   padding-right:8px;
 }
+
+
 /* #endregion */
