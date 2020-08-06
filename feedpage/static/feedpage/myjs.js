@@ -1,9 +1,42 @@
 
 $(document).ready(() => {
-    $(".popup").mouseenter(() => {
+    
+    $(".popup").click(() => {
         $("#test").fadeToggle(
         );
+        
     });
+
+    $(".normalFeed-down").click((e) => {
+        const $this = $(e.currentTarget);
+        const $down_form = $this.parent().parent().siblings('.normal-feed__supporting-text');
+        const $up_arrow = $this.siblings('.normalFeed-up')
+        $($down_form).fadeToggle(
+            100
+        );
+        $($up_arrow).fadeToggle(
+            0
+        );
+        $($this).fadeToggle(
+            0
+        );
+    });
+
+    $(".normalFeed-up").click((e) => {
+        const $this = $(e.currentTarget);
+        const $up_form = $this.parent().parent().siblings('.normal-feed__supporting-text');
+        const $down_arrow = $this.siblings('.normalFeed-down')
+        $($up_form).fadeToggle(
+            100
+        );
+        $($down_arrow).fadeToggle(
+            0
+        );
+        $($this).fadeToggle(
+            0
+        );
+    });
+
 
     $(".comment-edit").click((e) => {
         const $this = $(e.currentTarget);
@@ -23,7 +56,7 @@ $(document).ready(() => {
     
     $(".normalFeed-edit").click((e) => {
         const $this = $(e.currentTarget);
-        const $form_parent = $this.parent().siblings('.normal-feed__supporting-text');
+        const $form_parent = $this.parent().parent().siblings('.normal-feed__supporting-text');
         const $edit_form = $form_parent.find('.normalFeed-edit-form');
         $($edit_form).fadeToggle(
             500
@@ -32,7 +65,7 @@ $(document).ready(() => {
 
     $(".smallFeed-edit").click((e) => {
         const $this = $(e.currentTarget);
-        const $form_parent = $this.parent().siblings('.small-feed__supporting-text');
+        const $form_parent = $this.parent().parent().siblings('.small-feed__supporting-text');
         const $edit_form = $form_parent.find('.smallFeed-edit-form');
         $($edit_form).fadeToggle(
             500
@@ -43,9 +76,13 @@ $(document).ready(() => {
     $(".scroll-down").click((e) => {
         const $this = $(e.currentTarget);
         const id = $this.data('id')-1;
+        console.log(id);
         var normalFeeds = document.querySelectorAll("#normalFeed");
         var location = normalFeeds[id].offsetTop;
+        console.log(location);
+        
         window.scrollTo({top:location, behavior:'smooth'});
+        
     });
 
 

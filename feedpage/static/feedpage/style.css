@@ -1,14 +1,35 @@
 /* #region main.html csss*/
 
+html {
+  height: auto;
+}
 
 body  {
-	background-color:  white;
+  background-color:  white;
+  height: auto;
+  overflow: auto;
 }
 .tabs { 
   display: flex; 
   flex-wrap: wrap;
   justify-content: center;   
 } 
+
+.tabs h3 {
+  color:white;
+}
+
+.tabs h5 {
+  color:white;
+}
+
+.tabs .name-wrapper {
+  color:white;
+}
+
+.tabs .name-wrapper a {
+  color:white;
+}
 
 .tabs img {
   height:50px;
@@ -25,6 +46,7 @@ body  {
   background: white; 
   font-weight: bold; 
   transition: background ease 0.2s; 
+  margin:0;
 	
 } 
 /*박스배경*/ 
@@ -55,31 +77,31 @@ body  {
 /*탭 눌렀을때 컬러*/ 
 /* 더불어민주당 */
 .tabs input[type="radio"][id="tabone"]:checked + label + .tab { 
-  background:rgb(114, 114, 255); 
+  background:rgb(0, 59,150);
 } 
 .tabs input[type="radio"][id="tabone"]:checked + label { 
-  background:rgb(114, 114, 255); 
+  background:rgba(0, 59,150); 
 } 
 /* 미래통합당 */
 .tabs input[type="radio"][id="tabtwo"]:checked + label + .tab { 
-  background: rgb(255, 152, 152); 
+  background: rgb(250, 187, 203); 
 } 
 .tabs input[type="radio"][id="tabtwo"]:checked + label { 
-  background:rgb(255, 152, 152); 
+  background:rgb(250, 187, 203); 
 } 
 /* 정의당 */
 .tabs input[type="radio"][id="tabthree"]:checked + label + .tab { 
-  background: yellow; 
+  background: rgb(255, 204, 0); 
 } 
 .tabs input[type="radio"][id="tabthree"]:checked + label { 
-  background:yellow; 
+  background: rgb(255, 204, 0); 
 } 
 /* 국민의 당 */
 .tabs input[type="radio"][id="tabfour"]:checked + label + .tab { 
-  background: green; 
+  background: rgb(234, 85, 4); 
 } 
 .tabs input[type="radio"][id="tabfour"]:checked + label { 
-  background:green; 
+  background:rgb(234, 85, 4); 
 } 
 /* 기타정당 */
 .tabs input[type="radio"][id="tabfive"]:checked + label + .tab { 
@@ -104,9 +126,13 @@ a:hover {
 }
 
 a {
-  font-size : 20px;
   color: black;
-  text-decoration: none;
+}
+
+.name-wrapper {
+  display:flex;
+  flex-direction:column;
+  font-size: 20px;
 }
 
 .contents {
@@ -246,191 +272,144 @@ th {
 /* #region POLITICIAN.HTML CSS */
 
 
-.middle-header {
-	width:100%;
+.politician-header {
+  width:100%;
+  height:auto;
 	display: flex;
 	justify-content: space-around;
 
 }
 
-/*politician 프로필 카드 */
-
-
-.demo-card-wide.mdl-card.profile[id="더불어민주당"] {
-	width: 30%;
-	height: 100%;	
-	
-  background-color : rgb(114, 114, 255); 
+.politician-header .card-header {
+  color:white;
 }
 
-.demo-card-wide.mdl-card.profile[id="미래통합당"] {
-	width: 30%;
-	height: 100%;	
-	
-  background-color : rgb(255, 152, 152); 
-}
-
-.demo-card-wide.mdl-card.profile[id="정의당"] {
-	width: 30%;
-	height: 100%;	
-	
-  background-color : yellow; 
-}
-
-.demo-card-wide.mdl-card.profile[id="국민의당"] {
-	width: 30%;
-	height: 100%;	
-	
-  background-color : green;
-}
-
-.demo-card-wide.mdl-card.profile {
-	width: 30%;
-	height: 100%;	
-	
-  background-color : #92B6D5; 
-}
-
-
-.demo-card-wide > .mdl-card__title {
-	display:flex;
-	justify-content:center;
-	/* background: url('../assets/demos/welcome_card.jpg') center / cover; */
-	border: solid 1px #dbdbdb;
-}
-
-.demo-card-wide > .mdl-card__photo {
-	width: 100%;
-	height: 100%;
-	display: flex;
-	justify-content: center;
-}
-
-.demo-card-wide > .mdl-card__supporting-text {
-	width: 100%;
-	display: flex;
-	justify-content: center;
-	padding:0;
-	margin-left:-2px;
-}
-
-.demo-card-wide > .mdl-card__supporting-text table {
-	width: 100%;
-	font-size:20px;
-	
-}
-
-
-.demo-card-wide > .mdl-card__supporting-text table tr{
-	width: 100%;
-  min-height: 50px;
+.politician-header img {
+  width: 100%;
   height: auto;
-	display: flex;
-	justify-content: space-between;
-	
 }
 
+.politician-header > .card {
+  width: 30rem; 
+  height: auto;
+  margin-top:3rem;
+}
 
-.demo-card-wide > .mdl-card__supporting-text table td{
-	min-height: 100%;
-	display: flex;
+.card-header[id="더불어민주당"] {	
+  background:rgb(0, 59,150); 
+}
+
+.card-header[id="미래통합당"] {	
+  background:rgb(250, 187, 203); 
+}
+
+.card-header[id="정의당"] {	
+  background: rgb(255, 204, 0);
+}
+
+.card-header[id="국민의당"] {	
+  background:rgb(234, 85, 4); 
+}
+
+.politician-header .list-group-item {
+  display:flex;
+  justify-content: flex-start;
+  align-items:center;
+  padding:0;
+  min-height: 40px;
+  font-size: 18px;
+}
+
+.politician-header .category {
+  width:30%;
+  height:100%;
+  margin:0;
+  color:white;
+  display: flex;
+  justify-content:center;
   align-items: center;
-  
-	border: solid 1px #dbdbdb;
-	
 }
-
-.demo-card-wide > .mdl-card__supporting-text .category {
-	width:30%;
-	color: white;
-	background-color: rgb(25, 8, 177); 
-	
-}
-
-.demo-card-wide > .mdl-card__supporting-text .content {
+.politician-header .content {
   width:70%;
-  min-height:100%;
-	color: black;
-  display:flex;
-  flex-direction:column;
+  height:100%;
+  margin:0;
+  display: flex;
+  justify-content:center;
   align-items: center;
-  justify-content: center;
 }
 
-.popup span{
-  height:auto;
-  font-size: 14px;
-}
 
-#test .vote {
-  width:100%;
-  display:flex;
-  justify-content: space-evenly;
-}
-
-/* politician 페이지 목차 */
-
-.middle-header > .table-of-contents {
-	width: 20%;
-	height:100%;
-	margin-top: 20px;
-	padding:10px;
-	background-color:lightskyblue;
-	display:flex;
-	flex-direction: column;
-  align-items:flex-start;
+.politician-header .category[id="더불어민주당"] {	
+  background:rgb(0, 59,150);
+   
   
 }
 
-.middle-header > .table-of-contents > .title {
-	font-size: 20px;
+.category[id="미래통합당"] {	
+  background:rgb(250, 187, 203); 
 }
 
-.middle-header > .table-of-contents > .content {
-	font-size: 15px;
-	display: flex;
-	flex-direction : column;
-	margin-top: 5px;
+.category[id="정의당"] {	
+  background: rgb(255, 204, 0);
 }
 
-.middle-header > .table-of-contents > .content > .large-number{
-	font-size: 15px;
-	
+.category[id="국민의당"] {	
+  background:rgb(234, 85, 4); 
 }
 
-.middle-header > .table-of-contents > .content > .small-number {
-	font-size: 15px;
-	padding-left: 15px;
-	
+
+
+.politician-header > .table-of-contents {
+	height:30%;
+
 }
 
-/* polition.html normalFeed css */
 
-.demo-card-wide.mdl-card.normal-feed {
-	width: 95%;
-	height: auto;
-	margin-top:40px;
-  margin-left: 20px;
-  margin-bottom: 40px;
+
+.politician-header .table-of-contents .list-group-item {
+  padding-left:8px;
+  margin-top: 5px;
+  margin-bottom:5px;
+  display:flex;
+  align-items: center;
+}
+
+
+.politician-header .large-number {
+  font-size: 24px;
+}
+
+
+.politician-header .multiple-items .small-number {
+  margin-left:20px;
+  padding-top:10px;
+  font-size:18px;
 }
 
 /* #endregion */
 
 /* #region debate.html css */
+.debate-title {
+  border-bottom: solid 1px #dbdbdb;
+  
+  width:80%;
+  margin-top: 50px;
+  margin-right: 200px;
+  margin-left: 100px;
+}
+
 
 .comment-box {
   width: 90%;
   height: auto;
-  position: relative;
-  left:5%;
-  top: 5%;
+  
 
   display:flex;
   flex-direction: column;
   align-items: center;
   justify-content:flex-start;
 
-  border: solid 1px #dbdbdb;
+  
 }
 
 .comment-box > .card-comment {
@@ -472,4 +451,150 @@ form {
   justify-content: flex-end;
 }
 
+.demo-card-wide.mdl-card.normal-feed {
+	width: 95%;
+	height: auto;
+	margin-top:40px;
+  margin-left: 20px;
+  margin-bottom: 40px;
+  
+}
+
+.demo-card-wide.small-feed .card-title {
+	width: 100%;
+	height:auto;
+  min-height:0;
+  z-index:1;
+  display:flex;
+  justify-content: space-between;
+  border-bottom: solid 1px #dbdbdb;
+}
+.normal-feed > .card-title {
+  display:flex;
+  padding-left: 20px;
+  padding-right: 20px;
+  justify-content:space-between;
+  align-items: center;
+  /* background: url('../assets/demos/welcome_card.jpg') center / cover; */
+  height:70px;
+  margin:0;
+  border-bottom: solid 1px #dbdbdb;
+}
+
+.small-feed.card-title {
+  display:flex;
+  justify-content:flex-start;
+  align-items: center;
+  height:30px;
+  margin-top:30px;
+}
+
+
+
+.normal-feed__supporting-text {
+  width:100%;
+  height: auto;
+  margin-top:10px;
+  margin-left:20px;
+  
+}
+
+.normal-feed__supporting-text .law-wrapper {
+  width:100%;
+  height: auto;
+  
+
+  display:flex;
+  flex-direction:column;
+  justify-content: space-between;
+  margin-top:30px;
+  
+}
+
+.normal-feed__supporting-text .law-wrapper .like-wrapper {
+  width: 100%;
+  border-bottom: 1px solid #dbdbdb;
+  padding-right:40px;
+  display:flex;
+  justify-content: space-between;
+}
+
+.small-feed__supporting-text {
+  width:100%;
+  height: auto;
+  
+  margin-bottom:20px;
+  
+}
+
+.normal-feed__supporting-text > .normalFeed-content {
+  width:100%;
+  height:100%;
+  
+  position:relative;
+  
+}
+
+.small-feed__supporting-text > .smallFeed-content {
+  width:100%;
+  height:100%;
+  display:block;
+  position:relative;
+}
+
+.normalFeed-edit-form > .submit-form{
+  width: 100%;
+  height:calc(100% + 20px);
+  padding-right:20px;
+  position: absolute;
+  top: 0;
+  z-index: 10;
+  background-color:white;
+
+  display:flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+
+.smallFeed-edit-form > .submit-form{
+  width: 100%;
+  height:calc(100% + 20px);
+  padding-right:20px;
+  position: absolute;
+  top: 0;
+  z-index: 15;
+  background-color:white;
+
+  display:flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+
+.normalFeed-edit-form > .submit-form > textarea {
+  width:100%;
+  height: 100%;
+  margin:0;
+}
+
+.smallFeed-edit-form > .submit-form > textarea {
+  width:100%;
+  height: 100%;
+  margin:0;
+}
+
+
+.normal-feed a {
+  font-size: 18px;
+  padding-bottom: 10px;
+  padding-left:8px;
+  padding-right:8px;
+}
+
+.mdl-badge[data-badge]:after {
+  background-color: white;
+  color:black;
+  border: solid 1px red;
+}
 /* #endregion */

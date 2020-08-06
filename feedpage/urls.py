@@ -20,6 +20,7 @@ urlpatterns = [
     path('politician/<int:pid>/',                                                                       views.politician,                       name='politician'), #pid = politician model id
     path('politician/<int:pid>/insert-photo/',                                                          views.insert_photo,                     name='insert_photo'),
    
+
     path('politician/<int:pid>/law/<int:lid>/like/',                                                    views.law_like,                         name='law_like'),
     path('politician/<int:pid>/law/<int:lid>/dislike/',                                                 views.law_dislike,                      name='law_dislike'),
     

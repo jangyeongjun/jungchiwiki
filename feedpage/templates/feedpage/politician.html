@@ -2,257 +2,377 @@
 
 
 {% block content %}
-    
-    {% comment %} 국회의원 페이지 상단 파트 {% endcomment %}
-    <div class="middle-header">
-        {% comment %} 국회의원 프로필 카드 {% endcomment %}
-        <div class="demo-card-wide mdl-card mdl-shadow--2dp profile" id = "{{ politician.politicalParty }}">
-            <div class="mdl-card__title">
-                <div class="mdl-card__title-text" style="font-weight: bold; font-size:30px;">{{ politician.hg_name }}</div>
-            </div>
-
-            <div class ="mdl-card__photo">
-                {% if  politician.photo %}
-                    <img src="{{ politician.photo.url }}"  alt="" width="100%" height="100%">
-                {% else %}
-                    <form enctype="multipart/form-data" action="/feeds/politician/{{ politician.id }}/insert-photo/" method="POST">
-                        {% csrf_token %}
-                        <p>사진 추가하기</p>
-                        <input name="photo" type="file"/> <br />
-                        <input type="submit" value="submit" />
-                    </form>
-                {% endif %}            
-            </div>
-            
-            <div class="mdl-card__supporting-text">
-                <table>
-                    <tr>
-                        <td class = "category">나이</td>
-                        <td class = "content">{{ politician.age }}</td>
-                    </tr>
-                    <tr>
-                        <td class = "category">성별</td>
-                        <td class = "content">{{ politician.gender }}</td>
-                    </tr>
-                    <tr>
-                        <td class = "category">지역구</td>
-                        <td class = "content">{{ politician.district }}</td>
-                    </tr>
-                    <tr>
-                        <td class = "category">소속당</td>
-                        <td class = "content">{{ politician.politicalParty }}</td>
-                    </tr>
-                    <tr>
-                        <td class = "category">소속 위원회</td>
-                        <td class = "content">{{ politician.politicalCommittee }}</td>
-                    </tr>
-                    <tr>
-                        <td class = "category">의원선수</td>
-                        <td class = "content">{{ politician.electedCount }}</td>
-                    </tr>
-                    <tr>
-                        <td class = "category">성향</td>
-                        <td class = "content">
-                            {% comment %} 투표 결과 표시하기 점수 {% endcomment %}
+    <div class="politician-header">
+        <div class="card"> 
+            <h5 class="card-header" id = "{{ politician.politicalParty}}" style = "font-size:24px; display:flex; justify-content:center;">{{ politician.hg_name }}({{politician.eng_name}})</h5>
+            {% if  politician.photo %}
+                <img src="{{ politician.photo.url }}" class="card-img-top" alt="" >
+            {% else %}
+            <form enctype="multipart/form-data" action="/feeds/politician/{{ politician.id }}/insert-photo/" method="POST">
+                    {% csrf_token %}
+                    <p>사진 추가하기</p>
+                    <input name="photo" type="file"/> <br />
+                    <input type="submit" value="submit" />
+                </form>
+            {% endif %}   
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    <div class="category" id ="{{ politician.politicalParty }}">
+                        <span>출생</span>
+                    </div>
+                    <div class="content">
+                        <span>{{ politician.bth_date}}({{ politician.bth_name}}력)</span>
+                        {% comment %} <span>{{ politician.age}}</span> {% endcomment %}
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="category" id ="{{ politician.politicalParty }}">
+                        <span>성별</span>
+                    </div>
+                    <div class="content">
+                        <span>{{ politician.gender }}성</span>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="category" id ="{{ politician.politicalParty }}">
+                        <span>소속 정당</span>
+                    </div>
+                    <div class="content">
+                        <span>{{ politician.politicalParty}}</span>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="category" id ="{{ politician.politicalParty }}">
+                        <span>지역구</span>
+                    </div>
+                    <div class="content">
+                        <span>{{ politician.district}}</span>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="category" id ="{{ politician.politicalParty }}">
+                        <span>의원 선수</span>
+                    </div>
+                    <div class="content">
+                        <span>{{ politician.electedCount}}</span>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="category" id ="{{ politician.politicalParty }}">
+                        <span>의원 대수</span>
+                    </div>
+                    <div class="content">
+                        <span>{{ politician.units}}</span>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="category" id ="{{ politician.politicalParty }}">
+                        <span>직위</span>
+                    </div>
+                    <div class="content">
+                        <span>{{ politician.job_res_name}}</span>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="category" id ="{{ politician.politicalParty }}">
+                        <span>소속 위원회</span>
+                    </div>
+                    <div class="content">
+                        <span>{{ politician.politicalCommittee}}</span>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="category" id ="{{ politician.politicalParty }}">
+                        <span>전화번호</span>
+                    </div>
+                    <div class="content">
+                        <span>{{ politician.tel_num }}</span>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="category" id ="{{ politician.politicalParty }}">
+                        <span>이메일</span>
+                    </div>
+                    <div class="content">
+                        <span >{{ politician.e_mail }}</span>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="category" id ="{{ politician.politicalParty }}">
+                        <span>홈페이지</span>
+                    </div>
+                    <div class="content">
+                        <a href="{{ politician.homepage }}" class="card-link">링크</a>
+                    </div>
+                </li>
+                <li class="list-group-item">
+                    <div class="category" id ="{{ politician.politicalParty }}">
+                        <span>정치 성향</span>
+                    </div>
+                    <div class="content" style="display:flex; flex-direction:column;">
+                        <div>
                             <span>{{ politician.politicalOrientation }}</span>
-                            <span>{{ politician.orientation_vote_users.count }} 명 참여</span>
-                            {% if user in politician.orientation_vote_users.all %}
-                                <a href="/feeds/politician/{{ politician.id }}/orientationVote/cancel/">투표취소</a>
-                            {% else%}
-                                <div class = "popup">
-                                    <span>투표하기</span>
-                                </div>
-                            {% endif %}
-   
-                        </td>
-                    </tr>
-                    <tr id="test" style="display:none; ">
-                        
-                        <td class = "vote">
-                            <a href="/feeds/politician/{{ politician.id }}/orientationVote/0/">-5</a>
-                            <a href="/feeds/politician/{{ politician.id }}/orientationVote/1/">-4</a>
-                            <a href="/feeds/politician/{{ politician.id }}/orientationVote/2/">-3</a>
-                            <a href="/feeds/politician/{{ politician.id }}/orientationVote/3/">-2</a>
-                            <a href="/feeds/politician/{{ politician.id }}/orientationVote/4/">-1</a>
-                            <a href="/feeds/politician/{{ politician.id }}/orientationVote/5/">0</a>
-                            <a href="/feeds/politician/{{ politician.id }}/orientationVote/6/">1</a>
-                            <a href="/feeds/politician/{{ politician.id }}/orientationVote/7/">2</a>
-                            <a href="/feeds/politician/{{ politician.id }}/orientationVote/8/">3</a>
-                            <a href="/feeds/politician/{{ politician.id }}/orientationVote/9/">4</a>
-                            <a href="/feeds/politician/{{ politician.id }}/orientationVote/10/">5</a>
-                            
-                        </td>
-                    </tr>
-                </table>
-            </div>
+                            <span> ({{ politician.orientation_vote_users.count }} 명 참여)</span>
+                        </div>
+                        {% if user in politician.orientation_vote_users.all %}
+                            <a href="/feeds/politician/{{ politician.id }}/orientationVote/cancel/">투표취소</a>
+                        {% else%}
+                            <div class = "popup">
+                                <span>투표하기</span>
+                            </div>
+                        {% endif %}
+                    </div>
+                </li>
+                <li class="list-group-item" id="test" style="display:none; ">
+                    <div class="category" id ="{{ politician.politicalParty }}">
+                        <span>투표 용지</span>
+                    </div>
+                    <div class="content" style="display:flex; justify-content: space-between;">
+                        <a href="/feeds/politician/{{ politician.id }}/orientationVote/0/">-5(진보)</a>
+                        <a href="/feeds/politician/{{ politician.id }}/orientationVote/1/">-4</a>
+                        <a href="/feeds/politician/{{ politician.id }}/orientationVote/2/">-3</a>
+                        <a href="/feeds/politician/{{ politician.id }}/orientationVote/3/">-2</a>
+                        <a href="/feeds/politician/{{ politician.id }}/orientationVote/4/">-1</a>
+                        <a href="/feeds/politician/{{ politician.id }}/orientationVote/5/">0</a>
+                        <a href="/feeds/politician/{{ politician.id }}/orientationVote/6/">1</a>
+                        <a href="/feeds/politician/{{ politician.id }}/orientationVote/7/">2</a>
+                        <a href="/feeds/politician/{{ politician.id }}/orientationVote/8/">3</a>
+                        <a href="/feeds/politician/{{ politician.id }}/orientationVote/9/">4</a>
+                        <a href="/feeds/politician/{{ politician.id }}/orientationVote/10/">5(보수)</a>
+                    </div>
+                </li>
+            </ul>
         </div>
 
-        {% comment %} 국회의원 페이지 목차 {% endcomment %}
-        <div class ="table-of-contents">
-            <div class="title">목차</div>
-            <div class="content">
-                <a class = "large-number scroll-down" data-id = "1">1. 개요</a>
-                <a class = "large-number scroll-down" data-id = "2">2. 경력</a>
-                <a class = "large-number scroll-down" data-id = "3">3. 과거 공약/이행률</a>
-                <a class = "large-number scroll-down" data-id = "4">4. 발의 법률안</a>
-                <a class = "large-number scroll-down" data-id = "5">5. 찬성/반대 법안</a>
-                <a class = "small-number scroll-down" data-id = "6">5.1. 찬성 법안</a>
-                <a class = "small-number scroll-down" data-id = "7">5.2. 반대 법안</a>
-                <a class = "large-number scroll-down" data-id = "8">6. 발언 및 논란</a>
-                
+        <div class="card table-of-contents" style="width: 18rem; ">
+            <div class="card-header" id = "{{ politician.politicalParty}}" style="font-size:24px; text-align:center;">
+                목차
             </div>
-        </div>    
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item ">
+                    <a class = "large-number scroll-down" data-id = '1'>1. 개요</a>
+                </li>
+                <li class="list-group-item">
+                    <a class = "large-number scroll-down" data-id = "2">2. 경력</a>
+                </li>
+                <li class="list-group-item">
+                    <a class = "large-number scroll-down" data-id = "3">3. 과거 공약/이행률</a>
+                </li>
+                <li class="list-group-item">
+                    <a class = "large-number scroll-down" data-id = "4">4. 발의 법률안</a>
+                </li>
+                <li class="list-group-item">
+                    <div class="multiple-items" style="display: flex;
+                                                       flex-direction: column;
+                                                       align-items: flex-start;">
+                        <a class = "large-number scroll-down" data-id = "5">5. 찬성/반대 법안</a>
+                        <a class = "small-number scroll-down" data-id = "6">5.1. 찬성 법안</a>
+                        <a class = "small-number scroll-down" data-id = "7">5.2. 반대 법안</a>
+                    </div>               
+                </li>
+                
+                <li class="list-group-item">
+                    <a class = "large-number scroll-down" data-id = "8">6. 발언 및 논란</a>
+                </li>
+            </ul>
+        </div> 
     </div>
-    {% if user.is_superuser %}
+    
+
+       
+    {% comment %} {% if user.is_superuser %} {% endcomment %}
     <h5>
         <a href = "/feeds/politician/{{ politician.id }}/normalfeed/new/">normalFeed 추가하기</a>
     </h5>
-    {% endif %}
+    {% comment %} {% endif %} {% endcomment %}
+
     {% comment %} normal Feed 보여주는 part {% endcomment %}
+    
     {%for normalFeed in normalFeeds|dictsort:"title"%}
-        <div class="demo-card-wide mdl-card mdl-shadow--2dp normal-feed" id ="normalFeed">
-            <div class="mdl-card__title">
-                <h2>{{ normalFeed.title }}.{{ normalFeed.get_title_display }}</h2>
-
-                <a href="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/like/" 
-                   class = "material-icons mdl-badge normalFeed-Like"  
-                   data-pid={{ politician.id }} 
-                   data-nfid={{ normalFeed.id }} 
-                   data-csrfmiddlewaretoken="{{ csrf_token }}"
-                   data-badge="{{ normalFeed.like_users.count }}">LIKE</a>
-
-                <a href="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/dislike/" 
-                   class = "material-icons mdl-badge normalFeed-Dislike"  
-                   data-pid={{ politician.id }} 
-                   data-nfid={{ normalFeed.id }}
-                   data-csrfmiddlewaretoken="{{ csrf_token }}" 
-                   data-badge="{{ normalFeed.dislike_users.count }}">DISLIKE</a>
-
-                <a href="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/debate/">해당 내용에 대한 토론방</a>
-                {% if normalFeed.title != '4' %}
-                    {% if user.is_authenticated %} 
-                        <button class="mdl-button mdl-js-button mdl-button--icon normalFeed-edit">
-                            <i class="material-icons">edit</i>
-                        </button>
+        <div class="demo-card-wide mdl-card normal-feed" id ="normalFeed" style="box-shadow: 0;">
+            <div class="card-title">
+                <div style="display:flex;">
+                    <button class="mdl-button mdl-js-button mdl-button--icon normalFeed-down">
+                        <i class="material-icons">keyboard_arrow_down</i>
+                    </button>
+                    <button class="mdl-button mdl-js-button mdl-button--icon normalFeed-up" style="display:none;">
+                        <i class="material-icons">keyboard_arrow_up</i>
+                    </button>
+                    <h2 style="color:blue;">{{ normalFeed.title }}.</h2><h2>{{ normalFeed.get_title_display }}</h2>
+                    {% if normalFeed.title != '4' %}
+                        {% if user.is_authenticated %} 
+                            <button class="mdl-button mdl-js-button mdl-button--icon normalFeed-edit">
+                                <i class="material-icons">edit</i>
+                            </button>
+                        {% endif %}
                     {% endif %}
-                {% endif %}
-                {% if user.is_superuser %}
-                    <a href = "/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/delete/">삭제</a>
-                {% endif %}
+                    {% if user.is_superuser %}
+                        <a href = "/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/delete/">삭제</a>
+                    {% endif %}
+                </div>
+                <div>
+                    
+                    
+                    <a href="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/like/" 
+                    class = "material-icons mdl-badge normalFeed-Like"  
+                    data-pid={{ politician.id }} 
+                    data-nfid={{ normalFeed.id }} 
+                    data-csrfmiddlewaretoken="{{ csrf_token }}"
+                    data-badge="{{ normalFeed.like_users.count }}">
+                    <img src = '/media/thumbs_up.png' style="height:30px; width:auto;">
+                    </a>
+
+                    <a href="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/dislike/" 
+                    class = "material-icons mdl-badge normalFeed-Dislike"  
+                    data-pid={{ politician.id }} 
+                    data-nfid={{ normalFeed.id }}
+                    data-csrfmiddlewaretoken="{{ csrf_token }}" 
+                    data-badge="{{ normalFeed.dislike_users.count }}">
+                    <img src="/media/thumbs_down.png" style="height:30px; background:white;">
+                    </a>
+                
+                    <a href="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/debate/">해당 항목에 대한 토론방</a>
+                </div>
             </div>
-            <div class="normal-feed__supporting-text">
+            <div class="normal-feed__supporting-text" style="display:none;">
                 {% comment %} 발의 법률안이면 {% endcomment %}
                 {% if normalFeed.title == '4' %} 
                     {% for law in laws %}
-                        <div class="law-wrapper" style="border: solid 1px #dbdbdb;">
-                            <h4>{{ law.bill_name }}</h4>
-                            {% comment %} <h5>대표 발의자 : {{ law.proposer.hg_name }}</h5> {% endcomment %}
-                            <h6>발의된 날짜 : {{ law.propose_dt }}</h6>
-                            {% comment %} <h6>발의한 위원회 : {{ law.committee }}</h6>
-                            <h6>법안 상세 정보 : {{ law.detail_link }}</h6>
-                            <h6>발의자 명단 : {{ law.member_link }}</h6> {% endcomment %}
-                        </div>
-                        <div class = "like-wrapper">
-                            <a href="/feeds/politician/{{ politician.id }}/law/{{ law.id }}/like/"    
-                                class = "material-icons mdl-badge law-Like"     
-                                data-pid={{ politician.id }} 
-                                data-lid={{ law.id }} 
-                                data-csrfmiddlewaretoken="{{ csrf_token }}" 
-                                data-badge="{{ law.like_users.count }}">LIKES</a>
-                                
-                            <a href="/feeds/politician/{{ politician.id }}/law/{{ law.id }}/dislike/" 
-                                class = "material-icons mdl-badge law-Dislike"  
-                                data-pid={{ politician.id }} 
-                                data-lid={{ law.id }} 
-                                data-csrfmiddlewaretoken="{{ csrf_token }}" 
-                                data-badge="{{ law.dislike_users.count }}">DISLIKES</a>
+                        <div class="normalFeed-content law-wrapper">
+                            <div class = "like-wrapper" >
+                                <h4 style="color:blue;">{{ forloop.counter }}.</h4> <h4>{{ law.bill_name }}</h4>
+                                <div>
+                                    <a href="/feeds/politician/{{ politician.id }}/law/{{ law.id }}/like/"    
+                                        class = "material-icons mdl-badge law-Like"     
+                                        data-pid={{ politician.id }} 
+                                        data-lid={{ law.id }} 
+                                        data-csrfmiddlewaretoken="{{ csrf_token }}" 
+                                        data-badge="{{ law.like_users.count }}"><img src = '/media/thumbs_up.png' style="height:30px; width:auto;">
+                                        </a>
+                                        
+                                    <a href="/feeds/politician/{{ politician.id }}/law/{{ law.id }}/dislike/" 
+                                        class = "material-icons mdl-badge law-Dislike"  
+                                        data-pid={{ politician.id }} 
+                                        data-lid={{ law.id }} 
+                                        data-csrfmiddlewaretoken="{{ csrf_token }}" 
+                                        data-badge="{{ law.dislike_users.count }}"><img src="/media/thumbs_down.png" style="height:30px;"></a>
 
-                             <a href="/feeds/politician/{{ politician.id }}/law/{{ law.id }}/debate/">{{ law.bill_name }}에 대한 토론방</a>
+                                    <a href="/feeds/politician/{{ politician.id }}/law/{{ law.id }}/debate/">해당 법안에 대한 토론방</a>
+                                </div>
+                            </div>
+                            <div>
+                                
+                                {% comment %} <h5>대표 발의자 : {{ law.proposer.hg_name }}</h5> {% endcomment %}
+                                <h6>발의된 날짜 : {{ law.propose_dt }}</h6>
+                                <h6>발의한 위원회 : {{ law.committee }}</h6>
+                                <h6>법안 상세 정보 : {{ law.detail_link }}</h6>
+                                <h6>발의자 명단 : {{ law.member_link }}</h6>
+                            </div>
+                            
+                        
                         </div>
+                        
                     {% endfor %}
                 {% else %} 
                 {% comment %} 법률안 NORMALFEED가 아니면 {% endcomment %}
+                    <div class= "normalFeed-content">
+                        <h3> {{ normalFeed.content }}
+                        {% if user.is_authenticated %}
+                            <form action=                 "/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/edit/" 
+                                method=                   "POST" 
+                                class=                    "normalFeed-edit-form" 
+                                data-pid=                 "{{ politician.id }}" 
+                                data-nfid=                "{{ normalFeed.id }}"
+                                data-csrfmiddlewaretoken= "{{ csrf_token }}"
+                                style= "display:none;">
+                                {% csrf_token %}
+                                <div class="submit-form">
+                                    <textarea type="text" name="content">{{ normalFeed.content }}</textarea>
+                                    <button  type="submit" class="mdl-button mdl-js-button mdl-button--icon" style="margin-top:8px;">
+                                        <i class="material-icons">send</i>
+                                    </button>
+                                </div>
+                            </form>
+                        {% endif %}
+                    </div>
                     
-                    <h3> {{ normalFeed.content }}
-                    {% if user.is_authenticated %}
-                        <form action=                 "/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/edit/" 
-                            method=                   "POST" 
-                            class=                    "normalFeed-edit-form" 
-                            data-pid=                 "{{ politician.id }}" 
-                            data-nfid=                "{{ normalFeed.id }}"
-                            data-csrfmiddlewaretoken= "{{ csrf_token }}"
-                            style= "display:none;">
-                            {% csrf_token %}
-                            <div class="mdl-textfield mdl-js-textfield">
-                                <input class="mdl-textfield__input" type="text" name="content" value="{{ normalFeed.content }}">
-                                <button  type="submit" class="mdl-button mdl-js-button mdl-button--icon">
-                                    <i class="material-icons">send</i>
-                                </button>
-                            </div>
-                        </form>
-                    {% endif %}
-                    {% if user.is_superuser %}
-                        <h5>
-                            <a href = "/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/smallfeed/new/">smallFeed 추가하기</a>
-                        </h5>
-                    {% endif %}
                     {% for smallFeed in smallFeeds %}
+                    
                         {% if smallFeed.normalFeed == normalFeed %}   
                             {% comment %} forloop.counter shibalalalalalalalalal {% endcomment %}
-                            <div class = "mdl-card__title">
-                                <h4>{{ normalFeed.title }}.{{ forloop.counter }} {{ smallFeed.title }}</h4>
-                                <a href="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/smallfeed/{{ smallFeed.id }}/like/"    
-                                class = "material-icons mdl-badge smallFeed-Like"     
-                                data-pid={{ politician.id }} 
-                                data-nfid={{ normalFeed.id }} 
-                                data-sfid={{ smallFeed.id }} 
-                                data-csrfmiddlewaretoken="{{ csrf_token }}" 
-                                data-badge="{{ smallFeed.like_users.count }}">LIKES</a>
-                                
-                                <a href="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/smallfeed/{{ smallFeed.id }}/dislike/" 
-                                class = "material-icons mdl-badge smallFeed-Dislike"  
-                                data-pid={{ politician.id }} 
-                                data-nfid={{ normalFeed.id }} 
-                                data-sfid={{ smallFeed.id }} 
-                                data-csrfmiddlewaretoken="{{ csrf_token }}" 
-                                data-badge="{{ smallFeed.dislike_users.count }}">DISLIKES</a>
-                                {% comment %} smallfeed는 어떻게 sort할까 {% endcomment %}
-                                {% if user.is_authenticated %}       
-                                    <button class="mdl-button mdl-js-button mdl-button--icon smallFeed-edit">
-                                        <i class="material-icons">edit</i>
-                                    </button>
-                                {% endif %}
-                                {% if user.is_superuser %}
-                                    <a href = "/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/smallfeed/{{ smallFeed.id }}/delete/">삭제</a>
-                                {% endif %}
-                            </div>
-                            <div class="small-feed__supporting-text">
-                                <h5>{{ smallFeed.content }}</h5>
-                                <form action=                 "/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/smallfeed/{{ smallFeed.id }}/edit/" 
-                                    method=                   "POST" 
-                                    class=                    "smallFeed-edit-form" 
-                                    data-pid=                 "{{ politician.id }}" 
-                                    data-nfid=                "{{ normalFeed.id }}"
-                                    data-sfid=                "{{ smallFeed.id  }}"
-                                    data-csrfmiddlewaretoken= "{{ csrf_token }}"
-                                    style= "display:none;">
-                                    {% csrf_token %}
-                                    <div class="mdl-textfield mdl-js-textfield">
-                                        <input class="mdl-textfield__input" type="text" name="content" value="{{ smallFeed.content }}">
-                                        <button  type="submit" class="mdl-button mdl-js-button mdl-button--icon">
-                                            <i class="material-icons">send</i>
-                                        </button>
+                            <div class="demo-card-wide small-feed" id ="smallFeed">
+                                <div class = "small-feed card-title">
+                                    <div style="display:flex; align-items:center;">
+                                        
+                                        
+                                        {{ temp_counter }}
+                                        {{ smallFeed_counter }}
+                                        <h4 style="color:blue;">{{ normalFeed.title }}.{{ forloop.counter}} </h4> <h4>{{ smallFeed.title }}</h4>
+                                        
+                                        {% if user.is_authenticated %}       
+                                            <button class="mdl-button mdl-js-button mdl-button--icon smallFeed-edit">
+                                                <i class="material-icons">edit</i>
+                                            </button>
+                                        {% endif %}
+                                        {% if user.is_superuser %}
+                                            <a href = "/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/smallfeed/{{ smallFeed.id }}/delete/">삭제</a>
+                                        {% endif %}
                                     </div>
-                                </form>
+                                    <div style="padding-right:255px;">
+                                        <a href="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/smallfeed/{{ smallFeed.id }}/like/"    
+                                        class = "material-icons mdl-badge smallFeed-Like"     
+                                        data-pid={{ politician.id }} 
+                                        data-nfid={{ normalFeed.id }} 
+                                        data-sfid={{ smallFeed.id }} 
+                                        data-csrfmiddlewaretoken="{{ csrf_token }}" 
+                                        data-badge="{{ smallFeed.like_users.count }}" ><img src = '/media/thumbs_up.png' style="height:30px; width:auto;">
+                                        </a>
+                                        
+                                        <a href="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/smallfeed/{{ smallFeed.id }}/dislike/" 
+                                        class = "material-icons mdl-badge smallFeed-Dislike"  
+                                        data-pid={{ politician.id }} 
+                                        data-nfid={{ normalFeed.id }} 
+                                        data-sfid={{ smallFeed.id }} 
+                                        data-csrfmiddlewaretoken="{{ csrf_token }}" 
+                                        data-badge="{{ smallFeed.dislike_users.count }}"><img src="/media/thumbs_down.png" style="height:30px;"></a>
+                                    {% comment %} smallfeed는 어떻게 sort할까 {% endcomment %}
+                                    </div>
+                                </div>
+                                <div class="small-feed__supporting-text">
+                                    <div class = "smallFeed-content">
+                                        <h5>{{ smallFeed.content }}</h5>
+                                        <form action=                 "/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/smallfeed/{{ smallFeed.id }}/edit/" 
+                                            method=                   "POST" 
+                                            class=                    "smallFeed-edit-form" 
+                                            data-pid=                 "{{ politician.id }}" 
+                                            data-nfid=                "{{ normalFeed.id }}"
+                                            data-sfid=                "{{ smallFeed.id  }}"
+                                            data-csrfmiddlewaretoken= "{{ csrf_token }}"
+                                            style= "display:none;">
+                                            {% csrf_token %}
+                                            <div class="submit-form">
+                                                <textarea type="text" name="content">{{ smallFeed.content }}</textarea>
+                                                <button  type="submit" class="mdl-button mdl-js-button mdl-button--icon">
+                                                    <i class="material-icons">send</i>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
                         {% endif %}
                     {% endfor %}
-                 
+                    
                 {% endif%} 
             </div>
-
-            
+            {% comment %} {% if user.is_superuser %} {% endcomment %}
+                <h5>
+                    <a href = "/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/smallfeed/new/">smallFeed 추가하기</a>
+                </h5>
+            {% comment %} {% endif %} {% endcomment %}
+    
         </div>
+        
     {% endfor %}
     
 {% endblock content %}

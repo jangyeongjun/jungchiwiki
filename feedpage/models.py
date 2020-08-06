@@ -19,6 +19,11 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 #국회의원 모델
+# 초성 리스트. 00 ~ 18
+
+
+
+
 class Politician(models.Model):
     hg_name = models.CharField(max_length=10,blank=True)#한글이름
     eng_name = models.CharField(max_length=10,blank=True)
@@ -72,6 +77,20 @@ class Politician(models.Model):
     dislike_users          = models.ManyToManyField(User, blank=True, related_name = 'dislike_politican',          through='UserDislikePolitican' )
     orientation_vote_users = models.ManyToManyField(User, blank=True, related_name = 'orientation_vote_politican', through='OrientationVote')
     #propose_law            = models.ManyToManyField(Law,  blank=True, related_name = 'propose_politican',          through='PoliticanProposeLaw')
+    CHOSUNG_LIST = ['ㄱ', 'ㄲ', 'ㄴ', 'ㄷ', 'ㄸ', 'ㄹ', 'ㅁ', 'ㅂ', 'ㅃ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅉ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ']
+    def korean_chosung(self):
+        
+        word = str(self.hg_name)
+        w =list(word.strip())[0]
+
+        ## 588개 마다 초성이 바뀜. 
+        ch = (ord(w) - ord('가'))//588
+        chosung = self.CHOSUNG_LIST[ch]
+            
+        
+        return chosung
+
+
 
 class Law(models.Model):
     bill_name = models.CharField(max_length=100,blank=True)#법률이름
