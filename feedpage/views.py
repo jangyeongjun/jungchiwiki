@@ -251,7 +251,7 @@ def search(request, page=1,poliname_v='x',poliparty_v='x',policommi_v='x',polidi
             electedCount__icontains         = polielected_v
         )
         print(poliori_v)
-        if poliori_v != 'x':
+        if poliori_v != '':
             if int(poliori_v) == 4:
                 polis = polis.filter(politicalOrientation__gte=(int(poliori_v)))
             elif int(poliori_v) >= 0:
@@ -260,7 +260,7 @@ def search(request, page=1,poliname_v='x',poliparty_v='x',policommi_v='x',polidi
                 polis = polis.filter(politicalOrientation__lte=(int(poliori_v)+1))
             else:
                 polis = polis.filter(politicalOrientation__lte=(int(poliori_v)+1),politicalOrientation__gt=(int(poliori_v)))
-        if poliAge_v != 'x':
+        if poliAge_v != '':
             if int(poliAge_v) == 70:
                 polis = polis.filter(age__gte=(int(poliAge_v)))
             elif int(poliAge_v) == 29:
@@ -301,10 +301,10 @@ def search(request, page=1,poliname_v='x',poliparty_v='x',policommi_v='x',polidi
         polielected_v = 'x'
     if polihow_v =='':
         polihow_v = 'x'
-    if poliori_v =='x':
-            poliori_v = ''
-    if poliAge_v =='x':
-        poliAge_v = ''
+    if poliori_v =='':
+        poliori_v = 'x'
+    if poliAge_v =='':
+        poliAge_v = 'x'
     return render(request,'feedpage/search.html', 
     {"polis":polis, 'total_page':total_page, 'page_range':page_range,
     'initial':initial, 'next_end':next_end, 'before_end':before_end,
