@@ -23,6 +23,36 @@ $(document).ready(() => {
         );
     });
 
+    $(".smallFeed-down").click((e) => {
+        const $this = $(e.currentTarget);
+        const $down_form = $this.parent().parent().siblings('.small-feed__supporting-text');
+        const $up_arrow = $this.siblings('.smallFeed-up')
+        $($down_form).fadeToggle(
+            100
+        );
+        $($up_arrow).fadeToggle(
+            0
+        );
+        $($this).fadeToggle(
+            0
+        );
+    });
+
+    $(".law-down").click((e) => {
+        const $this = $(e.currentTarget);
+        const $down_form = $this.parent().parent().siblings('.law__supporting-text');
+        const $up_arrow = $this.siblings('.law-up')
+        $($down_form).fadeToggle(
+            100
+        );
+        $($up_arrow).fadeToggle(
+            0
+        );
+        $($this).fadeToggle(
+            0
+        );
+    });
+
     $(".normalFeed-up").click((e) => {
         const $this = $(e.currentTarget);
         const $up_form = $this.parent().parent().siblings('.normal-feed__supporting-text');
@@ -38,6 +68,35 @@ $(document).ready(() => {
         );
     });
 
+    $(".smallFeed-up").click((e) => {
+        const $this = $(e.currentTarget);
+        const $up_form = $this.parent().parent().siblings('.small-feed__supporting-text');
+        const $down_arrow = $this.siblings('.smallFeed-down')
+        $($up_form).fadeToggle(
+            100
+        );
+        $($down_arrow).fadeToggle(
+            0
+        );
+        $($this).fadeToggle(
+            0
+        );
+    });
+
+    $(".law-up").click((e) => {
+        const $this = $(e.currentTarget);
+        const $up_form = $this.parent().parent().siblings('.law__supporting-text');
+        const $down_arrow = $this.siblings('.law-down')
+        $($up_form).fadeToggle(
+            100
+        );
+        $($down_arrow).fadeToggle(
+            0
+        );
+        $($this).fadeToggle(
+            0
+        );
+    });
 
     $(".comment-edit").click((e) => {
         const $this = $(e.currentTarget);

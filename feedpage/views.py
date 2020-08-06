@@ -628,7 +628,7 @@ def law_dislike(request, pid, lid):
     law = Law.objects.get(id = lid)
     like_list = law.userlikelaw_set.filter(user_id = request.user.id)
     dislike_list = law.userdislikelaw_set.filter(user_id = request.user.id)
-    like_count = dislike_list.count()
+    like_count = like_list.count()
     if dislike_list.count() > 0:
         law.userdislikelaw_set.get(user_id = request.user.id).delete()
     else :
