@@ -5,12 +5,18 @@ from feedpage import views
 urlpatterns = [
     path('',                                                                                            views.main,                             name='main'),
     path('search/',                                                                                     views.search,                           name='search'),
-    path('search/<int:page>/',                                                                          views.search,                           name='search'),
     path('search/poliupdate/',                                                                          views.poliupdate,                       name='poliupdate'),
+    path('search/<int:page>/',                                                                          views.search,                           name='search'),
+    #poliname_v='',poliparty_v='',policommi_v='',polidisstrict_v='',poligender_v='',polielected_v
+    path('search/<int:page>/<str:poliname_v>/<str:poliparty_v>/<str:policommi_v>/<str:polidisstrict_v>/<str:poligender_v>/<str:polielected_v>/<str:polihow_v>/<str:poliori_v>/<str:poliAge_v>/',                                                                          views.search,                           name='search'),
+    
+                                                                                                        
     path('lawsearch/',                                                                                  views.lawsearch,                        name='lawsearch'),
     path('lawsearch/<int:page>/',                                                                       views.lawsearch,                        name='lawsearch'),
     path('lawsearch/<int:page>/<str:lawkey>/',                                                          views.lawsearch,                        name='lawsearch'),
-    path('lawsearch/lawupdate/',                                                                        views.lawupdate,                        name='lawupdate'),
+    path('lawsearch/lawupdate/',               
+    
+                                                                                                        views.lawupdate,                        name='lawupdate'),
     path('politician/<int:pid>/',                                                                       views.politician,                       name='politician'), #pid = politician model id
     path('politician/<int:pid>/insert-photo/',                                                          views.insert_photo,                     name='insert_photo'),
    

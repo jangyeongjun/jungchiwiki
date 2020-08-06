@@ -16,17 +16,6 @@ def main(request):
     politicians = Politician.objects.all()
     return render(request,'feedpage/main.html', {'politicians' : politicians})
 
-def poliupdate(request):
-    polis = poliParsing()
-    currentPoliticians = Politician.objects.all()
-
-    for number in range(len(polis)):
-        print(number)
-        if currentPoliticians.filter(hg_name = polis[number]['HG_NM']):
-            print(number)
-        else :
-            Politician.objects.create(hg_name = polis[number]['HG_NM'], eng_name = polis[number]['ENG_NM'], bth_name=polis[number]['BTH_GBN_NM'], bth_date=polis[number]['BTH_DATE'], job_res_name = polis[number]['JOB_RES_NM'], politicalParty = polis[number]['POLY_NM'], district = polis[number]['ORIG_NM'], politicalCommittee = polis[number]['CMITS'], electedCount = polis[number]['REELE_GBN_NM'], units = polis[number]['UNITS'], gender = polis[number]['SEX_GBN_NM'], tel_num = polis[number]['TEL_NO'], e_mail = polis[number]['E_MAIL'], homepage = polis[number]['HOMEPAGE'])
-    return render(request,'feedpage/search.html')
 
 
 #===============================================
@@ -123,35 +112,139 @@ def polisearch(request):
 
 
  
-def search(request, page=1,poliname='',poliparty='',policommi='',polidisstrict='',poligender='',polielected=''):
+def search(request, page=1,poliname_v='x',poliparty_v='x',policommi_v='x',polidisstrict_v='x',poligender_v='x',polielected_v='x',polihow_v='x',poliori_v='x',poliAge_v='x',):
+
+    #POST들어왔을 때, 캐치하기 위함
     if request.method == "POST":
         print(request.POST)
         #대조가 가능한 변수
-        poliname        = request.POST["poliname"]
-        poliparty       = request.POST["poliparty"]
-        policommi       = request.POST["policommi"]
-        polidisstrict   = request.POST["polidisstrict"]
-        poligender      = request.POST["poligender"]
-        polielected     = request.POST["polielected"]
-
-        polis = Politician.objects.all().order_by('hg_name').filter(
-            hg_name__icontains              = poliname,
-            politicalCommittee__icontains   = policommi,
-            politicalParty__icontains       = poliparty,
-            district__icontains             = polidisstrict,
-            gender__icontains               = poligender,
-            electedCount__icontains         = polielected
-        )
-        print(polis)
+        poliname_v        = request.POST["poliname"]
+        poliparty_v       = request.POST["poliparty"]
+        policommi_v       = request.POST["policommi"]
+        polidisstrict_v   = request.POST["polidisstrict"]
+        poligender_v      = request.POST["poligender"]
+        polielected_v     = request.POST["polielected"]
+        polihow_v         = request.POST["polihow"]
         #대조가 안되는 변수
-        Poliori         = request.POST["Poliori"]
-        polihow         = request.POST["polihow"]
-        poliAge         = request.POST["poliAge"]
+        poliori_v         = request.POST["poliori"]
+        poliAge_v         = request.POST["poliAge"]
+
+        if polihow_v == '비례대표':
+            polis = Politician.objects.all().order_by('hg_name').filter(
+                hg_name__icontains              = poliname_v,
+                politicalCommittee__icontains   = policommi_v,
+                politicalParty__icontains       = poliparty_v,
+                district__icontains             = polihow,
+                gender__icontains               = poligender_v,
+                electedCount__icontains         = polielected_v,
+            )
+        elif polihow_v == '지역구':
+            polis = Politician.objects.all().order_by('hg_name').filter(
+                hg_name__icontains              = poliname_v,
+                politicalCommittee__icontains   = policommi_v,
+                politicalParty__icontains       = poliparty_v,
+                district__icontains             = polidisstrict_v,
+                gender__icontains               = poligender_v,
+                electedCount__icontains         = polielected_v,
+            ).exclude(district='비례대표')
+        else:
+            polis = Politician.objects.all().order_by('hg_name').filter(
+            hg_name__icontains              = poliname_v,
+            politicalCommittee__icontains   = policommi_v,
+            politicalParty__icontains       = poliparty_v,
+            district__icontains             = polidisstrict_v,
+            gender__icontains               = poligender_v,
+            electedCount__icontains         = polielected_v
+        )
+        if poliori_v != '':
+            if int(poliori_v) == 4:
+                polis = polis.filter(politicalOrientation__gte=(int(poliori_v)))
+            elif int(poliori_v)>=0:
+                polis = polis.filter(politicalOrientation__gte=(int(poliori_v)),politicalOrientation__lt=(int(poliori_v)+1))
+            elif int(poliori_v)==-5:
+                polis = polis.filter(politicalOrientation__lte=(int(poliori_v)+1))
+            else:
+                polis = polis.filter(politicalOrientation__lte=(int(poliori_v)+1),politicalOrientation__gt=(int(poliori_v)))
+        if poliAge_v != '':
+            if int(poliAge_v) == 70:
+                polis = polis.filter(age__gte=(int(poliAge_v)))
+            elif int(poliAge_v) == 29:
+                polis = polis.filter(age__lte=(int(poliAge_v)))
+            else:
+                polis = polis.filter(age__gte=(int(poliAge_v)),age__lt=(int(poliAge_v)+10))
+            
         
         
+    #검색했을 때, 검색 조건 유지 위함
+    elif poliname_v !='x' or poliparty_v != 'x' or policommi_v !='x' or polidisstrict_v !='x' or poligender_v !='x' or polielected_v !='x' or polihow_v !='x' or poliori_v !='x' or poliAge_v !='x':
+        if poliname_v =='x':
+            poliname_v = ''
+        if poliparty_v =='x':
+            poliparty_v = ''
+        if policommi_v =='x':
+            policommi_v = ''
+        if polidisstrict_v =='x':
+            polidisstrict_v = ''
+        if poligender_v =='x':
+            poligender_v = ''
+        if polielected_v =='x':
+            polielected_v = ''
+        if polihow_v =='x':
+            polihow_v = ''
+        if poliori_v =='x':
+            poliori_v = ''
+        if poliAge_v =='x':
+            poliAge_v = ''
+        
+
+        if polihow_v == '비례대표':
+            polis = Politician.objects.all().order_by('hg_name').filter(
+                hg_name__icontains              = poliname_v,
+                politicalCommittee__icontains   = policommi_v,
+                politicalParty__icontains       = poliparty_v,
+                district__icontains             = polihow,
+                gender__icontains               = poligender_v,
+                electedCount__icontains         = polielected_v,
+            )
+        elif polihow_v == '지역구':
+            polis = Politician.objects.all().order_by('hg_name').filter(
+                hg_name__icontains              = poliname_v,
+                politicalCommittee__icontains   = policommi_v,
+                politicalParty__icontains       = poliparty_v,
+                district__icontains             = polidisstrict_v,
+                gender__icontains               = poligender_v,
+                electedCount__icontains         = polielected_v,
+            ).exclude(district='비례대표')
+        else:
+            polis = Politician.objects.all().order_by('hg_name').filter(
+            hg_name__icontains              = poliname_v,
+            politicalCommittee__icontains   = policommi_v,
+            politicalParty__icontains       = poliparty_v,
+            district__icontains             = polidisstrict_v,
+            gender__icontains               = poligender_v,
+            electedCount__icontains         = polielected_v
+        )
+        print(poliori_v)
+        if poliori_v != 'x':
+            if int(poliori_v) == 4:
+                polis = polis.filter(politicalOrientation__gte=(int(poliori_v)))
+            elif int(poliori_v) >= 0:
+                polis = polis.filter(politicalOrientation__gte=(int(poliori_v)),politicalOrientation__lt=(int(poliori_v)+1))
+            elif int(poliori_v) == -5:
+                polis = polis.filter(politicalOrientation__lte=(int(poliori_v)+1))
+            else:
+                polis = polis.filter(politicalOrientation__lte=(int(poliori_v)+1),politicalOrientation__gt=(int(poliori_v)))
+        if poliAge_v != 'x':
+            if int(poliAge_v) == 70:
+                polis = polis.filter(age__gte=(int(poliAge_v)))
+            elif int(poliAge_v) == 29:
+                polis = polis.filter(age__lte=(int(poliAge_v)))
+            else:
+                polis = polis.filter(age__gte=(int(poliAge_v)),age__lt=(int(poliAge_v)+10))
+
+
     else:
         polis = Politician.objects.all().order_by('hg_name')
-    
     #페이징 작업 위함
     paginated_by = 10
     total_count = len(polis)
@@ -168,12 +261,30 @@ def search(request, page=1,poliname='',poliparty='',policommi='',polidisstrict='
     start_index = paginated_by * (page-1)
     end_index = paginated_by * page
     polis = polis[start_index:end_index]
-    print(page)
+    if poliname_v =='':
+        poliname_v = 'x'
+    if poliparty_v =='':
+        poliparty_v = 'x'
+    if policommi_v =='':
+        policommi_v = 'x'
+    if polidisstrict_v =='':
+        polidisstrict_v = 'x'
+    if poligender_v =='':
+        poligender_v = 'x'
+    if polielected_v =='':
+        polielected_v = 'x'
+    if polihow_v =='':
+        polihow_v = 'x'
+    if poliori_v =='x':
+            poliori_v = ''
+    if poliAge_v =='x':
+        poliAge_v = ''
     return render(request,'feedpage/search.html', 
     {"polis":polis, 'total_page':total_page, 'page_range':page_range,
     'initial':initial, 'next_end':next_end, 'before_end':before_end,
-    "poliname":poliname, "poliparty":poliparty, "policommi":policommi,
-    "polidisstrict":polidisstrict, "poligender":poligender, "polielected":polielected
+    "poliname_v":poliname_v, "poliparty_v":poliparty_v, "policommi_v":policommi_v,
+    "polidisstrict_v":polidisstrict_v, "poligender_v":poligender_v, "polielected_v":polielected_v,
+    "polihow_v":polihow_v, "poliori_v":poliori_v,"poliAge_v":poliAge_v
     })
 
 
@@ -257,6 +368,22 @@ def law_debate(request, pid, lid):
 
 #======================================================
 #UPDATE
+
+def poliupdate(request):
+    polis = poliParsing()
+    currentPoliticians = Politician.objects.all()
+
+
+    for number in range(len(polis)):
+        print(polis[number]['HG_NM'])
+        age_poli = 2020-int(polis[number]['BTH_DATE'][0:4])+1
+        if currentPoliticians.filter(hg_name = polis[number]['HG_NM']):
+            print(number)
+        else :
+            Politician.objects.create(hg_name = polis[number]['HG_NM'], eng_name = polis[number]['ENG_NM'], bth_name=polis[number]['BTH_GBN_NM'], bth_date=polis[number]['BTH_DATE'], job_res_name = polis[number]['JOB_RES_NM'], politicalParty = polis[number]['POLY_NM'], district = polis[number]['ORIG_NM'], politicalCommittee = polis[number]['CMITS'], electedCount = polis[number]['REELE_GBN_NM'], units = polis[number]['UNITS'], gender = polis[number]['SEX_GBN_NM'], tel_num = polis[number]['TEL_NO'], e_mail = polis[number]['E_MAIL'], homepage = polis[number]['HOMEPAGE'],age=age_poli)
+    return render(request,'feedpage/search.html')
+
+
 def lawupdate(request):
     politicians = Politician.objects.all()
     lawobject = Law.objects.all()
@@ -280,8 +407,6 @@ def lawupdate(request):
                         Law.objects.create(committee=laws[number]['COMMITTEE'],bill_name = laws[number]['BILL_NAME'],proposer=Politician.objects.get(id=poli.id),proposer_etc=laws[number]['PROPOSER'], propose_dt=laws[number]['PROPOSE_DT'],detail_link=laws[number]['DETAIL_LINK'],member_link=laws[number]['MEMBER_LIST'])
                     except:
                         Law.objects.create(bill_name = laws[number]['BILL_NAME'],proposer=Politician.objects.get(id=poli.id),proposer_etc=laws[number]['PROPOSER'], propose_dt=laws[number]['PROPOSE_DT'],detail_link=laws[number]['DETAIL_LINK'],member_link=laws[number]['MEMBER_LIST'])
-
-
         else :#발의 법안 2개 이상인 경우
             for number in range(len(laws)):
                 print(len(laws))

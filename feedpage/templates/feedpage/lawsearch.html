@@ -21,7 +21,7 @@
 	       				<col style="width:3%;">
 	       				</colgroup>
 	       				<tbody>
-                           <form class="btn_group" action="{% url 'lawsearch'%}" method = "post" id = "search_form">
+                           <form class="btn_group" action='/feeds/lawsearch/' method = "post" id = "lawsearch_form" data-csrfmiddlewaretoken="{{ csrf_token }}">
                            {% csrf_token %}
 	       					<tr>
 								<th scope="row">법률안 이름</th>
