@@ -7,6 +7,7 @@ html {
 body  {
   background-color:  white;
   height: auto;
+  overflow: auto;
 }
 .tabs { 
   display: flex; 
@@ -388,20 +389,27 @@ th {
 /* #endregion */
 
 /* #region debate.html css */
+.debate-title {
+  border-bottom: solid 1px #dbdbdb;
+  
+  width:80%;
+  margin-top: 50px;
+  margin-right: 200px;
+  margin-left: 100px;
+}
+
 
 .comment-box {
   width: 90%;
   height: auto;
-  position: relative;
-  left:5%;
-  top: 5%;
+  
 
   display:flex;
   flex-direction: column;
   align-items: center;
   justify-content:flex-start;
 
-  border: solid 1px #dbdbdb;
+  
 }
 
 .comment-box > .card-comment {
@@ -449,7 +457,7 @@ form {
 	margin-top:40px;
   margin-left: 20px;
   margin-bottom: 40px;
-  overflow:auto;
+  
 }
 
 .demo-card-wide.small-feed .card-title {
