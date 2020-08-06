@@ -20,8 +20,9 @@
                     <div class="category" id ="{{ politician.politicalParty }}">
                         <span>출생</span>
                     </div>
-                    <div class="content">
+                    <div class="content" style="display:flex; flex-direction:column;">
                         <span>{{ politician.bth_date}}({{ politician.bth_name}}력)</span>
+                        <span>{{ politician.age }}세</span>
                         {% comment %} <span>{{ politician.age}}</span> {% endcomment %}
                     </div>
                 </li>
@@ -284,7 +285,7 @@
                 {% else %} 
                 {% comment %} 법률안 NORMALFEED가 아니면 {% endcomment %}
                     <div class= "normalFeed-content">
-                        <h3> {{ normalFeed.content }}</h3>
+                        <h3 style="white-space: pre-line;"> {{ normalFeed.content }}</h3>
                         {% if user.is_authenticated %}
                             <form action=                 "/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/edit/" 
                                 method=                   "POST" 
@@ -352,7 +353,7 @@
                                 </div>
                                 <div class="small-feed__supporting-text" style="display:none;">
                                     <div class = "smallFeed-content">
-                                        <h5>{{ smallFeed.content }}</h5>
+                                        <h5 style="white-space: pre-line;">{{ smallFeed.content }}</h5>
                                         <form action=                 "/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/smallfeed/{{ smallFeed.id }}/edit/" 
                                             method=                   "POST" 
                                             class=                    "smallFeed-edit-form" 

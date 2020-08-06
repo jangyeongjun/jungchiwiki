@@ -180,6 +180,11 @@ class Comment(models.Model):
         ('불이행', 'failure')
     ]
     evaluation = models.CharField(max_length = 35, choices = evaluationChoices, blank=True)#일반토론인 경우에는 blank값
+    likeChoices = [
+        ('like', 'like'),
+        ('dislike', 'dislike'),
+    ]
+    likeChoice = models.CharField(max_length = 35, choices = likeChoices, blank=True)
     #1:N
     author = models.ForeignKey(User, blank=True, null=True, on_delete=models.PROTECT) #유저가 사라져도 댓글은 사라지지 않음
     law = models.ForeignKey(Law, blank=True,  null=True, on_delete=models.CASCADE, related_name='comments' )

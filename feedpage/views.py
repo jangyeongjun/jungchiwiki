@@ -8,6 +8,7 @@ import os
 from django.http import JsonResponse
 import simplejson as json
 import math
+import datetime
 
 
 # Create your views here.
@@ -91,13 +92,24 @@ def smallFeedCreate(request,pid,nfid):
     path = os.path.join('/feeds/politician/', str(pid))
     return redirect(path)
 
-def normalFeed_debate_new_comment(request, pid, nfid):
+def normalFeed_debate_new_like_comment(request, pid, nfid):
     content = request.POST['content']
     author = request.user
     normalFeed = NormalFeed.objects.get(id = nfid)
-    Comment.objects.create(content=content, author = author, normalFeed=normalFeed)
+    time = str(datetime.datetime.now()).strip('.')[0:16]
+    Comment.objects.create(content=content, author = author, normalFeed=normalFeed, likeChoice = 'like', created_at = time)
     path = os.path.join('/feeds/politician', str(pid), 'normalfeed', str(nfid), 'debate').replace("\\" , "/")
     return redirect(path)
+
+def normalFeed_debate_new_dislike_comment(request, pid, nfid):
+    content = request.POST['content']
+    author = request.user
+    normalFeed = NormalFeed.objects.get(id = nfid)
+    time = str(datetime.datetime.now()).strip('.')[0:16]
+    Comment.objects.create(content=content, author = author, normalFeed=normalFeed, likeChoice = 'dislike', created_at = time)
+    path = os.path.join('/feeds/politician', str(pid), 'normalfeed', str(nfid), 'debate').replace("\\" , "/")
+    return redirect(path)
+
 
 def normalFeed_debate_new_CTC(request, pid, nfid, cid):
     content = request.POST['content']
@@ -107,13 +119,24 @@ def normalFeed_debate_new_CTC(request, pid, nfid, cid):
     path = os.path.join('/feeds/politician', str(pid), 'normalfeed', str(nfid), 'debate').replace("\\" , "/")
     return redirect(path)
 
-def law_debate_new_comment(request, pid, lid):
+def law_debate_new_like_comment(request, pid, lid):
     content = request.POST['content']
     author = request.user
     law = Law.objects.get(id = lid)
-    Comment.objects.create(content=content, author = author, law=law)
+    time = str(datetime.datetime.now()).strip('.')[0:16]
+    Comment.objects.create(content=content, author = author, law=law, likeChoice='like', created_at = time )
     path = os.path.join('/feeds/politician', str(pid), 'law', str(lid), 'debate').replace("\\" , "/")
     return redirect(path)
+
+def law_debate_new_dislike_comment(request, pid, lid):
+    content = request.POST['content']
+    author = request.user
+    law = Law.objects.get(id = lid)
+    time = str(datetime.datetime.now()).strip('.')[0:16]
+    Comment.objects.create(content=content, author = author, law=law, likeChoice='dislike', created_at = time)
+    path = os.path.join('/feeds/politician', str(pid), 'law', str(lid), 'debate').replace("\\" , "/")
+    return redirect(path)
+
 
 def law_debate_new_CTC(request, pid, lid, cid):
     content = request.POST['content']
@@ -358,13 +381,19 @@ def politician(request, pid):
 def normalFeed_debate(request, pid, nfid):
     politician = Politician.objects.get(id = pid)
     normalFeed = NormalFeed.objects.get(id = nfid)
-    comments = normalFeed.comments.all()
-    comments_to_comment = CommentToComment.objects.none()
-    for c in comments:
-        temp = c.ctc.all()
-        comments_to_comment = comments_to_comment.union(temp)
+    like_comments = Comment.objects.filter(likeChoice='like', normalFeed=normalFeed)
+    dislike_comments = Comment.objects.filter(likeChoice='dislike', normalFeed=normalFeed)
     
-    return render(request,'feedpage/debate.html', {'politician': politician ,'normalFeed' : normalFeed, 'comments' : comments, 'comments_to_comment' : comments_to_comment})
+    comments_to_like_comment = CommentToComment.objects.none()
+    comments_to_dislike_comment = CommentToComment.objects.none()
+    for c in like_comments:
+        temp = c.ctc.all()
+        comments_to_like_comment = comments_to_like_comment.union(temp)
+    for c in dislike_comments:
+        temp = c.ctc.all()
+        comments_to_dislike_comment = comments_to_dislike_comment.union(temp)
+    
+    return render(request,'feedpage/debate.html', {'politician': politician ,'normalFeed' : normalFeed, 'like_comments' : like_comments, 'dislike_comments' : dislike_comments, 'comments_to_like_comment' : comments_to_like_comment, 'comments_to_dislike_comment' : comments_to_dislike_comment})
 
 
 def law_debate(request, pid, lid):
@@ -556,8 +585,9 @@ def smallFeed_dislike(request, pid, sfid, nfid):
 def normalFeed_debate_comment_edit(request, pid, nfid, cid):
     comment = Comment.objects.get(id = cid)
     content = request.POST['content']
+    time = str(datetime.datetime.now()).strip('.')[0:16]
     comment.content = content
-    comment.updated_at = timezone.now()
+    comment.updated_at = time
     comment.save()
     path = os.path.join('/feeds/politician', str(pid), 'normalfeed', str(nfid), 'debate').replace("\\" , "/")
     return redirect(path)
@@ -565,8 +595,9 @@ def normalFeed_debate_comment_edit(request, pid, nfid, cid):
 def normalFeed_debate_ctc_edit(request, pid, nfid, cid, ctcid):
     ctc = CommentToComment.objects.get(id = ctcid)
     content = request.POST['content']
+    time = str(datetime.datetime.now()).strip('.')[0:16]
     ctc.content = content
-    ctc.updated_at = timezone.now()
+    ctc.updated_at = time
     ctc.save()
     path = os.path.join('/feeds/politician', str(pid), 'normalfeed', str(nfid), 'debate').replace("\\" , "/")
     return redirect(path)
