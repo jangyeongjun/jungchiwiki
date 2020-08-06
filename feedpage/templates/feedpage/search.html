@@ -11,7 +11,8 @@
        			<div class="national_assemblyman_search">
 	       			<!-- left 검색 -->
 	       			<div class="theme_select_box response_theme_box response_theme_layout">
-	       			<form id="schform" method="post">
+	       			<form id="poliform" method="post", action="{% url 'search'%}">
+					   {% csrf_token %}
 		       			<div class="response_theme_header">
 			       			<h4>의원검색</h4>
 		       			</div>
@@ -26,203 +27,147 @@
 	       				</colgroup>
 	       				<tbody>
 	       					<tr>
-	       						
 								<th scope="row">이름</th>
-	       						<td><input type="text" title="이름" id="schHgNm" name="schHgNm"></td>
+	       						<td>
+								   {% if poliname_v == "x"%}
+								   	<input type="text" title="poliname" id="poliname" name="poliname">
+								   {% else %}
+								   	<input type="text" title="poliname" id="poliname" name="poliname" value ={{ poliname_v }}>
+								   {% endif %}
+								</td>
 	       						<th scope="row">정치성향</th>
 	       						<td>
-								    <select id="Polychar" name="Polychar" title="성향">
+								    <select id="poliori" name="poliori" title="성향">
 										<option value="">전체</option>
-										
-											<option value="">보수 4.0~</option>										
-										
-											<option value="">보수 3.0~3.9</option>										
-										
-											<option value="">보수 2.0~2.9</option>		
-
-											<option value="">보수 1.0~1.9</option>
-
-											<option value="">보수 0.0~0.9</option>
-
-											<option value="">진보 0.0~0.9</option>				
-										
-											<option value="">진보 1.0~1.9</option>										
-										
-											<option value="">진보 2.0~2.9</option>			
-										
-											<option value="">진보 3.0~3.9</option>										
-										
-											<option value="">진보 4.0~</option>										
+											<option value='4'{% if poliori_v == "4"%}selected{% endif %}>보수 4.0~</option>			
+											<option value='3'{% if poliori_v == "3"%}selected{% endif %}>보수 3.0~3.9</option>	
+											<option value='2'{% if poliori_v == "2"%}selected{% endif %}>보수 2.0~2.9</option>	
+											<option value='1'{% if poliori_v == "1"%}selected{% endif %}>보수 1.0~1.9</option>
+											<option value='0'{% if poliori_v == "0"%}selected{% endif %}>보수 0.0~0.9</option>
+											<option value='-1'{% if poliori_v == "-1"%}selected{% endif %}>진보 0.0~0.9</option>	
+											<option value='-2'{% if poliori_v == "-2"%}selected{% endif %}>진보 1.0~1.9</option>	
+											<option value='-3'{% if poliori_v == "-3"%}selected{% endif %}>진보 2.0~2.9</option>	
+											<option value='-4'{% if poliori_v == "-4"%}selected{% endif %}>진보 3.0~3.9</option>	
+											<option value='-5'{% if poliori_v == "-5"%}selected{% endif %}>진보 4.0~</option>										
 									</select>
 								</td>
 	       						<th scope="row">정당</th>
 	       						<td>
-		       						<select id="schPoly" name="schPoly" title="정당">
-										<option value="">전체</option>
-										
-											<option value="101182">더불어민주당</option>										
-										
-											<option value="101198">미래통합당</option>										
-										
-											<option value="101180">정의당</option>		
-
-											<option value="101200">국민의당</option>		
-										
-											<option value="101203">열린민주당</option>										
-										
-											<option value="101208">기본소득당</option>			
-										
-											<option value="101209">시대전환</option>										
-										
-											<option value="101030">무소속</option>										
+		       						<select id="poliparty" name="poliparty" title="정당">
+											<option value="">전체</option>
+											<option value="더불어민주당" {% if poliparty_v == "더불어민주당"%}selected{% endif %}>더불어민주당</option>
+											<option value="미래통합당"{% if poliparty_v == "미래통합당"%}selected{% endif %}>미래통합당</option>	
+											<option value="정의당"{% if poliparty_v == "정의당"%}selected{% endif %}>정의당</option>	
+											<option value="국민의당"{% if poliparty_v == "국민의당"%}selected{% endif %}>국민의당</option>
+											<option value="열린민주당"{% if poliparty_v == "열린민주당"%}selected{% endif %}>열린민주당</option>	
+											<option value="기본소득당"{% if poliparty_v == "기본소득당"%}selected{% endif %}>기본소득당</option>	
+											<option value="시대전환"{% if poliparty_v == "시대전환"%}selected{% endif %}>시대전환</option>
+											<option value="무소속"{% if poliparty_v == "무소속"%}selected{% endif %}>무소속</option>										
 									</select>
 	       						</td>
 	       					</tr>
 	       					<tr>
 	       						<th scope="row">위원회</th>
 	       						<td>
-		       						<select id="schCmit" name="schCmit" title="위원회">
+		       						<select id="policommi" name="policommi" title="위원회">
 										<option value="">전체</option>
 										
-											<option value="9700005">국회운영위원회</option>
-										
-											<option value="9700006">법제사법위원회</option>
-										
-											<option value="9700008">정무위원회</option>
-										
-											<option value="9700300">기획재정위원회</option>
-										
-											<option value="9700512">교육위원회</option>
-										
-											<option value="9700479">과학기술정보방송통신위원회</option>
-										
-											<option value="9700409">외교통일위원회</option>
-										
-											<option value="9700019">국방위원회</option>
-										
-											<option value="9700480">행정안전위원회</option>
-										
-											<option value="9700513">문화체육관광위원회</option>
-										
-											<option value="9700408">농림축산식품해양수산위원회</option>
-										
-											<option value="9700481">산업통상자원중소벤처기업위원회</option>
-										
-											<option value="9700341">보건복지위원회</option>
-										
-											<option value="9700038">환경노동위원회</option>
-										
-											<option value="9700407">국토교통위원회</option>
-										
-											<option value="9700047">정보위원회</option>
-										
-											<option value="9700342">여성가족위원회</option>
-										
-											<option value="9700049">예산결산특별위원회</option>
+											<option value="국회운영위원회"{% if policommi_v == "국회운영위원회"%}selected{% endif %}>국회운영위원회</option>
+											<option value="법제사법위원회"{% if policommi_v == "법제사법위원회"%}selected{% endif %}>법제사법위원회</option>
+											<option value="정무위원회"{% if policommi_v == "정무위원회"%}selected{% endif %}>정무위원회</option>
+											<option value="기획재정위원회"{% if policommi_v == "기획재정위원회"%}selected{% endif %}>기획재정위원회</option>
+											<option value="교육위원회"{% if policommi_v == "교육위원회"%}selected{% endif %}>교육위원회</option>
+											<option value="과학기술정보방송통신위원회"{% if policommi_v == "과학기술정보방송통신위원회"%}selected{% endif %}>과학기술정보방송통신위원회</option>
+											<option value="외교통일위원회"{% if policommi_v == "외교통일위원회"%}selected{% endif %}>외교통일위원회</option>
+											<option value="국방위원회"{% if policommi_v == "국방위원회"%}selected{% endif %}>국방위원회</option>
+											<option value="행정안전위원회"{% if policommi_v == "행정안전위원회"%}selected{% endif %}>행정안전위원회</option>
+											<option value="문화체육관광위원회"{% if policommi_v == "문화체육관광위원회"%}selected{% endif %}>문화체육관광위원회</option>
+											<option value="농림축산식품해양수산위원회"{% if policommi_v == "농림축산식품해양수산위원회"%}selected{% endif %}>농림축산식품해양수산위원회</option>
+											<option value="산업통상자원중소벤처기업위원회"{% if policommi_v == "산업통상자원중소벤처기업위원회"%}>selected{% endif %}산업통상자원중소벤처기업위원회</option>
+											<option value="보건복지위원회"{% if policommi_v == "보건복지위원회"%}selected{% endif %}>보건복지위원회</option>
+											<option value="환경노동위원회"{% if policommi_v == "환경노동위원회"%}selected{% endif %}>환경노동위원회</option>
+											<option value="국토교통위원회"{% if policommi_v == "국토교통위원회"%}selected{% endif %}>국토교통위원회</option>
+											<option value="정보위원회"{% if policommi_v == "정보위원회"%}selected{% endif %}>정보위원회</option>
+											<option value="여성가족위원회"{% if policommi_v == "여성가족위원회"%}selected{% endif %}>여성가족위원회</option>
+											<option value="예산결산특별위원회"{% if policommi_v == "예산결산특별위원회"%}selected{% endif %}>예산결산특별위원회</option>
 										
 									</select>
 	       						</td>
 	       						<th scope="row">지역선거구</th>
 	       						<td>
-				       						<select id="schUpOrig" name="schUpOrig" title="시/도 지역 선택">
+				       						<select id="polidisstrict" name="polidisstrict" title="시/도 지역 선택">
 												<option value="">전체</option>
-														<option value="021001">서울</option>
-														<option value="021002">부산</option>
-														<option value="021003">대구</option>
-														<option value="021004">인천</option>
-														<option value="021005">광주</option>
-														<option value="021006">대전</option>
-														<option value="021007">울산</option>
-														<option value="021008">경기</option>
-														<option value="021009">강원</option>
-														<option value="021010">충북</option>
-														<option value="021011">충남</option>
-														<option value="021012">전북</option>
-														<option value="021013">전남</option>
-														<option value="021014">경북</option>
-														<option value="021015">경남</option>																									
-														<option value="021016">제주</option>													
-														<option value="021168">세종</option>
+														<option value="서울"{% if polidisstrict_v == "서울"%}selected{% endif %}>서울</option>
+														<option value="부산"{% if polidisstrict_v == "부산"%}selected{% endif %}>부산</option>
+														<option value="대구"{% if polidisstrict_v == "대구"%}selected{% endif %}>대구</option>
+														<option value="인천"{% if polidisstrict_v == "인천"%}selected{% endif %}>인천</option>
+														<option value="광주"{% if polidisstrict_v == "광주"%}selected{% endif %}>광주</option>
+														<option value="대전"{% if polidisstrict_v == "대전"%}selected{% endif %}>대전</option>
+														<option value="울산"{% if polidisstrict_v == "울산"%}selected{% endif %}>울산</option>
+														<option value="경기"{% if polidisstrict_v == "경기"%}selected{% endif %}>경기</option>
+														<option value="강원"{% if polidisstrict_v == "강원"%}selected{% endif %}>강원</option>
+														<option value="충북"{% if polidisstrict_v == "충북"%}selected{% endif %}>충북</option>
+														<option value="충남"{% if polidisstrict_v == "충남"%}selected{% endif %}>충남</option>
+														<option value="전북"{% if polidisstrict_v == "전북"%}selected{% endif %}>전북</option>
+														<option value="전남"{% if polidisstrict_v == "전남"%}selected{% endif %}>전남</option>
+														<option value="경북"{% if polidisstrict_v == "경북"%}selected{% endif %}>경북</option>
+														<option value="경남"{% if polidisstrict_v == "경남"%}selected{% endif %}>경남</option>																									
+														<option value="제주"{% if polidisstrict_v == "제주"%}selected{% endif %}>제주</option>													
+														<option value="세종"{% if polidisstrict_v == "세종"%}selected{% endif %}>세종</option>
 											
 											</select>
 	       						</td>
 	       						<th scope="row">성별</th>
 	       						<td>
-	       							<select id="schSexGbn" name="schSexGbn" title="성별">
+	       							<select id="poligender" name="poligender" title="성별">
 										<option value="">전체</option>
-											<option value="1">남</option>
-											<option value="2">여</option>
+											<option value="남"{% if poligender_v == "남"%}selected{% endif %}>남</option>
+											<option value="여"{% if poligender_v == "여"%}selected{% endif %}>여</option>
 									</select>
 	       						</td>
 	       					</tr>
 	       					<tr>
 	       						<th scope="row">연령</th>
 	       						<td>
-		       						<select id="schAge" name="schAge" title="연령">
+		       						<select id="poliAge" name="poliAge" title="연령">
 										<option value="" selected="selected">전체</option>
-										
-											<option value="29">30세미만</option>
-											
-											<option value="30">30대</option>
-											
-											<option value="40">40대</option>
-											
-											<option value="50">50대</option>
-											
-											<option value="60">60대</option>
-										
-											<option value="70">70세이상</option>
-											
-										
+											<option value="29"{% if poliAge_v == "29"%}selected{% endif %}>30세미만</option>
+											<option value="30"{% if poliAge_v == "30"%}selected{% endif %}>30대</option>
+											<option value="40"{% if poliAge_v == "40"%}selected{% endif %}>40대</option>
+											<option value="50"{% if poliAge_v == "50"%}selected{% endif %}>50대</option>
+											<option value="60"{% if poliAge_v == "60"%}selected{% endif %}>60대</option>
+											<option value="70"{% if poliAge_v == "70"%}selected{% endif %}>70세이상</option>
 									</select>
 	       						</td>
 	       						<th scope="row">당선횟수</th>
 	       						<td>
-		       						<select id="schReeleGbn" name="schReeleGbn" title="당선횟수">
+		       						<select id="polielected" name="polielected" title="당선횟수">
 										<option value="">전체</option>
-										
-											<option value="105001">초선</option>
-											
-											<option value="105002">재선</option>
-											
-											<option value="105003">3선</option>
-											
-											<option value="105004">4선</option>
-											
-											<option value="105005">5선</option>
-											
-											<option value="105006">6선</option>
-											
-											<option value="105007">7선</option>
-											
-											<option value="105008">8선</option>
-
-											<option value="105009">9선</option>
-											
-											<option value="105010">10선</option>
-											
+											<option value="초선"{% if polielected_v == "초선"%}selected{% endif %}>초선</option>
+											<option value="재선"{% if polielected_v == "재선"%}selected{% endif %}>재선</option>
+											<option value="3선"{% if polielected_v == "3선"%}selected{% endif %}>3선</option>
+											<option value="4선"{% if polielected_v == "4선"%}selected{% endif %}>4선</option>
+											<option value="5선"{% if polielected_v == "5선"%}selected{% endif %}>5선</option>
+											<option value="6선"{% if polielected_v == "6선"%}selected{% endif %}>6선</option>
+											<option value="7선"{% if polielected_v == "7선"%}selected{% endif %}>7선</option>
+											<option value="8선"{% if polielected_v == "8선"%}selected{% endif %}>8선</option>
+											<option value="9선"{% if polielected_v == "9선"%}selected{% endif %}>9선</option>
+											<option value="10선"{% if polielected_v == "10선"%}selected{% endif %}>10선</option>
 									</select>
 	       						</td>
 	       						<th scope="row">당선방법</th>
 	       						<td>
-		       						<select id="schElectGbn" name="schElectGbn" title="당선방법">
+		       						<select id="polihow" name="polihow" title="당선방법">
 										<option value="">전체</option>
-										
-											<option value="102010">지역구</option>
-										
-											<option value="102020">비례대표</option>
-										
+											<option value="지역구"{% if polihow_v == "지역구"%}selected{% endif %}>지역구</option>
+											<option value="비례대표"{% if polihow_v == "비례대표"%}selected{% endif %}>비례대표</option>
 									</select>
 	       						</td>
 	       					</tr>
 	       				</tbody>
 	       				</table>
-	       				<div class="btn_group">
-		       				<ul>
-		       					<li><a href="javascript:;" class="btn_inquiries" id="btnSearch">검색</a></li>
-		       					<li><a href="javascript:;" class="btn_checkchart" id="btnInit">초기화</a></li>
-		       				</ul>
-	       				</div>
+                        <button class="btn_inquiries" id="btnSearch" type="submit">검색</button>
+                        
 	       			</form>
 	       			<div class="bgshadow_modal">&nbsp;</div>
 	       			</div>
@@ -264,14 +209,22 @@
 	       						<tbody id="list-result-sect">
 								   {% for poli in polis %}
 									<tr>	
-										<td class="m_none rownum">{{ poli.politicalOrientation }}</td>	
+										<td class="m_none rownum">
+										{% if poli.politicalOrientation > 0 %}
+											보수 {{ poli.politicalOrientation }}
+										{% elif poli.politicalOrientation < 0%}
+											진보 {{ poli.politicalOrientation }}
+										{% else %}
+											{{ poli.politicalOrientation }}
+										{% endif %}
+										</td>	
 										<td class="m_left"><a href="/feeds/politician/{{ poli.id }}/" class="hgNm" title="새창열림">{{ poli.hg_name }}</a></td>	
 										<td class="polyNm">{{ poli.politicalParty }}</td>	
 										<td class="m_none cmits">{{ poli.politicalCommittee }}</td>	
 										<td class="m_none origNm">{{ poli.district }}</td>
 										<td class="m_none sexGbnNm">{{ poli.gender }}</td>	
 										<td class="m_none reeleGbnNm">{{ poli.electedCount }}</td>
-										<td class="m_none eleGbnNm">{{ poli.bth_name }}{{ poli.bth_date }}</td>
+										<td class="m_none eleGbnNm">({{ poli.bth_name }}){{ poli.bth_date }}, {{ poli.age }}세</td>
 									</tr>
 								   {% endfor %}
 								</tbody>
@@ -287,14 +240,20 @@
 								   <a href="#" class="btn-next btn_page_next next" title="다음 10페이지 이동"><strong>다음 10페이지 이동</strong></a> 
 								   <a href="#" class="btn-last btn_page_last last" title="마지막페이지 이동">
 								   <strong>마지막페이지 이동</strong>
-								   </a> {% endcomment %}
+								   </a> poliname_v='',poliparty_v='',policommi_v='',polidisstrict_v='',poligender_v='',polielected_v{% endcomment %}
 										<ul class = "pagination">
-											<a class = "number page-number" href="/feeds/search/{{ before_end }}/">◀</a></li>
+											<a class = "number page-number" href="/feeds/search/{{ before_end }}/{{ poliname_v }}/{{ poliparty_v }}/{{ policommi_v }}/{{ polidisstrict_v }}/{{ poligender_v }}/{{ polielected_v }}/{{ polihow_v }}/{{ poliori_v }}/{{ poliAge_v }}/">
+												◀
+											</a></li>
 											{% for page in page_range %}
-												<a class = "number page-number" href="/feeds/search/{{page}}/">{{page}}</a></li>
+												<a class = "number page-number" href="/feeds/search/{{page}}/{{ poliname_v }}/{{ poliparty_v }}/{{ policommi_v }}/{{ polidisstrict_v }}/{{ poligender_v }}/{{ polielected_v }}/{{ polihow_v }}/{{ poliori_v }}/{{ poliAge_v }}/">
+												{{page}}
+												</a></li>
 														
 											{% endfor %}
-											<a class = "number page-number" href="/feeds/search/{{ next_end }}/">▶</a></li>
+											<a class = "number page-number" href="/feeds/search/{{ next_end }}/{{ poliname_v }}/{{ poliparty_v }}/{{ policommi_v }}/{{ polidisstrict_v }}/{{ poligender_v }}/{{ polielected_v }}/{{ polihow_v }}/{{ poliori_v }}/{{ poliAge_v }}/">
+												▶
+											</a></li>
 
 										</ul>
 								   </div>
