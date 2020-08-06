@@ -240,7 +240,15 @@
                     {% for law in laws %}
                         <div class="normalFeed-content law-wrapper">
                             <div class = "like-wrapper" >
-                                <h4 style="color:blue;">{{ forloop.counter }}.</h4> <h4>{{ law.bill_name }}</h4>
+                                <div style="display:flex;">
+                                    <button class="mdl-button mdl-js-button mdl-button--icon law-down">
+                                        <i class="material-icons">keyboard_arrow_down</i>
+                                    </button>
+                                    <button class="mdl-button mdl-js-button mdl-button--icon law-up" style="display:none;">
+                                        <i class="material-icons">keyboard_arrow_up</i>
+                                    </button>
+                                    <h4 style="color:blue;">{{ forloop.counter }}.</h4> <h4>{{ law.bill_name }}</h4>
+                                </div>
                                 <div>
                                     <a href="/feeds/politician/{{ politician.id }}/law/{{ law.id }}/like/"    
                                         class = "material-icons mdl-badge law-Like"     
@@ -260,7 +268,7 @@
                                     <a href="/feeds/politician/{{ politician.id }}/law/{{ law.id }}/debate/">해당 법안에 대한 토론방</a>
                                 </div>
                             </div>
-                            <div>
+                            <div class="law__supporting-text" style="display:none;">
                                 
                                 {% comment %} <h5>대표 발의자 : {{ law.proposer.hg_name }}</h5> {% endcomment %}
                                 <h6>발의된 날짜 : {{ law.propose_dt }}</h6>
@@ -276,7 +284,7 @@
                 {% else %} 
                 {% comment %} 법률안 NORMALFEED가 아니면 {% endcomment %}
                     <div class= "normalFeed-content">
-                        <h3> {{ normalFeed.content }}
+                        <h3> {{ normalFeed.content }}</h3>
                         {% if user.is_authenticated %}
                             <form action=                 "/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/edit/" 
                                 method=                   "POST" 
@@ -304,9 +312,13 @@
                                 <div class = "small-feed card-title">
                                     <div style="display:flex; align-items:center;">
                                         
+                                        <button class="mdl-button mdl-js-button mdl-button--icon smallFeed-down">
+                                            <i class="material-icons">keyboard_arrow_down</i>
+                                        </button>
+                                        <button class="mdl-button mdl-js-button mdl-button--icon smallFeed-up" style="display:none;">
+                                            <i class="material-icons">keyboard_arrow_up</i>
+                                        </button>
                                         
-                                        {{ temp_counter }}
-                                        {{ smallFeed_counter }}
                                         <h4 style="color:blue;">{{ normalFeed.title }}.{{ forloop.counter}} </h4> <h4>{{ smallFeed.title }}</h4>
                                         
                                         {% if user.is_authenticated %}       
@@ -338,7 +350,7 @@
                                     {% comment %} smallfeed는 어떻게 sort할까 {% endcomment %}
                                     </div>
                                 </div>
-                                <div class="small-feed__supporting-text">
+                                <div class="small-feed__supporting-text" style="display:none;">
                                     <div class = "smallFeed-content">
                                         <h5>{{ smallFeed.content }}</h5>
                                         <form action=                 "/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/smallfeed/{{ smallFeed.id }}/edit/" 
