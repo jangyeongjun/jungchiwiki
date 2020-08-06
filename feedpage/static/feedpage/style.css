@@ -1,10 +1,12 @@
 /* #region main.html csss*/
 
+html {
+  height: auto;
+}
 
 body  {
   background-color:  white;
-  height: 100%;
-
+  height: auto;
 }
 .tabs { 
   display: flex; 
@@ -271,6 +273,7 @@ th {
 
 .politician-header {
   width:100%;
+  height:auto;
 	display: flex;
 	justify-content: space-around;
 
@@ -446,7 +449,7 @@ form {
 	margin-top:40px;
   margin-left: 20px;
   margin-bottom: 40px;
-  
+  overflow:auto;
 }
 
 .demo-card-wide.small-feed .card-title {

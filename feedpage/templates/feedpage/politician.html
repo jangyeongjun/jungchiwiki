@@ -144,14 +144,13 @@
             </ul>
         </div>
 
-
         <div class="card table-of-contents" style="width: 18rem; ">
             <div class="card-header" id = "{{ politician.politicalParty}}" style="font-size:24px; text-align:center;">
                 목차
             </div>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item">
-                    <a class = "large-number scroll-down" data-id = "1">1. 개요</a>
+                <li class="list-group-item ">
+                    <a class = "large-number scroll-down" data-id = '1'>1. 개요</a>
                 </li>
                 <li class="list-group-item">
                     <a class = "large-number scroll-down" data-id = "2">2. 경력</a>
@@ -193,7 +192,13 @@
         <div class="demo-card-wide mdl-card normal-feed" id ="normalFeed" style="box-shadow: 0;">
             <div class="card-title">
                 <div style="display:flex;">
-                    <h2>{{ normalFeed.title }}.{{ normalFeed.get_title_display }}</h2>
+                    <button class="mdl-button mdl-js-button mdl-button--icon normalFeed-down">
+                        <i class="material-icons">keyboard_arrow_down</i>
+                    </button>
+                    <button class="mdl-button mdl-js-button mdl-button--icon normalFeed-up" style="display:none;">
+                        <i class="material-icons">keyboard_arrow_up</i>
+                    </button>
+                    <h2 style="color:blue;">{{ normalFeed.title }}.</h2><h2>{{ normalFeed.get_title_display }}</h2>
                     {% if normalFeed.title != '4' %}
                         {% if user.is_authenticated %} 
                             <button class="mdl-button mdl-js-button mdl-button--icon normalFeed-edit">
@@ -229,13 +234,13 @@
                     <a href="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/debate/">해당 항목에 대한 토론방</a>
                 </div>
             </div>
-            <div class="normal-feed__supporting-text">
+            <div class="normal-feed__supporting-text" style="display:none;">
                 {% comment %} 발의 법률안이면 {% endcomment %}
                 {% if normalFeed.title == '4' %} 
                     {% for law in laws %}
                         <div class="normalFeed-content law-wrapper">
                             <div class = "like-wrapper" >
-                                <h4>{{ forloop.counter }}. {{ law.bill_name }}</h4>
+                                <h4 style="color:blue;">{{ forloop.counter }}.</h4> <h4>{{ law.bill_name }}</h4>
                                 <div>
                                     <a href="/feeds/politician/{{ politician.id }}/law/{{ law.id }}/like/"    
                                         class = "material-icons mdl-badge law-Like"     
@@ -302,7 +307,7 @@
                                         
                                         {{ temp_counter }}
                                         {{ smallFeed_counter }}
-                                        <h4>{{ normalFeed.title }}.{{ forloop.counter}} {{ smallFeed.title }}</h4>
+                                        <h4 style="color:blue;">{{ normalFeed.title }}.{{ forloop.counter}} </h4> <h4>{{ smallFeed.title }}</h4>
                                         
                                         {% if user.is_authenticated %}       
                                             <button class="mdl-button mdl-js-button mdl-button--icon smallFeed-edit">
