@@ -26,7 +26,7 @@ SECRET_KEY = '$*bip=il$i%mck&jh%ky_bj=hw-1n)u#u)qyksn!@0%*)ao32y'
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    '*',
+    'nawiki.herokuapp.com',
 ]
 
 
