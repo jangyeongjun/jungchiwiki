@@ -25,7 +25,9 @@ SECRET_KEY = '$*bip=il$i%mck&jh%ky_bj=hw-1n)u#u)qyksn!@0%*)ao32y'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'https://nawiki.herokuapp.com/',
+]
 
 
 # Application definition
