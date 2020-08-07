@@ -1,0 +1,43 @@
+<div id="i-Modal" class="modal fade">
+    <div class="modal-dialog modal-login">
+      <div class="modal-content">
+        <div class="modal-header text-center">				
+          <h4 class="modal-title">통계 보기</h4>	
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        </div>
+        <div class="modal-body">
+          
+          `<div id="container" style="width: 30%;">
+            <canvas id="pie-chart"></canvas>
+          </div>
+
+          <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+          <script>
+
+            var config = {
+              type: 'pie',
+              data: {
+                datasets: [{
+                  data: {{ data|safe }},
+                  backgroundColor: [
+                    '#1d0fdb', '#bf081a'
+                  ],
+                  label: 'Population'
+                }],
+                labels: {{ labels|safe }}
+              },
+              options: {
+                responsive: true
+              }
+            };
+
+            window.onload = function() {
+              var ctx = document.getElementById('pie-chart').getContext('2d');
+              window.myPie = new Chart(ctx, config);
+            };
+
+          </script>
+        </div>
+      </div>
+    </div>
+</div>    

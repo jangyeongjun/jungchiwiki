@@ -1,6 +1,6 @@
 $('#feed-create').submit((event) => {
     event.preventDefault() 
-    
+  
     $.ajax({
       url: '/feeds/',  // feed create을 POST 받는 url과, view함수는 "/feeds/"였습니다. 
       method: 'POST',
@@ -70,3 +70,31 @@ $('#login-form').submit((event) => {
     })
 })
 
+
+$('#signup-form').submit((event) => {
+  event.preventDefault()
+  $.ajax({
+  url: '/accounts/signup/',
+  method: 'POST',
+  dataType: 'json',
+  data: {
+      csrfmiddlewaretoken: $(event.currentTarget).data('csrfmiddlewaretoken'),
+      username: $(`input#username`).val(),
+      usernickname: $(`input#nickname`).val(),
+      usergender: $('input:radio[name="usergender"]:checked').val(),
+      userbirth_dt: $(`input#userbirth_dt`).val(),
+      user_Orientation: $(`select#user_Orientation`).val(),
+      password1: $(`input#password1`).val(),
+      password2: $(`input#password2`).val(),
+  },
+  success(response) {
+      console.log(response)
+      window.location.href='/feeds/'
+  },
+  error(response, status, error) {
+      console.log(response, status, error)
+  }
+  })
+
+    
+})

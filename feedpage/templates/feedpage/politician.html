@@ -128,11 +128,11 @@
                         <span>투표 용지</span>
                     </div>
                     <div class="content" style="display:flex; justify-content: space-between;">
-                        <a href="/feeds/politician/{{ politician.id }}/orientationVote/0/">-5(진보)</a>
-                        <a href="/feeds/politician/{{ politician.id }}/orientationVote/1/">-4</a>
-                        <a href="/feeds/politician/{{ politician.id }}/orientationVote/2/">-3</a>
-                        <a href="/feeds/politician/{{ politician.id }}/orientationVote/3/">-2</a>
-                        <a href="/feeds/politician/{{ politician.id }}/orientationVote/4/">-1</a>
+                        <a href="/feeds/politician/{{ politician.id }}/orientationVote/0/">(진보)5</a>
+                        <a href="/feeds/politician/{{ politician.id }}/orientationVote/1/">4</a>
+                        <a href="/feeds/politician/{{ politician.id }}/orientationVote/2/">3</a>
+                        <a href="/feeds/politician/{{ politician.id }}/orientationVote/3/">2</a>
+                        <a href="/feeds/politician/{{ politician.id }}/orientationVote/4/">1</a>
                         <a href="/feeds/politician/{{ politician.id }}/orientationVote/5/">0</a>
                         <a href="/feeds/politician/{{ politician.id }}/orientationVote/6/">1</a>
                         <a href="/feeds/politician/{{ politician.id }}/orientationVote/7/">2</a>
@@ -230,7 +230,7 @@
                     data-badge="{{ normalFeed.dislike_users.count }}">
                     <img src="/media/thumbs_down.png" style="height:30px; background:white;">
                     </a>
-                
+                    <a href="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/infor/">Information</a>
                     <a href="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/debate/">해당 항목에 대한 토론방</a>
                 </div>
             </div>
