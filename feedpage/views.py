@@ -348,17 +348,18 @@ def search(request, page=1,poliname_v='x',poliparty_v='x',policommi_v='x',polidi
     })
 
 
-def lawsearch(request, page=1, lawkey=None):
-    if lawkey == None:
-        lawsearch_key = request.POST.get('lawsearch_key',None)
-    else:
-        lawsearch_key = lawkey
-    
-    if lawsearch_key:
-        #laws = get_list_or_404(Law, bill_name__contains=lawsearch_key)
+def lawsearch(request, page=1, lawkey='x'):
+
+    if request.method == "POST":
+        lawsearch_key = request.POST.get('lawsearch_key')
         laws = Law.objects.all().order_by('-propose_dt').filter(bill_name__icontains = lawsearch_key)
+    elif lawkey != 'x':
+        lawsearch_key = lawkey
+        laws = Law.objects.all().order_by('-propose_dt').filter(bill_name__icontains = lawsearch_key)
+        
     else:
         laws = Law.objects.all().order_by('-propose_dt')
+        lawsearch_key = lawkey
      #paging 작업
     paginated_by = 10
     total_count = len(laws)
@@ -939,4 +940,37 @@ def orientationVoteCancel(request,  pid):
 
 
 
+#===================================================================================================
+#information
+def normalFeed_like(request, pid, nfid):
+    normalFeed = NormalFeed.objects.get(id = nfid)
+    like_list = normalFeed.userlikenormalfeed_set.filter(user_id = request.user.id)
+    dislike_list = normalFeed.userdislikenormalfeed_set.filter(user_id = request.user.id)
+    dislike_count = dislike_list.count()
+    if like_list.count() > 0:
+        normalFeed.userlikenormalfeed_set.get(user_id = request.user.id).delete()
+    else :
+        UserLikeNormalFeed.objects.create(user_id = request.user.id, normalFeed_id = normalFeed.id)
 
+    if dislike_list.count() > 0 :
+        normalFeed.userdislikenormalfeed_set.get(user_id = request.user.id).delete()
+
+    context = {
+        'like_count': like_list.count(),
+        'dislike_count': dislike_count
+    }
+    return JsonResponse(context)
+
+def pie_chart(request, pid, nfid):
+    normalFeed = NormalFeed.objects.get(id = nfid)
+    like_m_num = len(normalFeed.like_users.filter(profile__gender = 'M'))
+    like_f_num = len(normalFeed.like_users.filter(profile__gender = 'F'))
+    print(like_m_num)
+    print(like_f_num)
+    labels = ['남성', '여성']
+    data = [like_m_num,like_f_num]
+
+    return render(request, 'feedpage/information.html', {
+        'labels': labels,
+        'data': data,
+    })
