@@ -385,14 +385,20 @@ def politician(request, pid):
     politician = Politician.objects.get(id = pid)
     normalFeeds = politician.normalFeeds.all().order_by('title')
     laws =  Law.objects.filter(proposer = politician)
+    smallFeedsAll= SmallFeed.objects.all()
     # 더 좋은 방법이 뭘가
     smallFeedsSet = []
     ranges = []
 
     for normalFeed in normalFeeds:
-        smallFeeds = SmallFeed.objects.filter(normalFeed=normalFeed)
+        smallFeeds = []
+        for smallFeed in smallFeedsAll:
+            if smallFeed.normalFeed == normalFeed:
+                smallFeeds.append(smallFeed)
+        
         smallFeedsSet.append(smallFeeds)
-        ranges.append(range(smallFeeds.count()))
+        length = len(smallFeeds)
+        ranges.append(range(length))
 
     return render(request,'feedpage/politician.html', {'politician': politician ,'normalFeeds' : normalFeeds, 'smallFeedsSet':smallFeedsSet, 'ranges':ranges, 'laws':laws})
 

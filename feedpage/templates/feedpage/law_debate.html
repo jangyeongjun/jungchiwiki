@@ -1,18 +1,16 @@
 {% extends 'base.html' %}
 
 {% block content %}
-     <a href = "/feeds/politician/{{ politician.id }}">뒤로 가기</a>
+    <a href = "/feeds/politician/{{ politician.id }}"
+       style = "font-size:24px; margin:20px;"
+    >뒤로 가기</a>
     
     <div class ="debate-title">
-        <h2>토론방</h2>
+        <h2>토론방 ({{ law.bill_name }}에 대해 자유롭게 토론해 보세요.)</h2>
     </div>
     <div class="debate-content">
         <div class="demo-card-wide mdl-card">
-            <div class="mdl-card__title">
-                <h2 class="mdl-card__title-text">
-                    {{ law.bill_name }}에 대해 자유롭게 토론해 보세요.
-                </h2>
-            </div>
+            
             <div class="mdl-card__supporting-text">
                 <div style="display:flex;">
                     <h4 class="show">내용 다시 살펴보기</h4>
@@ -101,7 +99,7 @@
                             </button>
                             <div style="display:flex; flex-direction:column;">
                                 <div class="comment-info">
-                                    <h5 style="color:purple; margin:0;">{{ c.author.profile.nickname }}&nbsp;</h5>
+                                    <h5 style="color:rgb(255,152,0); margin:0;">{{ c.author.profile.nickname }}&nbsp;</h5>
                                     {% if c.updated_at != None %}
                                         <h7>{{ c.updated_at }}</h7>
                                     {% else %}
@@ -194,7 +192,7 @@
                                         </button>
                                         <div style="display:flex; flex-direction:column;">
                                             <div class="ctc-info">
-                                                <h5 style="color:purple; margin:0;">{{ ctc.author.profile.nickname }}&nbsp;</h5>
+                                                <h5 style="color:rgb(255,152,0); margin:0;">{{ ctc.author.profile.nickname }}&nbsp;</h5>
                                                 {% if ctc.updated_at != None %}
                                                     <h7>{{ ctc.updated_at }}</h7>
                                                 {% else %}
@@ -313,7 +311,7 @@
                             </button>
                             <div style="display:flex; flex-direction:column;">
                                 <div class="comment-info">
-                                    <h5 style="color:purple; margin:0;">{{ c.author.profile.nickname }}&nbsp;</h5>
+                                    <h5 style="color:rgb(255,152,0); margin:0;">{{ c.author.profile.nickname }}&nbsp;</h5>
                                     {% if c.updated_at != None %}
                                         <h7>{{ c.updated_at }}</h7>
                                     {% else %}
@@ -405,7 +403,7 @@
                                         </button>
                                         <div style="display:flex; flex-direction:column;">
                                             <div class="ctc-info">
-                                                <h5 style="color:purple; margin:0;">{{ ctc.author.profile.nickname }}&nbsp;</h5>
+                                                <h5 style="color:rgb(255,152,0); margin:0;">{{ ctc.author.profile.nickname }}&nbsp;</h5>
                                                 {% if ctc.updated_at != None %}
                                                     <h7>{{ ctc.updated_at }}</h7>
                                                 {% else %}
