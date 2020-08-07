@@ -344,7 +344,7 @@ def search(request, page=1,poliname_v='x',poliparty_v='x',policommi_v='x',polidi
     'initial':initial, 'next_end':next_end, 'before_end':before_end,
     "poliname_v":poliname_v, "poliparty_v":poliparty_v, "policommi_v":policommi_v,
     "polidisstrict_v":polidisstrict_v, "poligender_v":poligender_v, "polielected_v":polielected_v,
-    "polihow_v":polihow_v, "poliori_v":poliori_v,"poliAge_v":poliAge_v
+    "polihow_v":polihow_v, "poliori_v":poliori_v,"poliAge_v":poliAge_v,'total_count':total_count
     })
 
 
@@ -458,8 +458,8 @@ def poliupdate(request):
     for number in range(len(polis)):
         print(polis[number]['HG_NM'])
         age_poli = 2020-int(polis[number]['BTH_DATE'][0:4])+1
-        if currentPoliticians.filter(hg_name = polis[number]['HG_NM']):
-            print(number)
+        if currentPoliticians.filter(hg_name = polis[number]['HG_NM'],bth_date=polis[number]['BTH_DATE']):
+            print('이름겹친다!')
         else :
             Politician.objects.create(hg_name = polis[number]['HG_NM'], eng_name = polis[number]['ENG_NM'], bth_name=polis[number]['BTH_GBN_NM'], bth_date=polis[number]['BTH_DATE'], job_res_name = polis[number]['JOB_RES_NM'], politicalParty = polis[number]['POLY_NM'], district = polis[number]['ORIG_NM'], politicalCommittee = polis[number]['CMITS'], electedCount = polis[number]['REELE_GBN_NM'], units = polis[number]['UNITS'], gender = polis[number]['SEX_GBN_NM'], tel_num = polis[number]['TEL_NO'], e_mail = polis[number]['E_MAIL'], homepage = polis[number]['HOMEPAGE'],age=age_poli)
     return render(request,'feedpage/search.html')

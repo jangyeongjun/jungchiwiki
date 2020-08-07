@@ -3,7 +3,9 @@
 {% block content %}
 
 <div class="container" id="container">
-	<a href="/feeds/search/poliupdate/" >국회의원 정보 업데이트</a>
+	{% if user.is_superuser %}
+		<a href="/feeds/search/poliupdate/" >국회의원 정보 업데이트</a>
+	{% endif %}
 	<article>
 		<div class="contents" id="contents">
        		<div class="layout_flex_100">   		
@@ -179,6 +181,7 @@
 	       					<!-- 목록보기 -->
 	       					<div class="nassem_result_list" style="display: block;">
 	       					<h4 class="hide">목록보기</h4>
+							<h10>총 {{ total_count }}명의 국회의원이 검색되었습니다.</h10>
 	       					<form id="listform" method="post">
 	       						<input type="hidden" name="page" title="page" value="1">
 								<input type="hidden" name="rows" title="rows" value="10">
@@ -209,15 +212,15 @@
 	       						<tbody id="list-result-sect">
 								   {% for poli in polis %}
 									<tr>	
-										<td class="m_none rownum">
+										<td class="m_none rownum" id="m_none" value="{{ poli.politicalOrientation }}">
 										{% if poli.politicalOrientation > 0 %}
 											보수 {{ poli.politicalOrientation }}
 										{% elif poli.politicalOrientation < 0%}
-											진보 {{ poli.politicalOrientation }}
+											진보 {% widthratio poli.politicalOrientation 1 -1 %}
 										{% else %}
 											{{ poli.politicalOrientation }}
 										{% endif %}
-										</td>	
+										</td>
 										<td class="m_left"><a href="/feeds/politician/{{ poli.id }}/" class="hgNm" title="새창열림">{{ poli.hg_name }}</a></td>	
 										<td class="polyNm">{{ poli.politicalParty }}</td>	
 										<td class="m_none cmits">{{ poli.politicalCommittee }}</td>	
@@ -309,6 +312,5 @@
 		</div>
 	</article>
 	</div>
-
 
 {% endblock content %}

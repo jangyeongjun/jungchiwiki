@@ -774,4 +774,31 @@ form {
 	background-color: white;
 	color: black;
 }
-/* #endregion */
+
+.highcharts-root{
+  height: 200px !important;
+}
+
+.chart_1 {
+  height: 300px !important;
+  display: flex !important;
+  justify-content: center !important;
+}
+
+.container1 {
+  padding: 0px !important;
+}
+
+.highcharts-container
+
+.chart_2 {
+  height: 100% !important;
+  width: 100%;
+  display: flex !important;
+  justify-content: center !important;
+}
+
+.container3 {
+  width: 100% !important;
+}
+
