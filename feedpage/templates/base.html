@@ -28,7 +28,7 @@
                     <nav class="mdl-navigation">
                         <div style="text-align: right;">
                             {% if user.is_authenticated %}
-                                {{ user.get_username }}님, 안녕하세요
+                                {{ user.profile.nickname }}님, 안녕하세요
                                 <a href="#logoutModal" data-toggle="modal">로그아웃</a> 
                             {% else %}
                                 <a href="#signupModal" data-toggle="modal">회원가입</a>
@@ -59,7 +59,6 @@
             </main>
         </div>
 
-        {% include 'feedpage/information.html' %}
         {% include 'account/signup.html' %}
         {% include 'account/login.html' %}
         {% include 'account/logout.html' %}

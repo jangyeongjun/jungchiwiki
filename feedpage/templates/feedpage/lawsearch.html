@@ -2,7 +2,9 @@
 
 {% block content %}
 <div class="container" id="container">
-	<a href="/feeds/lawsearch/lawupdate/" >발의법안 업데이트</a>
+	{% if user.is_superuser %}
+		<a href="/feeds/lawsearch/lawupdate/" >발의법안 업데이트</a>
+	{% endif %}
 	<article>
 		<div class="contents" id="contents">
        		<div class="layout_flex_100">   		

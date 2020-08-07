@@ -831,8 +831,13 @@ $(document).ready(() => {
           
       })
 
-
+    $(".normalFeed-info").click((e) => {
+        const $this = $(e.currentTarget);
+        const $info_form = $this.parent().parent().siblings('.normal-feed__information');
+        $($info_form).fadeToggle(
+            0
+        );
+    });
 
   }
 );
-
