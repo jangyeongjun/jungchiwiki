@@ -1,7 +1,9 @@
 
 $(document).ready(() => {
     
-    $(".popup").click(() => {
+    $(".popup").click((e) => {
+        const $this = $(e.currentTarget);
+        $this.css("font-weight", "bold");
         $("#test").fadeToggle(
         );
         
@@ -52,6 +54,46 @@ $(document).ready(() => {
         );
     });
 
+    $(".debate-down").click((e) => {
+        const $this = $(e.currentTarget);
+        const $down_form = $this.parent().siblings('.normal-feed__supporting-text');
+        const $up_arrow = $this.siblings('.debate-up')
+        const $show = $this.siblings('.show')
+        const $hide = $this.siblings('.hide')
+        $($down_form).fadeToggle(
+            100
+        );
+        $($up_arrow).fadeToggle(
+            0
+        );
+        $($this).fadeToggle(
+            0
+        );
+        $($show).fadeToggle(
+            0
+        );
+        $($hide).fadeToggle(
+            0
+        );
+    });
+
+    $(".ctc-down").click((e) => {
+        const $this = $(e.currentTarget);
+        const $down_form = $this.parent().parent().siblings('.ctc-box');
+        const $up_arrow = $this.siblings('.ctc-up')
+        $($down_form).fadeToggle(
+            100
+        );
+        $($up_arrow).fadeToggle(
+            0
+        );
+        $($this).fadeToggle(
+            0
+        );
+        
+    });
+
+
     $(".normalFeed-up").click((e) => {
         const $this = $(e.currentTarget);
         const $up_form = $this.parent().parent().siblings('.normal-feed__supporting-text');
@@ -97,9 +139,49 @@ $(document).ready(() => {
         );
     });
 
+    $(".debate-up").click((e) => {
+        const $this = $(e.currentTarget);
+        const $up_form = $this.parent().siblings('.normal-feed__supporting-text');
+        const $down_arrow = $this.siblings('.debate-down')
+        const $show = $this.siblings('.show')
+        const $hide = $this.siblings('.hide')
+        $($up_form).fadeToggle(
+            100
+        );
+        $($down_arrow).fadeToggle(
+            0
+        );
+        $($this).fadeToggle(
+            0
+        );
+        $($show).fadeToggle(
+            0
+        );
+        $($hide).fadeToggle(
+            0
+        );
+    });
+
+    $(".ctc-up").click((e) => {
+        const $this = $(e.currentTarget);
+        const $up_form = $this.parent().parent().siblings('.ctc-box');
+        const $down_arrow = $this.siblings('.ctc-down')
+        $($up_form).fadeToggle(
+            100
+        );
+        $($down_arrow).fadeToggle(
+            0
+        );
+        $($this).fadeToggle(
+            0
+        );
+    
+    });
+
+
     $(".comment-edit").click((e) => {
         const $this = $(e.currentTarget);
-        const $edit_form = $this.siblings('.comment-edit-form');
+        const $edit_form = $this.parent().siblings('.comment-content').find('.comment-edit-form');
         $($edit_form).fadeToggle(
             500
         );
@@ -107,7 +189,7 @@ $(document).ready(() => {
 
     $(".ctc-edit").click((e) => {
         const $this = $(e.currentTarget);
-        const $edit_form = $this.siblings('.ctc-edit-form');
+        const $edit_form = $this.parent().siblings('.ctc-content').find('.ctc-edit-form');
         $($edit_form).fadeToggle(
             500
         );

@@ -26,17 +26,17 @@ urlpatterns = [
     
     path('politician/<int:pid>/law/<int:lid>/debate/',                                                  views.law_debate,                       name='law_debate'),
     
-    path('politician/<int:pid>/law/<int:lid>/debate/comment/<int:cid>/like/',                           views.law_debate_comment_like,   name='law_debate_comment_like'),
-    path('politician/<int:pid>/law/<int:lid>/debate/comment/<int:cid>/dislike/',                        views.law_debate_comment_dislike,name='law_debate_comment_dislike'),
-    path('politician/<int:pid>/law/<int:lid>/debate/comment/new/',                                      views.law_debate_new_comment,    name='law_debate_new_comment'),
-    path('politician/<int:pid>/law/<int:lid>/debate/comment/<int:cid>/delete/',                         views.law_debate_comment_delete, name='law_debate_comment_delete'),
-    path('politician/<int:pid>/law/<int:lid>/debate/comment/<int:cid>/edit/',                           views.law_debate_comment_edit,   name='law_debate_comment_edit'),
+    path('politician/<int:pid>/law/<int:lid>/debate/comment/<int:cid>/like/',                           views.law_debate_comment_like,          name='law_debate_comment_like'),
+    path('politician/<int:pid>/law/<int:lid>/debate/comment/<int:cid>/dislike/',                        views.law_debate_comment_dislike,       name='law_debate_comment_dislike'),
+    path('politician/<int:pid>/law/<int:lid>/debate/comment/new/',                                      views.law_debate_new_comment,      name='law_debate_new_comment'),
+    path('politician/<int:pid>/law/<int:lid>/debate/comment/<int:cid>/delete/',                         views.law_debate_comment_delete,        name='law_debate_comment_delete'),
+    path('politician/<int:pid>/law/<int:lid>/debate/comment/<int:cid>/edit/',                           views.law_debate_comment_edit,          name='law_debate_comment_edit'),
 
-    path('politician/<int:pid>/law/<int:lid>/debate/comment/<int:cid>/ctc/<int:ctcid>/like/',           views.law_debate_ctc_like,       name='law_ctc_like'),
-    path('politician/<int:pid>/law/<int:lid>/debate/comment/<int:cid>/ctc/<int:ctcid>/dislike/',        views.law_debate_ctc_dislike,    name='law_ctc_dislike'),
-    path('politician/<int:pid>/law/<int:lid>/debate/comment/<int:cid>/ctc/<int:ctcid>/delete/',         views.law_debate_ctc_delete,     name='law_ctc_delete'),
-    path('politician/<int:pid>/law/<int:lid>/debate/comment/<int:cid>/new/',                            views.law_debate_new_CTC,        name='lawnormalFeed_debate_new_comment'),
-    path('politician/<int:pid>/law/<int:lid>/debate/comment/<int:cid>/ctc/<int:ctcid>/edit/',           views.law_debate_ctc_edit,       name='law_ctc_edit'),
+    path('politician/<int:pid>/law/<int:lid>/debate/comment/<int:cid>/ctc/<int:ctcid>/like/',           views.law_debate_ctc_like,              name='law_ctc_like'),
+    path('politician/<int:pid>/law/<int:lid>/debate/comment/<int:cid>/ctc/<int:ctcid>/dislike/',        views.law_debate_ctc_dislike,           name='law_ctc_dislike'),
+    path('politician/<int:pid>/law/<int:lid>/debate/comment/<int:cid>/ctc/<int:ctcid>/delete/',         views.law_debate_ctc_delete,            name='law_ctc_delete'),
+    path('politician/<int:pid>/law/<int:lid>/debate/comment/<int:cid>/new/',                            views.law_debate_new_CTC,               name='lawnormalFeed_debate_new_comment'),
+    path('politician/<int:pid>/law/<int:lid>/debate/comment/<int:cid>/ctc/<int:ctcid>/edit/',           views.law_debate_ctc_edit,              name='law_ctc_edit'),
 
 
 
