@@ -2,22 +2,33 @@
 
 {% block content %}
 
-<div class="tabs">    
+<div class="tabs" >    
     <input type="radio" name="tabs" id="tabone" checked="checked">     
     <label for="tabone"><img src = '../media/더불어민주당.png'></label> 
     <div class="tab"> 
-      <h3>더불어민주당 소속 의원</h3>
+      <h3 style="color: rgba(0, 59, 150); padding:20px;">더불어민주당 소속 의원</h3>
       
-      <div class = "name-wrapper">  
+      <div class = "name-wrapper" style="padding-right:20px; padding-left:20px;margin:auto;">  
         {% for dang in politician_chosung.0 %}
           {% for chosung in chosung_list %}
             {% if dang and forloop.counter == forloop.parentloop.counter %}
-              <div style="color:white;">
-                <h2>{{ chosung }} </h2>
-                <div >
-                  {% for politician in dang|dictsort:"hg_name" %}
-                    <a href="/feeds/politician/{{ politician.id }}/">{{ politician.hg_name }}</a>
-                  {% endfor %}
+              <div>
+                <div style="display:flex; align-items:center;">
+                  <h2 class="chosung">{{ chosung }}</h2>
+                  <button class="mdl-button mdl-js-button mdl-button--icon chosung-down">
+                      <i class="material-icons" style="color:black;">keyboard_arrow_down</i>
+                  </button>
+                  <button class="mdl-button mdl-js-button mdl-button--icon chosung-up" style="display:none;">
+                      <i class="material-icons" style="color:black;">keyboard_arrow_up</i>
+                  </button>
+                </div>
+                <div class="chosung_name" style="display:none;">
+                  <div style="width:100%; height:auto;  display:flex; flex-wrap:wrap;">
+                    {% for politician in dang|dictsort:"hg_name" %}
+                    
+                      <a href="/feeds/politician/{{ politician.id }}/" style="color:black; min-width: 70px; min-height:40px;">{{ politician.hg_name }}</a>
+                    {% endfor %}
+                  </div>
                 </div>
               </div>
             {% endif %}
@@ -28,17 +39,27 @@
     <input type="radio" name="tabs" id="tabtwo">     
     <label for="tabtwo"><img src = '../media/미래통합당.png'></label> 
     <div class="tab"> 
-      <h3>미래통합당 소속 의원</h3>
-      <div class = "name-wrapper">  
+      <h3 style="color: rgb(250, 187, 203); padding:20px;">미래통합당 소속 의원</h3>
+      <div class = "name-wrapper" style="padding-right:20px; padding-left:20px;margin:auto;">  
         {% for dang in politician_chosung.1 %}
           {% for chosung in chosung_list %}
             {% if dang and forloop.counter == forloop.parentloop.counter %}
               <div>
-                <h2>{{ chosung }} </h2>
-                <div>
-                  {% for politician in dang|dictsort:"hg_name" %}
-                    <a href="/feeds/politician/{{ politician.id }}/">{{ politician.hg_name }}</a>
-                  {% endfor %}
+                <div style="display:flex; align-items:center;">
+                  <h2 class="chosung">{{ chosung }} </h2>
+                  <button class="mdl-button mdl-js-button mdl-button--icon chosung-down">
+                      <i class="material-icons" style="color:black;">keyboard_arrow_down</i>
+                  </button>
+                  <button class="mdl-button mdl-js-button mdl-button--icon chosung-up" style="display:none;">
+                      <i class="material-icons" style="color:black;">keyboard_arrow_up</i>
+                  </button>
+                </div>
+                <div class="chosung_name" style="display:none;">
+                  <div style="width:100%; height:auto;  display:flex; flex-wrap:wrap;">
+                    {% for politician in dang|dictsort:"hg_name" %}
+                      <a href="/feeds/politician/{{ politician.id }}/" style="color:black; min-width: 70px; min-height:40px;">{{ politician.hg_name }}</a>
+                    {% endfor %}
+                  </div>
                 </div>
               </div>
             {% endif %}
@@ -49,17 +70,27 @@
     <input type="radio" name="tabs" id="tabthree">     
     <label for="tabthree"><img src = '../media/정의당.png'></label> 
     <div class="tab"> 
-      <h3>정의당 소속 의원</h3>
-      <div class = "name-wrapper">  
+      <h3 style="color: rgb(255, 204, 0); padding:20px;">정의당 소속 의원</h3>
+      <div class = "name-wrapper" style="padding-right:20px; padding-left:20px;margin:auto;">  
         {% for dang in politician_chosung.2 %}
           {% for chosung in chosung_list %}
             {% if dang and forloop.counter == forloop.parentloop.counter %}
               <div>
-                <h2>{{ chosung }} </h2>
-                <div>
-                  {% for politician in dang|dictsort:"hg_name" %}
-                    <a href="/feeds/politician/{{ politician.id }}/">{{ politician.hg_name }}</a>
-                  {% endfor %}
+                <div style="display:flex; align-items:center;">
+                  <h2 class="chosung">{{ chosung }} </h2>
+                  <button class="mdl-button mdl-js-button mdl-button--icon chosung-down">
+                      <i class="material-icons" style="color:black;">keyboard_arrow_down</i>
+                  </button>
+                  <button class="mdl-button mdl-js-button mdl-button--icon chosung-up" style="display:none;">
+                      <i class="material-icons" style="color:black;">keyboard_arrow_up</i>
+                  </button>
+                </div>
+                <div class="chosung_name" style="display:none;">
+                  <div style="width:100%; height:auto;  display:flex; flex-wrap:wrap;">
+                    {% for politician in dang|dictsort:"hg_name" %}
+                      <a href="/feeds/politician/{{ politician.id }}/" style="color:black; min-width: 70px; min-height:40px;">{{ politician.hg_name }}</a>
+                    {% endfor %}
+                  </div>
                 </div>
               </div>
             {% endif %}
@@ -70,17 +101,27 @@
     <input type="radio" name="tabs" id="tabfour"> 
     <label for="tabfour"><img src = '../media/국민의당.jpg'></label> 
     <div class="tab"> 
-      <h3>국민의당 소속 의원</h3>
-      <div class = "name-wrapper">  
+      <h3 style="color: rgb(234, 85, 4); padding:20px;">국민의당 소속 의원</h3>
+      <div class = "name-wrapper" style="padding-right:20px; padding-left:20px;margin:auto;">  
         {% for dang in politician_chosung.3 %}
           {% for chosung in chosung_list %}
             {% if dang and forloop.counter == forloop.parentloop.counter %}
               <div>
-                <h2>{{ chosung }} </h2>
-                <div>
-                  {% for politician in dang|dictsort:"hg_name" %}
-                    <a href="/feeds/politician/{{ politician.id }}/">{{ politician.hg_name }}</a>
-                  {% endfor %}
+                <div style="display:flex; align-items:center;">
+                  <h2 class="chosung">{{ chosung }} </h2>
+                  <button class="mdl-button mdl-js-button mdl-button--icon chosung-down">
+                      <i class="material-icons" style="color:black;">keyboard_arrow_down</i>
+                  </button>
+                  <button class="mdl-button mdl-js-button mdl-button--icon chosung-up" style="display:none;">
+                      <i class="material-icons" style="color:black;">keyboard_arrow_up</i>
+                  </button>
+                </div>
+                <div class="chosung_name" style="display:none;">
+                  <div style="width:100%; height:auto;  display:flex; flex-wrap:wrap;">
+                    {% for politician in dang|dictsort:"hg_name" %}
+                      <a href="/feeds/politician/{{ politician.id }}/" style="color:black; min-width: 70px; min-height:40px;">{{ politician.hg_name }}</a>
+                    {% endfor %}
+                  </div>
                 </div>
               </div>
             {% endif %}
@@ -91,18 +132,28 @@
     <input type="radio" name="tabs" id="tabfive"> 
     <label for="tabfive">기타정당</label> 
     <div class="tab"> 
-      <h3>기타정당 소속 의원</h3> 
-      <h5>열린민주당 소속 의원</h5>
-      <div class = "name-wrapper">  
+      <h3 style="color: #92b6d5; padding:20px;">기타정당 소속 의원</h3> 
+      <h5 style="color: #92b6d5; padding:20px;">열린민주당 소속 의원</h5>
+      <div class = "name-wrapper" style="padding-right:20px; padding-left:20px;margin:auto;">  
         {% for dang in politician_chosung.4 %}
           {% for chosung in chosung_list %}
             {% if dang and forloop.counter == forloop.parentloop.counter %}
               <div>
-                <h2>{{ chosung }} </h2>
-                <div>
-                  {% for politician in dang|dictsort:"hg_name" %}
-                    <a href="/feeds/politician/{{ politician.id }}/">{{ politician.hg_name }}</a>
-                  {% endfor %}
+                <div style="display:flex; align-items:center;">
+                  <h2 class="chosung">{{ chosung }} </h2>
+                  <button class="mdl-button mdl-js-button mdl-button--icon chosung-down">
+                      <i class="material-icons" style="color:black;">keyboard_arrow_down</i>
+                  </button>
+                  <button class="mdl-button mdl-js-button mdl-button--icon chosung-up" style="display:none;">
+                      <i class="material-icons" style="color:black;">keyboard_arrow_up</i>
+                  </button>
+                </div>
+                <div class="chosung_name" style="display:none;">
+                  <div style="width:100%; height:auto;  display:flex; flex-wrap:wrap;">
+                    {% for politician in dang|dictsort:"hg_name" %}
+                      <a href="/feeds/politician/{{ politician.id }}/" style="color:black; min-width: 70px; min-height:40px;">{{ politician.hg_name }}</a>
+                    {% endfor %}
+                  </div>
                 </div>
               </div>
             {% endif %}
@@ -110,17 +161,27 @@
         {% endfor %}
       </div> 
       <br>
-      <h5>기본소득당 소속 의원</h5>
-      <div class = "name-wrapper">  
+      <h5 style="color: #92b6d5; padding:20px;">기본소득당 소속 의원</h5>
+      <div class = "name-wrapper" style="padding-right:20px; padding-left:20px;margin:auto;">  
         {% for dang in politician_chosung.5 %}
           {% for chosung in chosung_list %}
             {% if dang and forloop.counter == forloop.parentloop.counter %}
               <div>
-                <h2>{{ chosung }} </h2>
-                <div>
-                  {% for politician in dang|dictsort:"hg_name" %}
-                    <a href="/feeds/politician/{{ politician.id }}/">{{ politician.hg_name }}</a>
-                  {% endfor %}
+                <div style="display:flex; align-items:center;">
+                  <h2 class="chosung">{{ chosung }} </h2>
+                  <button class="mdl-button mdl-js-button mdl-button--icon chosung-down">
+                      <i class="material-icons" style="color:black;">keyboard_arrow_down</i>
+                  </button>
+                  <button class="mdl-button mdl-js-button mdl-button--icon chosung-up" style="display:none;">
+                      <i class="material-icons" style="color:black;">keyboard_arrow_up</i>
+                  </button>
+                </div>
+                <div class="chosung_name" style="display:none;">
+                  <div style="width:100%; height:auto;  display:flex; flex-wrap:wrap;">
+                    {% for politician in dang|dictsort:"hg_name" %}
+                      <a href="/feeds/politician/{{ politician.id }}/" style="color:black; min-width: 70px; min-height:40px;">{{ politician.hg_name }}</a>
+                    {% endfor %}
+                  </div>
                 </div>
               </div>
             {% endif %}
@@ -128,17 +189,27 @@
         {% endfor %}
       </div> 
       <br>
-      <h5>시대전환 소속 의원</h5>
-      <div class = "name-wrapper">  
+      <h5 style="color: #92b6d5; padding:20px;">시대전환 소속 의원</h5>
+      <div class = "name-wrapper" style="padding-right:20px; padding-left:20px;margin:auto;">  
         {% for dang in politician_chosung.6 %}
           {% for chosung in chosung_list %}
             {% if dang and forloop.counter == forloop.parentloop.counter %}
               <div>
-                <h2>{{ chosung }} </h2>
-                <div>
-                  {% for politician in dang|dictsort:"hg_name" %}
-                    <a href="/feeds/politician/{{ politician.id }}/">{{ politician.hg_name }}</a>
-                  {% endfor %}
+                <div style="display:flex; align-items:center;">
+                  <h2 class="chosung">{{ chosung }} </h2>
+                  <button class="mdl-button mdl-js-button mdl-button--icon chosung-down">
+                      <i class="material-icons" style="color:black;">keyboard_arrow_down</i>
+                  </button>
+                  <button class="mdl-button mdl-js-button mdl-button--icon chosung-up" style="display:none;">
+                      <i class="material-icons" style="color:black;">keyboard_arrow_up</i>
+                  </button>
+                </div>
+                <div class="chosung_name" style="display:none;">
+                  <div style="width:100%; height:auto;  display:flex; flex-wrap:wrap;">
+                    {% for politician in dang|dictsort:"hg_name" %}
+                      <a href="/feeds/politician/{{ politician.id }}/" style="color:black; min-width: 70px; min-height:40px;">{{ politician.hg_name }}</a>
+                    {% endfor %}
+                  </div>
                 </div>
               </div>
             {% endif %}
@@ -149,17 +220,27 @@
     <input type="radio" name="tabs" id="tabsix"> 
     <label for="tabsix">무소속</label> 
     <div class="tab"> 
-      <h3>무소속 의원</h3>
-      <div class = "name-wrapper">  
+      <h3 style="color: #92b6d5; padding:20px;">무소속 의원</h3>
+      <div class = "name-wrapper" style="padding-right:20px; padding-left:20px;margin:auto;">  
         {% for dang in politician_chosung.7 %}
           {% for chosung in chosung_list %}
             {% if dang and forloop.counter == forloop.parentloop.counter %}
               <div>
-                <h2>{{ chosung }} </h2>
-                <div>
-                  {% for politician in dang|dictsort:"hg_name" %}
-                    <a href="/feeds/politician/{{ politician.id }}/">{{ politician.hg_name }}</a>
-                  {% endfor %}
+                <div style="display:flex; align-items:center;">
+                  <h2 class="chosung">{{ chosung }} </h2>
+                  <button class="mdl-button mdl-js-button mdl-button--icon chosung-down">
+                      <i class="material-icons" style="color:black;">keyboard_arrow_down</i>
+                  </button>
+                  <button class="mdl-button mdl-js-button mdl-button--icon chosung-up" style="display:none;">
+                      <i class="material-icons" style="color:black;">keyboard_arrow_up</i>
+                  </button>
+                </div>
+                <div class="chosung_name" style="display:none;">
+                  <div style="width:100%; height:auto;  display:flex; flex-wrap:wrap;">
+                    {% for politician in dang|dictsort:"hg_name" %}
+                      <a href="/feeds/politician/{{ politician.id }}/" style="color:black; min-width: 70px; min-height:40px;">{{ politician.hg_name }}</a>
+                    {% endfor %}
+                  </div>
                 </div>
               </div>
             {% endif %}

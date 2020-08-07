@@ -1,822 +1,778 @@
 /* #region main.html csss*/
 
-
-body  {
-  background-color:  white;
-  
-  height:100vh;
- 
- 
+* {
+  /* font-family: 'Do Hyeon', sans-serif; */
+  font-family: 'Nanum Gothic', sans-serif;
 }
-.tabs { 
-  display: flex; 
-  flex-wrap: wrap;
-  justify-content: center;   
-} 
+
+h1,h2,h3,h4,h5,h6 {
+  /* font-family: 'Do Hyeon', sans-serif !important; */
+  font-family: 'Nanum Gothic', sans-serif !important;
+}
+
+body {
+	background-color: white;
+}
+.tabs {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+}
 
 .tabs h3 {
-  color:white;
+	color: white;
 }
 
 .tabs h5 {
-  color:white;
+	color: white;
 }
 
 .tabs .name-wrapper {
-  color:white;
+	color: white;
 }
 
 .tabs .name-wrapper a {
-  color:white;
+	color: white;
 }
 
 .tabs img {
-  height:50px;
-  width:auto;
+	height: 50px;
+	width: auto;
 }
-.tabs label { 
-  width:16.66666%; 
-  order: 1; 
-  display: flex; 
-  padding:10px 0px; 
-  justify-content : center;
-  align-items: center; 
-  cursor: pointer; 
-  background: white; 
-  font-weight: bold; 
-  transition: background ease 0.2s; 
-  margin:0;
-	
-} 
-/*박스배경*/ 
-.tabs .tab { 
-  order: 99; 
-  flex-grow: 1; 
-  width: 100%; 
-  display: none; 
-  padding: 1rem; 
-  background: #92B6D5; 
-} 
+.tabs label {
+	width: 16.6655%;
+	order: 1;
+	display: flex;
+	padding: 10px 0px;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+	background: white;
+	font-weight: bold;
+	transition: background ease 0.2s;
+	margin: 0;
+}
+/*박스배경*/
+.tabs .tab {
+	order: 99;
+	flex-grow: 1;
+	width: 100%;
+	display: none;
+	padding: 1rem;
+}
 
 .tabs .tab > .name-wrapper {
-  width:98%;
-  display:flex;
-  flex-wrap:wrap;
-  
-} 
+	width: 98%;
+	display: flex;
+	flex-wrap: wrap;
+}
 .tabs .tab > .name-wrapper > .name {
-  width:80px;
-  padding:10px;
- 
-} 
+	width: 80px;
+	padding: 10px;
+}
 
-.tabs input[type="radio"] { 
-  display: none; 
-} 
-/*탭 눌렀을때 컬러*/ 
+.tabs input[type="radio"] {
+	display: none;
+}
+/*탭 눌렀을때 컬러*/
 /* 더불어민주당 */
-.tabs input[type="radio"][id="tabone"]:checked + label + .tab { 
-  background:rgb(0, 59,150);
-} 
-.tabs input[type="radio"][id="tabone"]:checked + label { 
-  background:rgba(0, 59,150); 
-} 
+.tabs input[type="radio"][id="tabone"]:checked + label + .tab .chosung {
+	color: rgba(0, 59, 150);
+}
+.tabs input[type="radio"][id="tabone"]:checked + label {
+	background: rgba(0, 59, 150);
+}
 /* 미래통합당 */
-.tabs input[type="radio"][id="tabtwo"]:checked + label + .tab { 
-  background: rgb(250, 187, 203); 
-} 
-.tabs input[type="radio"][id="tabtwo"]:checked + label { 
-  background:rgb(250, 187, 203); 
-} 
+.tabs input[type="radio"][id="tabtwo"]:checked + label + .tab .chosung {
+  color: rgb(250, 187, 203);
+}
+.tabs input[type="radio"][id="tabtwo"]:checked + label {
+	background: rgb(250, 187, 203);
+}
 /* 정의당 */
-.tabs input[type="radio"][id="tabthree"]:checked + label + .tab { 
-  background: rgb(255, 204, 0); 
-} 
-.tabs input[type="radio"][id="tabthree"]:checked + label { 
-  background: rgb(255, 204, 0); 
-} 
+.tabs input[type="radio"][id="tabthree"]:checked + label + .tab .chosung {
+  color: rgb(255, 204, 0);
+}
+.tabs input[type="radio"][id="tabthree"]:checked + label {
+	background: rgb(255, 204, 0);
+}
 /* 국민의 당 */
-.tabs input[type="radio"][id="tabfour"]:checked + label + .tab { 
-  background: rgb(234, 85, 4); 
-} 
-.tabs input[type="radio"][id="tabfour"]:checked + label { 
-  background:rgb(234, 85, 4); 
-} 
+.tabs input[type="radio"][id="tabfour"]:checked + label + .tab .chosung {
+  color: rgb(234, 85, 4);
+}
+.tabs input[type="radio"][id="tabfour"]:checked + label {
+	background: rgb(234, 85, 4);
+}
 /* 기타정당 */
-.tabs input[type="radio"][id="tabfive"]:checked + label + .tab { 
-  background: #92B6D5; 
-} 
-.tabs input[type="radio"][id="tabfive"]:checked + label { 
-  background:#92B6D5; 
-} 
+.tabs input[type="radio"][id="tabfive"]:checked + label + .tab .chosung {
+  color: #92b6d5;
+}
+.tabs input[type="radio"][id="tabfive"]:checked + label {
+	background: #92b6d5;
+}
 /* 무소속 */
-.tabs input[type="radio"][id="tabsix"]:checked + label + .tab { 
-  background: #92B6D5; 
-} 
-.tabs input[type="radio"][id="tabsix"]:checked + label { 
-  background:#92B6D5; 
-} 
-.tabs input[type="radio"]:checked + label + .tab { 
-  display: block; 
+.tabs input[type="radio"][id="tabsix"]:checked + label + .tab .chosung {
+  color: #92b6d5;
+}
+.tabs input[type="radio"][id="tabsix"]:checked + label {
+	background: #92b6d5;
+}
+.tabs input[type="radio"]:checked + label + .tab {
+	display: block;
 }
 
 a h6:hover {
-  font-weight: bold;
-  color:black;
+	font-weight: bold;
+	color: black;
 }
 
 a {
-  color: black;
+	color: black;
 }
 
 a:hover {
-  font-weight: bold;
-  color:black;
+	font-weight: bold;
+	color: black;
 }
 
 .name-wrapper {
-  display:flex;
-  flex-direction:column;
-  font-size: 20px;
+	display: flex;
+	flex-direction: column;
+	font-size: 20px;
 }
 
 .contents {
-  min-height: 500px;
-  padding-bottom: 50px;
+	min-height: 500px;
+	padding-bottom: 50px;
 }
 
 .nassem_top_btn {
-  text-align: right;
-  margin: 10px 0 -15px 0;
+	text-align: right;
+	margin: 10px 0 -15px 0;
 }
 
 .theme_select_box {
-  overflow: hidden;
-  margin: 25px 0 0 0;
+	overflow: hidden;
+	margin: 25px 0 0 0;
 }
 
 table {
-  border-collapse: collapse;
-  border-spacing: 0;
-  width: 100%;
-  table-layout: fixed;
+	border-collapse: collapse;
+	border-spacing: 0;
+	width: 100%;
+	table-layout: fixed;
 }
 
 colgroup {
-  display: table-column-group;
+	display: table-column-group;
 }
 
-
 table {
-  display: table;
-  border-collapse: separate;
-  box-sizing: border-box;
-  border-spacing: 2px;
-  border-color: grey;
+	display: table;
+	border-collapse: separate;
+	box-sizing: border-box;
+	border-spacing: 2px;
+	border-color: grey;
 }
 
 .theme_select_box table th {
-  font-family: "notoKrM";
-  width: 20%;
-  text-align: center;
-  color: #111111;
-  background: #f2f5f8;
-  padding: 8px;
-  border-top: 1px solid #dbdbdb;
-  border-bottom: 1px solid #dbdbdb;
+	font-family: "notoKrM";
+	width: 20%;
+	text-align: center;
+	color: #111111;
+	background: #f2f5f8;
+	padding: 8px;
+	border-top: 1px solid #dbdbdb;
+	border-bottom: 1px solid #dbdbdb;
 }
 
 .theme_select_box table td {
-  width: 30%;
-  height: 50px;
-  border-top: 1px solid #dbdbdb;
-  border-bottom: 1px solid #dbdbdb;
-  padding: 8px;
+	width: 30%;
+	height: 50px;
+	border-top: 1px solid #dbdbdb;
+	border-bottom: 1px solid #dbdbdb;
+	padding: 8px;
 }
 
 .theme_select_box table td > select {
-  width: 100%;
+	width: 100%;
 }
 
 .container.hide-pc-lnb {
-  padding-left: 0;
-  width: 100%;
-  max-width: 1200px;
+	padding-left: 0;
+	width: 100%;
+	max-width: 1200px;
 }
 .container {
-  position: relative;
-  padding-left:50px;
-  padding-right:50px;
-  margin: 0 auto;
+	position: relative;
+	padding-left: 50px;
+	padding-right: 50px;
+	margin: 0 auto;
 }
 
 .btn_inquiries {
-  font-family: "notoKrL";
-  display: inline-block;
-  height: 33px;
-  line-height: 33px;
-  width: 88px;
-  background: #003b87;
-  color: #ffffff;
-  text-align: center;
+	font-family: "notoKrL";
+	display: inline-block;
+	height: 33px;
+	line-height: 33px;
+	width: 88px;
+	background: #003b87;
+	color: #ffffff;
+	text-align: center;
 }
 
 .btn_checkchart {
-  font-family: "notoKrL";
-  display: inline-block;
-  height: 33px;
-  line-height: 33px;
-  width: 88px;
-  background: #0091a3;
-  color: #ffffff;
-  text-align: center;
+	font-family: "notoKrL";
+	display: inline-block;
+	height: 33px;
+	line-height: 33px;
+	width: 88px;
+	background: #0091a3;
+	color: #ffffff;
+	text-align: center;
 }
 
-
 .btn_group ul {
-  display: flex;
-  margin: 10px 0 0 0;
+	display: flex;
+	margin: 10px 0 0 0;
 }
 
 .btn_group {
-  display: flex;
-  text-align: right;
-  justify-content: flex-end;
+	display: flex;
+	text-align: right;
+	justify-content: flex-end;
 }
 
 .themeB table th {
-  font-family: "notoKrM";
-  background: #f2f5f8;
-  border-top: 2px solid #001732;
-  height: 48px;
-  border-bottom: 1px solid #e4e4e4;
-  color: #111111;
+	font-family: "notoKrM";
+	background: #f2f5f8;
+	border-top: 2px solid #001732;
+	height: 48px;
+	border-bottom: 1px solid #e4e4e4;
+	color: #111111;
 }
 
 tbody {
-  display: table-row-group;
-  vertical-align: middle;
-  border-color: inherit;
+	display: table-row-group;
+	vertical-align: middle;
+	border-color: inherit;
 }
 
 .themeB table td {
-  padding: 14px 8px;
-  border-bottom: 1px solid #e4e4e4;
-  text-align: center;
+	padding: 14px 8px;
+	border-bottom: 1px solid #e4e4e4;
+	text-align: center;
 }
 
 th {
-  display: table-cell;
-  vertical-align: inherit;
-  font-weight: bold;
-  text-align: center;
+	display: table-cell;
+	vertical-align: inherit;
+	font-weight: bold;
+	text-align: center;
 }
 /* #endregion */
 
-
 /* #region POLITICIAN.HTML CSS */
 
-
 .politician-header {
-  width:100%;
-  height:auto;
+	width: 100%;
+	height: auto;
 	display: flex;
 	justify-content: space-around;
-
 }
 
 .politician-header .card-header {
-  color:white;
+	color: white;
 }
 
 .politician-header img {
-  width: 100%;
-  height: auto;
+	width: 100%;
+	height: auto;
 }
 
 .politician-header > .card {
-  width: 30rem; 
-  height: auto;
-  margin-top:3rem;
+	width: 30rem;
+	height: auto;
+	margin-top: 3rem;
 }
 
-.card-header[id="더불어민주당"] {	
-  background:rgb(0, 59,150); 
+.card-header[id="더불어민주당"] {
+	background: rgb(0, 59, 150);
 }
 
-.card-header[id="미래통합당"] {	
-  background:rgb(250, 187, 203); 
+.card-header[id="미래통합당"] {
+	background: rgb(250, 187, 203);
 }
 
-.card-header[id="정의당"] {	
-  background: rgb(255, 204, 0);
+.card-header[id="정의당"] {
+	background: rgb(255, 204, 0);
 }
 
-.card-header[id="국민의당"] {	
-  background:rgb(234, 85, 4); 
+.card-header[id="국민의당"] {
+	background: rgb(234, 85, 4);
 }
 
 .politician-header .list-group-item {
-  display:flex;
-  justify-content: flex-start;
-  align-items:center;
-  padding:0;
-  min-height: 40px;
-  font-size: 18px;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	padding: 0;
+	min-height: 40px;
+	font-size: 18px;
 }
 
 .politician-header .category {
-  width:30%;
-  height:100%;
-  margin:0;
-  color:white;
-  display: flex;
-  justify-content:center;
-  align-items: center;
+	width: 30%;
+	height: 100%;
+	margin: 0;
+	color: white;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 .politician-header .content {
-  width:70%;
-  height:100%;
-  margin:0;
-  display: flex;
-  justify-content:center;
-  align-items: center;
+	width: 70%;
+	height: 100%;
+	margin: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
-
-.politician-header .category[id="더불어민주당"] {	
-  background:rgb(0, 59,150);
-   
-  
+.politician-header .category[id="더불어민주당"] {
+	background: rgb(0, 59, 150);
 }
 
-.category[id="미래통합당"] {	
-  background:rgb(250, 187, 203); 
+.category[id="미래통합당"] {
+	background: rgb(250, 187, 203);
 }
 
-.category[id="정의당"] {	
-  background: rgb(255, 204, 0);
+.category[id="정의당"] {
+	background: rgb(255, 204, 0);
 }
 
-.category[id="국민의당"] {	
-  background:rgb(234, 85, 4); 
+.category[id="국민의당"] {
+	background: rgb(234, 85, 4);
 }
-
-
 
 .politician-header > .table-of-contents {
-	height:30%;
-
+	height: 30%;
 }
-
-
 
 .politician-header .table-of-contents .list-group-item {
-  padding-left:8px;
-  margin-top: 5px;
-  margin-bottom:5px;
-  display:flex;
-  align-items: center;
+	padding-left: 8px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	display: flex;
+	align-items: center;
 }
-
 
 .politician-header .large-number {
-  font-size: 24px;
+	font-size: 24px;
 }
 
-
 .politician-header .multiple-items .small-number {
-  margin-left:20px;
-  padding-top:10px;
-  font-size:18px;
+	margin-left: 20px;
+	padding-top: 10px;
+	font-size: 18px;
 }
 
 /* #endregion */
 
 /* #region debate.html css */
 .debate-title {
-  border-bottom: solid 1px #dbdbdb;
-  
-  width:80%;
-  margin-top: 50px;
-  margin-right: 200px;
-  margin-left: 100px;
+	border-bottom: solid 1px #dbdbdb;
 
+	width: 80%;
+	margin-top: 50px;
+	margin-right: 200px;
+	margin-left: 100px;
 }
 
 .debate-content {
-  width:80%;
-  margin-right: 200px;
-  margin-left: 100px;
-  display:flex;
-  justify-content:center;
+	width: 80%;
+	margin-right: 200px;
+	margin-left: 100px;
+	display: flex;
+	justify-content: center;
 }
 
 .debate-content .mdl-card {
-  width:100%;
-  height: auto;
+	width: 100%;
+	height: auto;
 }
 
 .new-comment-wrapper {
-  width:80%;
-  margin-right: 200px;
-  margin-left: 100px;
-  padding-bottom:20px;
-  background-color: rgb(228, 228, 228);
-  border-top:solid 2px #4b4b4b;
+	width: 80%;
+	margin-right: 200px;
+	margin-left: 100px;
+	padding-bottom: 20px;
+	background-color: rgb(228, 228, 228);
+	border-top: solid 2px #4b4b4b;
 
-
-  display:flex;
-  flex-direction: column;
-  justify-content: flex-start;
-
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
 }
 .new-comment-wrapper .info {
-  display:flex;
-  flex-direction:row;
-  justify-content:flex-start;
-  align-items: center;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
 }
 
 .new-comment-wrapper .info h4 {
-  margin:0;
-  padding-left:7px;
+	margin: 0;
+	padding-left: 7px;
 }
 
 .new-comment-wrapper .content {
-  width:100%;
-  height:auto;
-  display:flex;
-  flex-direction:row;
-  align-items: center;
-  margin-top:10px;
-  padding-left:20px;
+	width: 100%;
+	height: auto;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	margin-top: 10px;
+	padding-left: 20px;
 }
 
 .new-comment-wrapper .content .select {
-  width:20%;
-  margin:0;
-  border-right:solid 1px #dbdbdb;
+	width: 20%;
+	margin: 0;
+	border-right: solid 1px #dbdbdb;
 }
 
 .new-comment-wrapper .content .type {
-  width:80%;
-  margin:0;
-  padding-right:40px;
-  display:flex;
-  justify-content:center;
-  align-items:flex-end;
+	width: 80%;
+	margin: 0;
+	padding-right: 40px;
+	display: flex;
+	justify-content: center;
+	align-items: flex-end;
 }
 .new-comment-wrapper .warning {
-  width:100%;
-  height:auto;
-  margin-top:10px;
-  padding-left:20px;
+	width: 100%;
+	height: auto;
+	margin-top: 10px;
+	padding-left: 20px;
 }
-
 
 .comment-divider {
-  width:80%;
-  margin-right: 200px;
-  margin-left: 100px;
-  padding-bottom:40px;
-  padding-top:40px;
-  display:flex;
-  flex-direction: row;
+	width: 80%;
+	margin-right: 200px;
+	margin-left: 100px;
+	padding-bottom: 40px;
+	padding-top: 40px;
+	display: flex;
+	flex-direction: row;
 }
 
-.comment-divider div{
-  width:50%;
-  display:flex;
-  justify-content:center;
-} 
-
-
+.comment-divider div {
+	width: 50%;
+	display: flex;
+	justify-content: center;
+}
 
 .total-comment-box {
-  width:80%;
-  height:auto;
-  margin-right: 200px;
-  margin-left: 100px;
-  display:flex;
-  flex-direction:row;
-  
+	width: 80%;
+	height: auto;
+	margin-right: 200px;
+	margin-left: 100px;
+	display: flex;
+	flex-direction: row;
 }
 
 .comment-box {
-  width: 90%;
-  height: auto;
-  
+	width: 90%;
+	height: auto;
 
-  display:flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content:flex-start;
-
-  
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: flex-start;
 }
 
 .comment-box > .card-comment {
-  width:90%;
-  margin:10px;
-  border-bottom: solid 2px #4b4b4b;
+	width: 90%;
+	margin: 10px;
+	border-bottom: solid 2px #4b4b4b;
 }
 
 .comment-box > .card-comment > .text {
-  display: flex;
-  flex-direction: row;
-  width:100%;
-  margin-bottom:40px;
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+	margin-bottom: 40px;
 }
 
 .comment-box > .card-comment > .ctc-box {
-  display: flex;
-  flex-direction: column;
-  width:80%;
-  padding-left: 50px;
+	display: flex;
+	flex-direction: column;
+	width: 80%;
+	padding-left: 50px;
 }
 
 .comment-box .card-comment .ctc-box .ctc-block {
-  display:flex;
-  flex-direction: row;
-  margin-bottom:20px;
-  
+	display: flex;
+	flex-direction: row;
+	margin-bottom: 20px;
 }
 
 .comment-box > .card-comment > .text .comment-info {
-  display:flex;
-  flex-direction:row;
-  align-items:center;
-  width:100%;
-  background:rgb(226, 226, 226);
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	width: 100%;
+	background: rgb(226, 226, 226);
 }
 
 .comment-box > .card-comment > .ctc-box .ctc-info {
-  display:flex;
-  flex-direction:row;
-  align-items:center;
-  width:100%;
-  background:rgb(226, 226, 226);
-  
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	width: 100%;
+	background: rgb(226, 226, 226);
 }
 
 .comment-info span {
-  width:auto; 
-  height:auto;
+	width: auto;
+	height: auto;
 }
 
 .comment-info .comment-edit-form {
-  width:auto;
-  height:auto;
+	width: auto;
+	height: auto;
 }
 
 .comment-content {
-  position:relative;
+	position: relative;
 }
 
 .comment-content .submit-form {
-  width:100%;
-  height: calc(100% + 30px);
-  min-height:40px;
-  z-index: 2;
-  display:flex;
-  flex-direction:column;
-  align-items:flex-end;
-  position:absolute;
-  top:0;
-  
+	width: 100%;
+	height: calc(100% + 30px);
+	min-height: 40px;
+	z-index: 2;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	position: absolute;
+	top: 0;
 }
 
-.comment-content .submit-form textarea{
-  width:100%;
-  height: 100%;
-
+.comment-content .submit-form textarea {
+	width: 100%;
+	height: 100%;
 }
-
 
 .ctc-content {
-  position:relative;
-  text-align:left;
+	position: relative;
+	text-align: left;
 }
 
 .ctc-content .submit-form {
-  width:100%;
-  height: calc(100% + 30px);
-  min-height:40px;
-  z-index: 2;
-  display:flex;
-  flex-direction:column;
-  align-items:flex-end;
-  position:absolute;
-  top:0;
-  
+	width: 100%;
+	height: calc(100% + 30px);
+	min-height: 40px;
+	z-index: 2;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+	position: absolute;
+	top: 0;
 }
 
-.ctc-content .submit-form textarea{
-  width:100%;
-  height: 100%;
-
+.ctc-content .submit-form textarea {
+	width: 100%;
+	height: 100%;
 }
 
 .comment-like-wrapper {
-  margin-top:40px;
+	margin-top: 20px;
 }
 
 .ctc-like-wrapper {
-  margin-top:40px;
-  display:flex;
-  justify-content:flex-start;
+	margin-top: 20px;
+	display: flex;
+	justify-content: flex-start;
 }
 
 .comment-box > .card-comment > .ctc-box {
-  width:100%;
-  text-align : right;
-  
+	width: 100%;
+	text-align: right;
 }
 
-
-
 .new-ctc-wrapper form {
-  width:100%;
-  display:flex;
-  justify-content:center;
+	width: 100%;
+	display: flex;
+	justify-content: center;
 }
 
 .new-ctc-wrapper textarea {
-  width:100%;
-  margin-left:-50px;
+	width: 100%;
+	margin-left: -50px;
 }
 
 .new-ctc-wrapper button {
-  margin:0 !important;
+	margin: 0 !important;
 }
 
-
-.mdl-textfield.mdl-js-textfield > button  {
-	margin-left:  260px;
+.mdl-textfield.mdl-js-textfield > button {
+	margin-left: 260px;
 }
 
 form {
-  display : inline;  
+	display: inline;
 }
 
 .mdl-button > i {
-  vertical-align:-25%;
+	vertical-align: -25%;
 }
 
 .new-comment-wrapper {
-  display:flex;
-  justify-content: flex-end;
+	display: flex;
+	justify-content: flex-end;
 }
 
 .demo-card-wide.mdl-card.normal-feed {
 	width: 95%;
 	height: auto;
-	margin-top:40px;
-  margin-left: 20px;
-  margin-bottom: 40px;
-  
+	margin-top: 40px;
+	margin-left: 20px;
+	margin-bottom: 40px;
 }
 
 .demo-card-wide.small-feed .card-title {
 	width: 100%;
-	height:auto;
-  min-height:0;
-  z-index:1;
-  display:flex;
-  justify-content: space-between;
-  border-bottom: solid 1px #dbdbdb;
+	height: auto;
+	min-height: 0;
+	z-index: 1;
+	display: flex;
+	justify-content: space-between;
+	border-bottom: solid 1px #dbdbdb;
 }
 .normal-feed > .card-title {
-  display:flex;
-  padding-left: 20px;
-  padding-right: 20px;
-  justify-content:space-between;
-  align-items: center;
-  /* background: url('../assets/demos/welcome_card.jpg') center / cover; */
-  height:70px;
-  margin:0;
-  border-bottom: solid 1px #dbdbdb;
+	display: flex;
+	padding-left: 20px;
+	padding-right: 20px;
+	justify-content: space-between;
+	align-items: center;
+	/* background: url('../assets/demos/welcome_card.jpg') center / cover; */
+	height: 70px;
+	margin: 0;
+	border-bottom: solid 1px #dbdbdb;
 }
 
 .small-feed.card-title {
-  display:flex;
-  justify-content:flex-start;
-  align-items: center;
-  height:30px;
-  margin-top:30px;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	height: 30px;
+	margin-top: 30px;
 }
 
 .law__supporting-text {
-  padding-left:30px;
+	padding-left: 30px;
 }
 
-
 .normal-feed__supporting-text {
-  width:100%;
-  height: auto;
-  margin-top:10px;
-  margin-left:20px;
-  
+	width: 100%;
+	height: auto;
+	margin-top: 10px;
+	margin-left: 20px;
 }
 
 .normal-feed__supporting-text .law-wrapper {
-  width:100%;
-  height: auto;
-  
+	width: 100%;
+	height: auto;
 
-  display:flex;
-  flex-direction:column;
-  justify-content: space-between;
-  margin-top:30px;
-  
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	margin-top: 30px;
 }
 
 .normal-feed__supporting-text .law-wrapper .like-wrapper {
-  width: 100%;
-  border-bottom: 1px solid #dbdbdb;
-  padding-right:40px;
-  display:flex;
-  justify-content: space-between;
+	width: 100%;
+	border-bottom: 1px solid #dbdbdb;
+	padding-right: 40px;
+	display: flex;
+	justify-content: space-between;
 }
 
 .small-feed__supporting-text {
-  width:100%;
-  height: auto;
-  
-  margin-bottom:20px;
-  
+	width: 100%;
+	height: auto;
+
+	margin-bottom: 20px;
 }
 
 .normal-feed__supporting-text > .normalFeed-content {
-  width:100%;
-  height:100%;
-  
-  position:relative;
-  
+	width: 100%;
+	height: 100%;
+
+	position: relative;
 }
 
 .small-feed__supporting-text > .smallFeed-content {
-  width:100%;
-  height:100%;
-  display:block;
-  position:relative;
+	width: 100%;
+	height: 100%;
+	display: block;
+	position: relative;
 }
 
-.normalFeed-edit-form > .submit-form{
-  width: 100%;
-  height:calc(100% + 20px);
-  padding-right:20px;
-  position: absolute;
-  top: 0;
-  z-index: 10;
-  background-color:white;
+.normalFeed-edit-form > .submit-form {
+	width: 100%;
+	height: calc(100% + 20px);
+	padding-right: 20px;
+	position: absolute;
+	top: 0;
+	z-index: 10;
+	background-color: white;
 
-  display:flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-end;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: flex-end;
 }
 
-.smallFeed-edit-form > .submit-form{
-  width: 100%;
-  height:calc(100% + 20px);
-  padding-right:20px;
-  position: absolute;
-  top: 0;
-  z-index: 15;
-  background-color:white;
+.smallFeed-edit-form > .submit-form {
+	width: 100%;
+	height: calc(100% + 20px);
+	padding-right: 20px;
+	position: absolute;
+	top: 0;
+	z-index: 15;
+	background-color: white;
 
-  display:flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-end;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: flex-end;
 }
 
 .normalFeed-edit-form > .submit-form > textarea {
-  width:100%;
-  height: 100%;
-  margin:0;
+	width: 100%;
+	height: 100%;
+	margin: 0;
 }
 
 .smallFeed-edit-form > .submit-form > textarea {
-  width:100%;
-  height: 100%;
-  margin:0;
+	width: 100%;
+	height: 100%;
+	margin: 0;
 }
 
-
 .normal-feed a {
-  font-size: 18px;
-  padding-bottom: 10px;
-  padding-left:8px;
-  padding-right:8px;
+	font-size: 18px;
+	padding-bottom: 10px;
+	padding-left: 8px;
+	padding-right: 8px;
 }
 
 .mdl-badge[data-badge]:after {
-  background-color: white;
-  color:black;
-  
+	background-color: white;
+	color: black;
 }
 
 .highcharts-root{
@@ -846,4 +802,3 @@ form {
   width: 100% !important;
 }
 
-/* #endregion */
