@@ -9,6 +9,36 @@ $(document).ready(() => {
         
     });
 
+    $(".chosung-down").click((e) => {
+        const $this = $(e.currentTarget);
+        const $down_form = $this.parent().siblings('.chosung_name');
+        const $up_arrow = $this.siblings('.chosung-up')
+        $($down_form).fadeToggle(
+            100
+        );
+        $($up_arrow).fadeToggle(
+            0
+        );
+        $($this).fadeToggle(
+            0
+        );
+    });
+
+    $(".chosung-up").click((e) => {
+        const $this = $(e.currentTarget);
+        const $up_form = $this.parent().siblings('.chosung_name');
+        const $down_arrow = $this.siblings('.chosung-down')
+        $($up_form).fadeToggle(
+            100
+        );
+        $($down_arrow).fadeToggle(
+            0
+        );
+        $($this).fadeToggle(
+            0
+        );
+    });
+
     $(".normalFeed-down").click((e) => {
         const $this = $(e.currentTarget);
         const $down_form = $this.parent().parent().siblings('.normal-feed__supporting-text');
@@ -217,13 +247,13 @@ $(document).ready(() => {
     $(".scroll-down").click((e) => {
         const $this = $(e.currentTarget);
         const id = $this.data('id')-1;
-        console.log(id);
         var normalFeeds = document.querySelectorAll("#normalFeed");
         var location = normalFeeds[id].offsetTop;
-        console.log(location);
+
+        // window.scrollTo({top:location, behavior:'smooth'});
         
-        window.scrollTo({top:location, behavior:'smooth'});
-        
+        const $test = $this.parent().parent().parent().parent().parent().parent().parent();
+        $test.scrollTop(location);
     });
 
 

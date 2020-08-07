@@ -2,6 +2,10 @@
 
 
 {% block content %}
+{% load index %}
+    
+    
+
     <div class="politician-header">
         <div class="card"> 
             <h5 class="card-header" id = "{{ politician.politicalParty}}" style = "font-size:24px; display:flex; justify-content:center;">{{ politician.hg_name }}({{politician.eng_name}})</h5>
@@ -182,9 +186,15 @@
 
        
     {% comment %} {% if user.is_superuser %} {% endcomment %}
-    <h5>
-        <a href = "/feeds/politician/{{ politician.id }}/normalfeed/new/">normalFeed 추가하기</a>
-    </h5>
+    
+    <a href = "/feeds/politician/{{ politician.id }}/normalfeed/new/"
+            style = "display:flex; flex-direction:row; margin:50px;"
+    >
+        <h3>항목 추가하기</h3>
+        <button  type="submit" class="mdl-button mdl-js-button mdl-button--icon">
+            <i class="material-icons-outlined">add</i>
+        </button>
+    </a>
     {% comment %} {% endif %} {% endcomment %}
 
     {% comment %} normal Feed 보여주는 part {% endcomment %}
@@ -235,6 +245,7 @@
                     <a href="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/debate/">해당 항목에 대한 토론방</a>
                 </div>
             </div>
+
             <div class="normal-feed__supporting-text" style="display:none;">
                 {% comment %} 발의 법률안이면 {% endcomment %}
                 {% if normalFeed.title == '4' %} 
@@ -306,9 +317,9 @@
                         {% endif %}
                     </div>
                     
-                    {% for smallFeed in smallFeeds %}
-                    
-                        {% if smallFeed.normalFeed == normalFeed %}   
+                    {% for i in ranges|index:forloop.counter0 %}
+                        {% with smallFeed=smallFeedsSet|index:forloop.parentloop.counter0|index:i %}
+                          
                             {% comment %} forloop.counter shibalalalalalalalalal {% endcomment %}
                             <div class="demo-card-wide small-feed" id ="smallFeed">
                                 <div class = "small-feed card-title">
@@ -321,7 +332,7 @@
                                             <i class="material-icons">keyboard_arrow_up</i>
                                         </button>
                                         
-                                        <h4 style="color:blue;">{{ normalFeed.title }}.{{ forloop.counter}} </h4> <h4>{{ smallFeed.title }}</h4>
+                                        <h4 style="color:blue;">{{ normalFeed.title }}.{{ i|add:1 }} </h4> <h4>{{ smallFeed.title }}</h4>
                                         
                                         {% if user.is_authenticated %}       
                                             <button class="mdl-button mdl-js-button mdl-button--icon smallFeed-edit">
@@ -374,15 +385,21 @@
                                     </div>
                                 </div>
                             </div>
-                        {% endif %}
+                            
+                        {% endwith %}
                     {% endfor %}
-                    
                 {% endif%} 
+                <a href = "/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/smallfeed/new/"
+                      style = "display:flex; flex-direction:row;"
+                >
+                    <h3>소항목 추가하기</h3>
+                    <button  type="submit" class="mdl-button mdl-js-button mdl-button--icon">
+                        <i class="material-icons-outlined">add</i>
+                    </button>
+                </a>
             </div>
             {% comment %} {% if user.is_superuser %} {% endcomment %}
-                <h5>
-                    <a href = "/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/smallfeed/new/">smallFeed 추가하기</a>
-                </h5>
+                
             {% comment %} {% endif %} {% endcomment %}
     
         </div>
