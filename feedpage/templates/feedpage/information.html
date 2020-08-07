@@ -1,43 +1,94 @@
-<div id="i-Modal" class="modal fade">
-    <div class="modal-dialog modal-login">
-      <div class="modal-content">
-        <div class="modal-header text-center">				
-          <h4 class="modal-title">통계 보기</h4>	
-            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        </div>
-        <div class="modal-body">
-          
-          `<div id="container" style="width: 30%;">
-            <canvas id="pie-chart"></canvas>
-          </div>
+{% comment %} 왜 base.html extend가 안되는거지? {% endcomment %}
 
-          <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
-          <script>
-
-            var config = {
-              type: 'pie',
-              data: {
-                datasets: [{
-                  data: {{ data|safe }},
-                  backgroundColor: [
-                    '#1d0fdb', '#bf081a'
-                  ],
-                  label: 'Population'
-                }],
-                labels: {{ labels|safe }}
-              },
-              options: {
-                responsive: true
-              }
-            };
-
-            window.onload = function() {
-              var ctx = document.getElementById('pie-chart').getContext('2d');
-              window.myPie = new Chart(ctx, config);
-            };
-
-          </script>
-        </div>
-      </div>
+  <div class = "chart_1" style = 'display: flex;'>
+    <div id="container1" style = 'width: 30%; padding:30px;'></div>
+    <script src="https://code.highcharts.com/highcharts.src.js"></script>
+    <script>
+      Highcharts.chart('container1', {
+          chart: {
+              type: 'column'
+          },
+          title: {
+              text: '성별 찬성반대통계'
+          },
+          xAxis: {
+              categories: {{ labels|safe }}
+          },
+          yAxis: {
+            title: {
+                text: '투표수'
+            }
+          },
+          series: [{
+              name: '찬성',
+              data: {{ data|safe }},
+              color: 'green'
+          }, {
+              name: '반대',
+              data: [2, 6],
+              color: 'red'
+          }]
+      });
+    </script>
+    <div id="container2" style = 'width: 50%; padding:30px;'></div>
+    <script src="https://code.highcharts.com/highcharts.src.js"></script>
+    <script>
+      Highcharts.chart('container2', {
+          chart: {
+              type: 'column'
+          },
+          title: {
+              text: '연령별 찬성반대통계'
+          },
+          xAxis: {
+              categories: ['10대', '20대', '30대', '40대', '50대','60대','70대 이상']
+              
+          },
+          yAxis: {
+            title: {
+                text: '투표수'
+            }
+          },
+          series: [{
+              name: '찬성',
+              data: [150,240,350,760,450,320,210],
+              color: 'green'
+          }, {
+              name: '반대',
+              data: [120,140,550,460,350,620,410],
+              color: 'red'
+          }]
+      });
+    </script>
+    
+  </div>
+  <div class = "chart_2" style = 'display: flex;'>
+    <div id="container3" style = 'width: 80%; padding:30px;'></div>
+    <script src="https://code.highcharts.com/highcharts.src.js"></script>
+    <script>
+      Highcharts.chart('container3', {
+          chart: {
+              type: 'column'
+          },
+          title: {
+              text: '정치성향별 찬성반대통계'
+          },
+          xAxis: {
+              categories: ['진보 5','진보 4','진보 3','진보 2','진보 1','중도 0','보수 1','보수 2','보수 3','보수 4','보수 5',]
+          },
+          yAxis: {
+            title: {
+                text: '투표수'
+            }
+          },
+          series: [{
+              name: '찬성',
+              data: [32,65,100,102,103,300,350,450,500,510,430]
+          }, {
+              name: '반대',
+              data: [200,400,430,360,600,200,400,320,200,50,70]
+          }]
+      });
+    </script>
     </div>
-</div>    
+  </div>
