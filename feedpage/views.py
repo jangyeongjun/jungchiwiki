@@ -382,11 +382,18 @@ def lawsearch(request, page=1, lawkey=None):
 
 def politician(request, pid):
     politician = Politician.objects.get(id = pid)
-    normalFeeds = politician.normalFeeds.all()
+    normalFeeds = politician.normalFeeds.all().order_by('title')
     laws =  Law.objects.filter(proposer = politician)
     # 더 좋은 방법이 뭘가
-    smallFeeds = SmallFeed.objects.filter(normalFeed__in=normalFeeds)
-    return render(request,'feedpage/politician.html', {'politician': politician ,'normalFeeds' : normalFeeds, 'smallFeeds':smallFeeds, 'laws':laws})
+    smallFeedsSet = []
+    ranges = []
+
+    for normalFeed in normalFeeds:
+        smallFeeds = SmallFeed.objects.filter(normalFeed=normalFeed)
+        smallFeedsSet.append(smallFeeds)
+        ranges.append(range(smallFeeds.count()))
+
+    return render(request,'feedpage/politician.html', {'politician': politician ,'normalFeeds' : normalFeeds, 'smallFeedsSet':smallFeedsSet, 'ranges':ranges, 'laws':laws})
 
 
 def normalFeed_debate(request, pid, nfid):
