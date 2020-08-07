@@ -27,7 +27,10 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '$*bip=il$i%mck&jh%ky_bj=hw-1n)
 DEBUG = bool( os.environ.get('DJANGO_DEBUG', True) )
 
 ALLOWED_HOSTS = [
+    '*',
     'nawiki.herokuapp.com',
+    'localhost',
+    '127.0.0.1'
 ]
 
 
