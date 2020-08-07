@@ -92,21 +92,25 @@ def smallFeedCreate(request,pid,nfid):
     path = os.path.join('/feeds/politician/', str(pid))
     return redirect(path)
 
-def normalFeed_debate_new_like_comment(request, pid, nfid):
+def normalFeed_debate_new_comment(request, pid, nfid):
     content = request.POST['content']
+    value = request.POST['options']
     author = request.user
     normalFeed = NormalFeed.objects.get(id = nfid)
     time = str(datetime.datetime.now()).strip('.')[0:16]
-    Comment.objects.create(content=content, author = author, normalFeed=normalFeed, likeChoice = 'like', created_at = time)
-    path = os.path.join('/feeds/politician', str(pid), 'normalfeed', str(nfid), 'debate').replace("\\" , "/")
-    return redirect(path)
-
-def normalFeed_debate_new_dislike_comment(request, pid, nfid):
-    content = request.POST['content']
-    author = request.user
-    normalFeed = NormalFeed.objects.get(id = nfid)
-    time = str(datetime.datetime.now()).strip('.')[0:16]
-    Comment.objects.create(content=content, author = author, normalFeed=normalFeed, likeChoice = 'dislike', created_at = time)
+    if value == '1':
+        Comment.objects.create(content=content, 
+                               author = author, 
+                               normalFeed=normalFeed, 
+                               likeChoice = 'like', 
+                               created_at = time)
+    elif value == '2':
+        Comment.objects.create(content=content, 
+                               author = author, 
+                               normalFeed=normalFeed, 
+                               likeChoice = 'dislike', 
+                               created_at = time)
+    
     path = os.path.join('/feeds/politician', str(pid), 'normalfeed', str(nfid), 'debate').replace("\\" , "/")
     return redirect(path)
 
@@ -115,27 +119,34 @@ def normalFeed_debate_new_CTC(request, pid, nfid, cid):
     content = request.POST['content']
     author = request.user
     comment = Comment.objects.get(id = cid)
-    CommentToComment.objects.create(content = content, author = author, comment = comment)
+    time = str(datetime.datetime.now()).strip('.')[0:16]
+    CommentToComment.objects.create(content = content, author = author, comment = comment, created_at = time)
     path = os.path.join('/feeds/politician', str(pid), 'normalfeed', str(nfid), 'debate').replace("\\" , "/")
     return redirect(path)
 
-def law_debate_new_like_comment(request, pid, lid):
+def law_debate_new_comment(request, pid, lid):
     content = request.POST['content']
+    value = request.POST['options']
     author = request.user
     law = Law.objects.get(id = lid)
     time = str(datetime.datetime.now()).strip('.')[0:16]
-    Comment.objects.create(content=content, author = author, law=law, likeChoice='like', created_at = time )
+    if value =='1':
+        Comment.objects.create(content=content, 
+                               author = author, 
+                               law=law, 
+                               likeChoice='like', 
+                               created_at = time )
+    elif value == '2':
+        Comment.objects.create(content=content, 
+                               author = author, 
+                               law=law, 
+                               likeChoice='dislike', 
+                               created_at = time )
+
+    
     path = os.path.join('/feeds/politician', str(pid), 'law', str(lid), 'debate').replace("\\" , "/")
     return redirect(path)
 
-def law_debate_new_dislike_comment(request, pid, lid):
-    content = request.POST['content']
-    author = request.user
-    law = Law.objects.get(id = lid)
-    time = str(datetime.datetime.now()).strip('.')[0:16]
-    Comment.objects.create(content=content, author = author, law=law, likeChoice='dislike', created_at = time)
-    path = os.path.join('/feeds/politician', str(pid), 'law', str(lid), 'debate').replace("\\" , "/")
-    return redirect(path)
 
 
 def law_debate_new_CTC(request, pid, lid, cid):
@@ -380,6 +391,7 @@ def politician(request, pid):
 
 def normalFeed_debate(request, pid, nfid):
     politician = Politician.objects.get(id = pid)
+    laws =  Law.objects.filter(proposer = politician)
     normalFeed = NormalFeed.objects.get(id = nfid)
     like_comments = Comment.objects.filter(likeChoice='like', normalFeed=normalFeed)
     dislike_comments = Comment.objects.filter(likeChoice='dislike', normalFeed=normalFeed)
@@ -393,30 +405,30 @@ def normalFeed_debate(request, pid, nfid):
         temp = c.ctc.all()
         comments_to_dislike_comment = comments_to_dislike_comment.union(temp)
     
-    return render(request,'feedpage/debate.html', {'politician': politician ,'normalFeed' : normalFeed, 'like_comments' : like_comments, 'dislike_comments' : dislike_comments, 'comments_to_like_comment' : comments_to_like_comment, 'comments_to_dislike_comment' : comments_to_dislike_comment})
+    return render(request,'feedpage/debate.html', {'politician': politician ,'normalFeed' : normalFeed, 'laws':laws, 'like_comments' : like_comments, 'dislike_comments' : dislike_comments, 'comments_to_like_comment' : comments_to_like_comment, 'comments_to_dislike_comment' : comments_to_dislike_comment})
 
 
 def law_debate(request, pid, lid):
-    if request.method =='GET':
-        politician = Politician.objects.get(id=pid)
-        law = Law.objects.get(id = lid)
-        comments = law.comments.all()
-        comments_to_comment = CommentToComment.objects.none()
-        for c in comments:
-            temp = c.ctc.all()
-            comments_to_comment = comments_to_comment.union(temp)
-        
-        return render(request,'feedpage/law_debate.html', {'politician':politician, 'law': law , 'comments' : comments, 'comments_to_comment' : comments_to_comment})
-    elif request.method == 'POST':
-        law = Law.objects.get(id=request.POST['lid'])
-        like_count = law.like_users.count()
-        dislike_count = law.like_user.count()
-        context = {
-            'title'     : law.bill_name,
-            'like_count': like_count,
-            'dislike_count': dislike_count
-        }
-        return JsonResponse(context)
+
+    politician = Politician.objects.get(id=pid)
+    law = Law.objects.get(id = lid)
+    comments = law.comments.all()
+    
+    like_comments = Comment.objects.filter(likeChoice='like', law=law)
+    dislike_comments = Comment.objects.filter(likeChoice='dislike', law=law)
+    
+    comments_to_like_comment = CommentToComment.objects.none()
+    comments_to_dislike_comment = CommentToComment.objects.none()
+    for c in like_comments:
+        temp = c.ctc.all()
+        comments_to_like_comment = comments_to_like_comment.union(temp)
+    for c in dislike_comments:
+        temp = c.ctc.all()
+        comments_to_dislike_comment = comments_to_dislike_comment.union(temp)
+    
+    
+    return render(request,'feedpage/law_debate.html', {'politician':politician, 'law': law , 'like_comments' : like_comments, 'dislike_comments' : dislike_comments, 'comments_to_like_comment' : comments_to_like_comment, 'comments_to_dislike_comment' : comments_to_dislike_comment})
+    
 
 
 
@@ -890,7 +902,7 @@ def orientationVoteCancel(request,  pid):
     total = politician.politicalOrientation * numOfUsers
     value = OrientationVote.objects.get(user_id = request.user.id, politician= politician).value
     if numOfUsers != 1:
-        politician.politicalOrientation = (total - value) / (numOfUsers-1)
+        politician.politicalOrientation = (total - value +5) / (numOfUsers-1)
     else:
         politician.politicalOrientation = 0
     politician.save()

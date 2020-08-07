@@ -220,7 +220,7 @@
                     data-nfid={{ normalFeed.id }} 
                     data-csrfmiddlewaretoken="{{ csrf_token }}"
                     data-badge="{{ normalFeed.like_users.count }}">
-                    <img src = '/media/thumbs_up.png' style="height:30px; width:auto;">
+                    <h6>좋아요</h6>
                     </a>
 
                     <a href="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/dislike/" 
@@ -229,7 +229,7 @@
                     data-nfid={{ normalFeed.id }}
                     data-csrfmiddlewaretoken="{{ csrf_token }}" 
                     data-badge="{{ normalFeed.dislike_users.count }}">
-                    <img src="/media/thumbs_down.png" style="height:30px; background:white;">
+                    <h6>싫어요</h6>
                     </a>
                 
                     <a href="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/debate/">해당 항목에 대한 토론방</a>
@@ -248,7 +248,10 @@
                                     <button class="mdl-button mdl-js-button mdl-button--icon law-up" style="display:none;">
                                         <i class="material-icons">keyboard_arrow_up</i>
                                     </button>
-                                    <h4 style="color:blue;">{{ forloop.counter }}.</h4> <h4>{{ law.bill_name }}</h4>
+                                    <h4 style="color:blue;">{{ forloop.counter }}.</h4> 
+                                    <h4><a href="/feeds/politician/{{ politician.id }}/law/{{ law.id }}/debate/">
+                                        {{ law.bill_name }}</a>
+                                    </h4>
                                 </div>
                                 <div>
                                     <a href="/feeds/politician/{{ politician.id }}/law/{{ law.id }}/like/"    
@@ -256,7 +259,7 @@
                                         data-pid={{ politician.id }} 
                                         data-lid={{ law.id }} 
                                         data-csrfmiddlewaretoken="{{ csrf_token }}" 
-                                        data-badge="{{ law.like_users.count }}"><img src = '/media/thumbs_up.png' style="height:30px; width:auto;">
+                                        data-badge="{{ law.like_users.count }}"><h6>좋아요</h6>
                                         </a>
                                         
                                     <a href="/feeds/politician/{{ politician.id }}/law/{{ law.id }}/dislike/" 
@@ -264,9 +267,7 @@
                                         data-pid={{ politician.id }} 
                                         data-lid={{ law.id }} 
                                         data-csrfmiddlewaretoken="{{ csrf_token }}" 
-                                        data-badge="{{ law.dislike_users.count }}"><img src="/media/thumbs_down.png" style="height:30px;"></a>
-
-                                    <a href="/feeds/politician/{{ politician.id }}/law/{{ law.id }}/debate/">해당 법안에 대한 토론방</a>
+                                        data-badge="{{ law.dislike_users.count }}"><h6>싫어요</h6></a>
                                 </div>
                             </div>
                             <div class="law__supporting-text" style="display:none;">
@@ -274,8 +275,8 @@
                                 {% comment %} <h5>대표 발의자 : {{ law.proposer.hg_name }}</h5> {% endcomment %}
                                 <h6>발의된 날짜 : {{ law.propose_dt }}</h6>
                                 <h6>발의한 위원회 : {{ law.committee }}</h6>
-                                <h6>법안 상세 정보 : {{ law.detail_link }}</h6>
-                                <h6>발의자 명단 : {{ law.member_link }}</h6>
+                                <h6>법안 상세 정보 : <a href="{{ law.detail_link }}">{{ law.detail_link }}</a></h6>
+                                <h6>발의자 명단 : <a href="{{ law.member_link }}">{{ law.member_link }}</a></h6>
                             </div>
                             
                         
@@ -338,7 +339,7 @@
                                         data-nfid={{ normalFeed.id }} 
                                         data-sfid={{ smallFeed.id }} 
                                         data-csrfmiddlewaretoken="{{ csrf_token }}" 
-                                        data-badge="{{ smallFeed.like_users.count }}" ><img src = '/media/thumbs_up.png' style="height:30px; width:auto;">
+                                        data-badge="{{ smallFeed.like_users.count }}" ><h6>좋아요</h6>
                                         </a>
                                         
                                         <a href="/feeds/politician/{{ politician.id }}/normalfeed/{{ normalFeed.id }}/smallfeed/{{ smallFeed.id }}/dislike/" 
@@ -347,7 +348,7 @@
                                         data-nfid={{ normalFeed.id }} 
                                         data-sfid={{ smallFeed.id }} 
                                         data-csrfmiddlewaretoken="{{ csrf_token }}" 
-                                        data-badge="{{ smallFeed.dislike_users.count }}"><img src="/media/thumbs_down.png" style="height:30px;"></a>
+                                        data-badge="{{ smallFeed.dislike_users.count }}"><h6>싫어요</h6></a>
                                     {% comment %} smallfeed는 어떻게 sort할까 {% endcomment %}
                                     </div>
                                 </div>

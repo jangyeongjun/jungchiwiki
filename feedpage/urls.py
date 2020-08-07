@@ -28,8 +28,7 @@ urlpatterns = [
     
     path('politician/<int:pid>/law/<int:lid>/debate/comment/<int:cid>/like/',                           views.law_debate_comment_like,          name='law_debate_comment_like'),
     path('politician/<int:pid>/law/<int:lid>/debate/comment/<int:cid>/dislike/',                        views.law_debate_comment_dislike,       name='law_debate_comment_dislike'),
-    path('politician/<int:pid>/law/<int:lid>/debate/comment/like/new/',                                 views.law_debate_new_like_comment,      name='law_debate_new_like_comment'),
-    path('politician/<int:pid>/law/<int:lid>/debate/comment/dislike/new/',                              views.law_debate_new_dislike_comment,   name='law_debate_new_dislike_comment'),
+    path('politician/<int:pid>/law/<int:lid>/debate/comment/new/',                                      views.law_debate_new_comment,      name='law_debate_new_comment'),
     path('politician/<int:pid>/law/<int:lid>/debate/comment/<int:cid>/delete/',                         views.law_debate_comment_delete,        name='law_debate_comment_delete'),
     path('politician/<int:pid>/law/<int:lid>/debate/comment/<int:cid>/edit/',                           views.law_debate_comment_edit,          name='law_debate_comment_edit'),
 
@@ -63,8 +62,7 @@ urlpatterns = [
     
     path('politician/<int:pid>/normalfeed/<int:nfid>/debate/comment/<int:cid>/like/',                   views.normalFeed_debate_comment_like,   name='normalFeed_debate_comment_like'),
     path('politician/<int:pid>/normalfeed/<int:nfid>/debate/comment/<int:cid>/dislike/',                views.normalFeed_debate_comment_dislike,name='normalFeed_debate_comment_dislike'),
-    path('politician/<int:pid>/normalfeed/<int:nfid>/debate/like/comment/new/',                         views.normalFeed_debate_new_like_comment,name='normalFeed_debate_new_like_comment'),
-    path('politician/<int:pid>/normalfeed/<int:nfid>/debate/dislike/comment/new/',                      views.normalFeed_debate_new_dislike_comment,    name='normalFeed_debate_new_dislike_comment'),
+    path('politician/<int:pid>/normalfeed/<int:nfid>/debate/comment/new/',                              views.normalFeed_debate_new_comment,    name='normalFeed_debate_new_comment'),
     path('politician/<int:pid>/normalfeed/<int:nfid>/debate/comment/<int:cid>/delete/',                 views.normalFeed_debate_comment_delete, name='normalFeed_debate_comment_delete'),
     path('politician/<int:pid>/normalfeed/<int:nfid>/debate/comment/<int:cid>/edit/',                   views.normalFeed_debate_comment_edit,   name='normalFeed_debate_comment_edit'),
 
