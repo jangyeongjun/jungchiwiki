@@ -47,6 +47,8 @@ urlpatterns = [
     path('politician/<int:pid>/normalfeed/<int:nfid>/dislike/',                                         views.normalFeed_dislike,               name='normalFeed_dislike'),
     path('politician/<int:pid>/normalfeed/<int:nfid>/edit/',                                            views.normalFeed_edit,                  name='normalFeed_edit'),
     path('politician/<int:pid>/normalfeed/<int:nfid>/delete/',                                          views.normalFeed_delete,                name='normalFeed_delete'),
+    #information용
+    path('politician/<int:pid>/normalfeed/<int:nfid>/infor/',                                           views.pie_chart,                        name='pie_chart'),
     path('politician/<int:pid>/normalfeed/new/',                                                        views.normalFeedAdd,                    name='normalFeedAdd'),
     path('politician/<int:pid>/normalfeed/create/',                                                     views.normalFeedCreate,                 name='normalFeedCreate'),
 

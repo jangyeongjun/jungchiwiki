@@ -26,11 +26,11 @@
 	       					<tr>
 								<th scope="row">법률안 이름</th>
 	       						<td class = "tdforlaw">
-                                    {%if lawsearch_keyword == None %}
-                                        <input type="text" title="이름" id="schHgNm" name="lawsearch_key" style="width:800px;height:30px;font-size:20px"></input>
+                                    {%if lawsearch_keyword == 'x' %}
+                                        <input type="text" title="이름" id="lawsearch_key" name="lawsearch_key" style="width:800px;height:30px;font-size:20px"></input>
                                         <button class="btn_inquiries" id="btnSearch" type="submit">검색</button>
                                     {% else %}
-                                        <input type="text" title="이름" id="schHgNm" name="lawsearch_key" value = "{{ lawsearch_keyword }}"style="width:800px;height:30px;font-size:20px"></input>
+                                        <input type="text" title="이름" id="lawsearch_key" name="lawsearch_key" value = "{{ lawsearch_keyword }}"style="width:800px;height:30px;font-size:20px"></input>
                                         <button class="btn_inquiries" id="btnSearch" type="submit">검색</button>
                                     {% endif %}
                                 </td>
